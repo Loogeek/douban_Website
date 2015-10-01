@@ -1,0 +1,34 @@
+{
+  "name": "Nodejs_Movie",
+  "version": "0.1",
+  "authors": [
+    "Loogeek <loogeek@163.com>"
+  ],
+  "description": "NodeJs Movie",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "keywords": [
+    "NodeJs",
+    "express",
+    "Mongodb",
+    "Mongoose",
+    "bower",
+    "jquery",
+    "jade",
+    "bootstrap"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}
