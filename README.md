@@ -53,3 +53,7 @@
 - 电影列表页:localhost:4000/admin/movie/list
 - 电影分类录入页:localhost:4000/admin/category/new
 - 电影分类页:localhost:4000/admin/category/list
+
+### 七、后期完善:
+####1.网站整体样式还是过于简陋，后期会对整个网站的样式进行完善;
+####2.用户对电影发表评论会对整个页面进行刷新，这并不友好，会使用Ajax对该部分进行修改;
