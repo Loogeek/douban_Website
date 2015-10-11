@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  .container
+    .row
+      table.table.table-hover.table-bordered
+        thead
+          tr
+            th 城市
+            th 影院
+            th 时间
+            th 查看
+            th 修改
+            th 删除
+        tbody
+          each item in citiesList
+            tr(class="item-id-#{item._id}")
+              td #{item.cityName}
+              td #{item.name}
+              td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
+              td: a(target="_blank", href="../movie/#{item._id}") 查看
+              td: a(target="_blank", href="../admin/update/#{item._id}") 修改
+              td
+                button.btn.btn-danger.citydel(type="button", data-id="#{item._id}") 删除
+  script(src="/js/admin.js")

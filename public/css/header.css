@@ -1,0 +1,14 @@
+
+/* navTop */
+.navTop{background-color: #545652;height:28px;}
+.navTop .navbar-header{}
+.navTop .navbar-text{margin-top: 0;}
+.navTop a,.navTop span{color: #d5d5d5;font: 12px Helvetica,Arial,sans-serif;padding:0;line-height: 28px;}
+.navTop a:hover{color: #fff;text-decoration: none;}
+
+/* nav-wrap */
+.nav{background-color: #f0f3f5;margin-bottom: 20px;}
+.navWrap{width:950px;margin:10px auto;}
+.navWrap .navLogo{float:left;width:145px;height: 56px;color:#27a;cursor:pointer;padding:10px;}
+.navWrap .navSearch{padding-top: 10px;}
+.navWrap .navSearch input{width:470px;height: 34px;padding:5px;}

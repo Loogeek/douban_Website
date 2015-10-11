@@ -1,19 +1,7 @@
-.container
-  .row
-    .page-header.clearfix
-      h1= title
-      .col-md-4
-        small 重度科幻迷
-      .col-md-8
-        form(method='GET', action='/results')
-          .input-group.col-sm-4.pull-right
-            input.form-control(type='text', name='q')
-            span.input-group-btn
-              button.btn.btn-default(type='submit') 搜索
-.navbar.navbar-default.navbar-fixed-bottom
-  .container
-    .navbar-header
-      a.navbar-brand(href="/") 重度科幻迷
+.navTop
+  .container-fluid
+    .navbar-header.clearfix
+      a.navbar-brand(href="/") 首页
     if user
       p.navbar-text.navbar-right
         span 欢迎您:#{user.name}
@@ -54,3 +42,13 @@
         .modal-footer
           button.btn.btn-default(type="button", data-dismiss="modal") 关闭
           button.btn.btn-success(type="submit") 提交
+.nav
+  .navWrap.clearfix
+    .navLogo
+      a(href="/")
+        img(src="/images/navLogo.png", alt="Logo")
+    .navSearch     
+      form(method='GET', action='/results')
+        input(type='text', name='q' placeholder="电影搜索")
+        span
+          button.btn.btn-default(type='submit') 搜索

@@ -3,6 +3,7 @@ var User = require('../app/controllers/user')	  //用户模块路由控制器
 var Movie = require('../app/controllers/movie');   //电影模块路由控制器
 var Comment = require('../app/controllers/comment'); //电影评论控制器
 var Category = require('../app/controllers/category')//电影分类控制器
+var City = require('../app/controllers/city')       //电影院分类控制器
 
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
@@ -19,6 +20,7 @@ module.exports = function(app){
 	app.get('/',Index.index);
 	//results
 	app.get('/results',Index.search);
+
 
 	// signup  用户注册路由
 	app.get('/signup',User.showSignup);
@@ -61,6 +63,13 @@ module.exports = function(app){
 	app.get('/admin/category/list',User.signinRequired,User.adminRequired,Category.list);
 	//list delete category 电影分类列表删除电影路由
 	app.delete('/admin/category/list',Category.del);	
+
+	//City 城市电影院路由
+	app.get('/admin/city/new',User.signinRequired,User.adminRequired,City.new);
+	app.post('/admin/city',User.signinRequired,User.adminRequired,City.save);
+	app.get('/admin/city/list',User.signinRequired,User.adminRequired,City.list);
+	//list delete city 电影院分类列表删除电影院路由
+	app.delete('/admin/city/list',City.del);
 
 };
 

@@ -53,6 +53,24 @@ $(function(){
 		});
 	});
 
+	//获取影院列表删除按钮类名，当点击删除按钮触发删除事件
+	$('.citydel').click(function(e){
+		var target = $(e.target);
+		var id = target.data('id');  //获取点击的id值
+		var tr = $('.item-id-' + id);
+
+		$.ajax({
+			type : 'DELETE',
+			url : '/admin/city/list?id=' + id
+		})
+		.done(function(result){
+			//如果服务器返回json数据中success = 1，并且删除行存在，则将该行数据删除
+			if(result.success === 1 && tr){
+				tr.remove();
+			}
+		});
+	});	
+
     //电影分类同步豆瓣api数据鼠标离开事件
 	$('#douban').blur(function(){
 		var id = $(this).val();

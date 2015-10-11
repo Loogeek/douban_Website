@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var logger = require('morgan');
 var fs = require('fs');       //文件读写模块
 
+
 var cookieParser = require('cookie-parser');
 var session = require('express-session');  //session依赖cookie模块
 var mongoStore = require('connect-mongo')(session);//用来对session进行持久化
@@ -12,7 +13,7 @@ var mongoStore = require('connect-mongo')(session);//用来对session进行持�
 var port = process.env.PORT || 4000;  //设置监听端口	
 var app = express();   //起点Web服务器
 
-var dbUrl = 'mongodb://localhost/imooc';
+var dbUrl = 'mongodb://127.0.0.1/imooc';
 mongoose.connect(dbUrl);
 
 // models loading

@@ -1,26 +1,60 @@
 //和首页进行交互
-// index page 主页路由
 var Movie = require('../models/movie');
 var Category = require('../models/category');
+var City = require('../models/city');
+// index page 主页路由
+//首页电影
 exports.index = function(req,res){
-	Category
-		.find({})
-		.populate({
-			path:'movies',
-			select:'title poster',
-			option:{limit:6}        //限制最多6条数据
-		})  
-		.exec(function(err,categories){
-			if(err){
-				console.log(err);
-			}
-			res.render('index',{
-				title:'imooc 首页',
-				categories:categories
-			});				
-		});
+	var _className = req.query.className;   //选电影区电影分类标题名称
+	var _cityName = req.query.cityName;	   //电影搜索区城市名称
+
+	//如果电影区发送了分类切换请求
+	if(_className){
+		Category
+			.findOne({name:_className})
+			.populate({
+				path:'movies',
+				select:'title poster',
+				option:{limit:6}        //限制最多6条数据
+			})  
+			.exec(function(err,category){	
+				// console.log(category);
+				if(err){
+					console.log(err);
+				}
+				res.json({data:category});			
+			});		
+	//如果发送了搜索电影院请求
+	}else if(_cityName){
+		City.findOne({cityName:_cityName})
+			.exec(function(err,name){
+				if(err){
+					console.log(err);
+				}
+				res.json({data:name});					
+			});
+	}else{
+		Category
+			.find({})
+			.populate({
+				path:'movies',
+				select:'title poster',
+				option:{limit:6}        //限制最多6条数据
+			})  
+			.exec(function(err,categories){
+				// console.log(categories);	
+				if(err){
+					console.log(err);
+				}
+				res.render('index',{
+					title:'imooc 首页',
+					categories:categories
+				});				
+			});		
+		}
 };
 
+//首页电影搜索
 exports.search = function(req,res){
 	var catId = req.query.cat;  //获取查询串
 	var q = req.query.q;        //获取搜索框提交内容
