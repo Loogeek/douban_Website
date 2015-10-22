@@ -3,6 +3,7 @@ var User = require('../models/user');		  //用户数据模型
 // signup  用户注册路由
 exports.signup = function(req,res){
 	var _user = req.body.user;    
+
 	//使用findOne对数据库中user进行查找
 	User.findOne({name:_user.name},function(err,user){
 		if(err){
@@ -10,7 +11,8 @@ exports.signup = function(req,res){
 		}
 		//如果用户名已存在
 		if(user){
-			return res.redirect('/signin');
+			return res.json({data:0});
+			// return res.redirect('/signin');
 		}else{
 			//数据库中没有该用户名，将其数据生成新的用户数据并保存至数据库
 			user = new User(_user);  //生成用户数据
@@ -18,7 +20,9 @@ exports.signup = function(req,res){
 				if(err){
 					console.log(err);
 				}
-				res.redirect('/');
+				req.session.user = user;   //将当前登录用户名保存到session中
+				return res.json({data:1});
+				// }
 			});
 		}
 	});
@@ -42,7 +46,7 @@ exports.signin = function(req,res){
 		}
 		if(!user){
 			console.log('用户不存在');
-			return res.redirect('/signup');
+			return res.json({data:0});
 		}
 		//使用user实例方法对用户名密码进行比较
 		user.comparePassword(password,function(err,isMatch){
@@ -52,10 +56,10 @@ exports.signin = function(req,res){
 			//密码匹配
 			if(isMatch){
 				req.session.user = user;   //将当前登录用户名保存到session中
-				res.redirect('/');
+				return res.json({data:2});
 			}else{
 				//账户名和密码不匹
-				res.redirect('/signin');
+				return res.json({data:1});
 			}
 		});		
 	});
@@ -80,7 +84,7 @@ exports.list = function(req,res){
 			console.log(err);
 		}
 		res.render('userlist',{
-			title:'imooc 用户列表页',
+			title:'豆瓣电影用户列表页',
 			users:users
 		});		
 	});	

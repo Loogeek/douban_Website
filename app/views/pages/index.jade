@@ -1,26 +1,28 @@
 extends ../layout
 block link
   link(href="/css/index.css",rel="stylesheet")
-  script(src="/js/main.js")
+  script(src="/js/index.js")
 block content
   .wrapper
     .content
       .container-fluid
         .row
-          .col-md-6.screen#m-screenTop                        
+          .col-md-6.col-md-offset-1.screen#m-screenTop                        
             each cat in categories
-              if cat.name === '正在上映' || cat.name === '即将上映'
+              if cat.name === '正在上映'
                 .panel.panel-default
                   .panel-heading.m-screenHeader
-                    h4 
+                    h4#headerNow 
                       a(href="/results?cat=#{cat._id}&p=0") #{cat.name}
+                      span 即将上映
+                      i »
                     .slide-tip
                       span.ui-side-index 1
-                      &nbsp;/&nbsp;
+                      span &nbsp;/&nbsp;
                       span.ui-side-max 
                       span.glyphicon.glyphicon-chevron-left(aria-hidden="true")
                       span.glyphicon.glyphicon-chevron-right(aria-hidden="true")
-                  .panel-body.m-screenBody 
+                  .panel-body.m-screenBody#screenBody 
                     if cat.movies && cat.movies.length > 0
                       each item in cat.movies                
                         .thumbnail
@@ -33,7 +35,7 @@ block content
                             h5 #{item.title}
                             p: a.btn.btn-primary(href="/movie/#{item._id}", role="button") 观看预告片
           .col-md-4.m-cinemasSearch
-            .cinemasSearch-bd.clearfix
+            .cinemasSearch-bd
               .city
                 span#cityId 广州
                 i.glyphicon.glyphicon-triangle-bottom
@@ -127,21 +129,33 @@ block content
                 .city-suggestion-input
                   input(placeholder="搜索本地电影院")
                   i.placeholder.glyphicon.glyphicon-search
-                .city-suggestion-list
+                .city-suggestion-list(style="display:none;")
                   h5 可售票影院
                   ul.auto-tip
+          .col-md-4.m-advertisement         
+            a(href="/fullpage" target="_blank")
+              img(src="/images/advertisements/1.jpg")            
       .container-fluid
         .row
-          .col-md-6.screen   
+          .col-md-6.col-md-offset-1.screen   
             .middleImg
               a(href="javascript:;")
                 img(src="/images/middleImg/1.jpg" alt="middelImg")
+          .col-md-4
+            .m-advertisement-list
+              h4 电影活动&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;· 
+              ul
+                li: a(href="javascript:;") 观影大福利！《头脑特工队》周边限量抢
+                li: a(href="javascript:;") 【有奖】怒吼你心中的怪兽(╰_╯)#
+                li: a(href="javascript:;") 资讯|《小王子》曝光终极预告海报         
       .container-fluid
         .row
-          .col-md-6.screen
+          .col-md-6.col-md-offset-1.screen
             .classRange
               #classTop.classTop
-                h4 选电影&nbsp;/&nbsp;选电视剧
+                span.active 选电影
+                i &nbsp;/&nbsp;
+                span 选电视剧
                 hr
                 button.btn.btn-primary 热门
                 button.btn.btn-default 最新
@@ -170,32 +184,36 @@ block content
                                 else
                                   img(src="/upload/#{item.poster}", alt="#{item.title}")
                               .caption
-                                h5 #{item.title}              
-          .col-md-4.m-billboard
-            each cat in categories
-              if cat.name === '本周口碑榜' 
-                .m-billboardHd
-                  h4 本周口碑榜
-                .m-billboardBd
-                  table.table.table-hover
-                    tbody
-                      - var i = 1
-                      if cat.movies && cat.movies.length > 0
-                        each item in cat.movies 
-                          if i <= 10                 
-                            tr
-                              td.order=i++ 
-                              td 
-                                a(href="/movie/#{item._id}") #{item.title}
+                                h5 #{item.title}
+          .col-md-4
+            .m-billboard
+              each cat in categories
+                if cat.name === '本周口碑榜' 
+                  .m-billboardHd
+                    h4 本周口碑榜
+                  .m-billboardBd
+                    table.table.table-hover
+                      tbody
+                        - var i = 1
+                        if cat.movies && cat.movies.length > 0
+                          each item in cat.movies 
+                            if i <= 10                 
+                              tr
+                                td.order=i++ 
+                                td 
+                                  a(href="/movie/#{item._id}") #{item.title}
+            .m-advertisement
+              a(href="javascript:;")
+                img(src="/images/advertisements/2.jpg")                                                                                    
       .container-fluid
         .row
-          .col-md-6.screen#m-galleryFrames
+          .col-md-6.col-md-offset-1.screen#m-galleryFrames
             .panel.panel-default           
               .panel-heading.m-screenHeader.m-galleryHd
                 h4 热门推荐
                 .slide-tip
                   span.ui-side-index 1
-                  &nbsp;/&nbsp;
+                  span &nbsp;/&nbsp;
                   span.ui-side-max 
                   span.glyphicon.glyphicon-chevron-left(aria-hidden="true")
                   span.glyphicon.glyphicon-chevron-right(aria-hidden="true")            

@@ -11,19 +11,25 @@ var CommentSchema = new Schema({
 	reply:[{							 //对评论人的回复
 		from:{type:ObjectId,ref:'User'},
 		to:{type:ObjectId,ref:'User'},     //被评论人
-		content:String
+		content:String,
+	    meta: {
+	    	createAt: {
+		    	type: Date,
+		    	default: Date.now()
+	    	}
+	  	}		
 	}],						  
 	content:String,					   //评论内容
     meta: {
     	createAt: {
 	    	type: Date,
 	    	default: Date.now()
-    },
-    updateAt: {
-	    type: Date,
-	    default: Date.now()
-    }
-  }
+    	},
+	    updateAt: {
+		    type: Date,
+		    default: Date.now()
+    	}
+  	}
 });
 
 //模式保存前执行下面函数,如果当前数据是新创建，则创建时间和更新时间都是当前时间，否则更新时间是当前时间

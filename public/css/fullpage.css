@@ -1,0 +1,7 @@
+*{margin: 0;padding: 0;}
+body{font: 16px/1.8 "Microsoft Yahei,verdana";}
+.section{position: relative;background-color: #fff;overflow: hidden;text-align: center;}
+.section1{background:url(/images/fullpage/Ant-Man.jpg) no-repeat center;background-size: cover;}
+.section2{background:url(/images/fullpage/Inception.jpg) no-repeat center;background-size: cover;}
+.section3{background:url(/images/fullpage/MissionImpossible.jpg) no-repeat center;background-size: cover;}
+.section4{background:url(/images/fullpage/Martian.jpg) no-repeat center;background-size: cover;}

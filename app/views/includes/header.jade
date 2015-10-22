@@ -4,7 +4,7 @@
       a.navbar-brand(href="/") 首页
     if user
       p.navbar-text.navbar-right
-        span 欢迎您:#{user.name}
+        a: span 欢迎您:#{user.name}
         span &nbsp;|&nbsp;
         a.navbar-link(href="/logout") 登出
     else
@@ -13,35 +13,37 @@
         span &nbsp;|&nbsp;
         a.navbar-link(href="#", data-toggle="modal", data-target="#signinModal") 登录
 #signupModal.modal.fade
-  .modal-dialog
+  .modal-dialog.m-signForm
     .modal-content
-      form(method="POST", action="/user/signup")
+      form(method="POST", action="/user/signup")#signupForm
         .modal-header 注册
-        .modal-body
-          .form-group
+        .modal-body.clearfix
+          span.err_tip(style="display:none;")
+          .form-group.clearfix
             label(for="signupName") 用户名
-            input#signupName.form-control(name="user[name]", type="text")
-          .form-group
+            input#signupName.form-control(name="user[name]", type="text" placeholder="账号")
+          .form-group.clearfix
             label(for="signupPassword") 密码
-            input#signupPassword.form-control(name="user[password]", type="text")
+            input#signupPassword.form-control(name="user[password]", type="password" placeholder="密码")
         .modal-footer
           button.btn.btn-default(type="button", data-dismiss="modal") 关闭
-          button.btn.btn-success(type="submit") 提交
+          button.btn.btn-success(type="submit") 注册
 #signinModal.modal.fade
-  .modal-dialog
+  .modal-dialog.m-signForm
     .modal-content
-      form(method="POST", action="/user/signin")
-        .modal-header 登录
-        .modal-body
-          .form-group
+      form(method="POST", action="/user/signin")#signinForm
+        .modal-header 登录豆瓣电影
+        .modal-body.clearfix
+          span.err_tip(style="display:none;")
+          .form-group.clearfix
             label(for="signinName") 用户名
-            input#signinName.form-control(name="user[name]", type="text")
-          .form-group
+            input#signinName.form-control(name="user[name]", type="text" placeholder="账号")
+          .form-group.clearfix
             label(for="signinPassword") 密码
-            input#signinPassword.form-control(name="user[password]", type="text")
+            input#signinPassword.form-control(name="user[password]", type="password"  placeholder="密码")
         .modal-footer
           button.btn.btn-default(type="button", data-dismiss="modal") 关闭
-          button.btn.btn-success(type="submit") 提交
+          button.btn.btn-success(type="submit") 登陆
 .nav
   .navWrap.clearfix
     .navLogo
@@ -51,4 +53,4 @@
       form(method='GET', action='/results')
         input(type='text', name='q' placeholder="电影搜索")
         span
-          button.btn.btn-default(type='submit') 搜索
+          button.btn.btn-default(type='submit') 搜索 

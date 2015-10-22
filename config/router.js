@@ -20,7 +20,7 @@ module.exports = function(app){
 	app.get('/',Index.index);
 	//results
 	app.get('/results',Index.search);
-
+	app.get('/fullpage',Index.fullpage);
 
 	// signup  用户注册路由
 	app.get('/signup',User.showSignup);
@@ -35,8 +35,11 @@ module.exports = function(app){
 	//list delete user 用户列表删除电影路由
 	app.delete('/admin/user/list',User.del);
 
+
+
 	//detail page 详细页面路由
 	app.get('/movie/:id',Movie.detail);
+	app.delete('/movie/:id',Comment.del);
 	//admin page 后台录入路由
 	/*
 	User.signinRequired 用户登录控制

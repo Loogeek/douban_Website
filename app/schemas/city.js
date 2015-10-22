@@ -4,8 +4,8 @@ var ObjectId = Schema.Types.ObjectId;
 
 var CitySchema = new Schema({
   cityName: String,
-  name: [],
-  movies: [{type: ObjectId, ref: 'Movie'}],
+  name: [{}],
+  //movies: [{type: ObjectId, ref: 'Movie'}],
   meta: {
     createAt: {
       type: Date,

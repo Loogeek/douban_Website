@@ -22,7 +22,7 @@ exports.detail = function(req,res){
 			.populate('from','name')
 			.populate('reply.from reply.to','name')//查找评论人和回复人的名字
 			.exec(function(err,comments){
-				console.log(comments);
+				// console.log(comments);
 				res.render('detail',{
 					title:'imooc 详情页',
 					movie:movie,

@@ -3,7 +3,7 @@ var Category = require('../models/category');    //电影数据模型
 // admin new page
 exports.new = function(req, res) {
     res.render('category_admin', {
-        title: 'imooc 后台分类录入页',
+        title: '豆瓣电影后台分类录入页',
         category: {}
     });
 };
@@ -29,7 +29,7 @@ exports.list = function(req, res) {
             console.log(err);
         }
         res.render('categorylist', {
-            title: 'imooc 分类列表页',
+            title: '豆瓣电影分类列表页',
             categories: categories
         });
     });
