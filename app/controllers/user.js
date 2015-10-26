@@ -36,8 +36,8 @@ exports.showSignup = function(req,res){
 
 // signin  用户登陆路由
 exports.signin = function(req,res){
-	var _user = req.body.user;    
-	var name = _user.name;
+	var _user = req.body.user || '';    
+	var name = _user.name || '';
 	var password = _user.password;
 
 	User.findOne({name:name},function(err,user){
