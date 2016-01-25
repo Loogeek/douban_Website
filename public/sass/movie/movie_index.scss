@@ -1,0 +1,329 @@
+
+/* 公共样式 */
+.col-md-3{
+	padding: 0;
+}
+.col-md-4
+ {
+  margin-left: 28px;
+}
+@mixin border-radius($redius:5px){
+	-webkit-border-radius: $redius;
+	-moz-border-radius: $redius;
+	-o-border-radius: $redius;
+	-ms-border-radius: $redius;
+	border-radius: $redius;
+}
+@mixin ellipsis{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow:ellipsis;
+}
+@mixin box-shadow($offset-x,$offset-y,$offset-z,$red,$green,$blue,$apl){
+	-webkit-box-shadow: $offset-x $offset-y $offset-z rgba($red,$green,$blue,$apl);
+	-moz-box-shadow: $offset-x $offset-y $offset-z rgba($red,$green,$blue,$apl);
+	-o-box-shadow: $offset-x $offset-y $offset-z rgba($red,$green,$blue,$apl);
+	-ms-box-shadow: $offset-x $offset-y $offset-z rgba($red,$green,$blue,$apl);
+	box-shadow: $offset-x $offset-y $offset-z rgba($red,$green,$blue,$apl);
+}
+.row{margin:0;}
+
+/* 电影展示区头部样式 */
+.screen{
+	.panel{
+	  border: none;
+	  overflow: hidden;
+	}
+	.screen-header{
+		background-color: #fff;
+	}
+	.btn-default{
+		border: none;
+	}
+}
+.screen-header{
+  position: relative;
+  padding-bottom: 0;
+  h4{
+  	display: inline-block;
+  	span{
+  	  font-size: 15px;
+	  margin-left: 20px;
+	  cursor: pointer;
+  	}
+  }
+  .slide-tip{
+	  float: right;
+	  position: absolute;
+	  top: 20px;
+	  right: 0;
+	  .side-max{margin-right: 10px;}
+	  .glyphicon{cursor: pointer;}
+	  .slide-prev,.slide-next{
+		background:url(/images/movie/slide_swithc_2.png);
+		opacity: .5;
+		width: 18px;
+		height: 18px;
+		cursor: pointer;
+		outline: none;
+		border: none;
+	  }
+	  .slide-next{
+	  	background-position: -18px 0;
+	  }
+	  .slide-prev:hover,.slide-next:hover{
+	  	opacity: 1;
+	  }
+  }
+}
+
+
+/* 首页正在上映和选电影区公共样式 */
+.screen-body {
+  position: relative;
+  padding: 15px 0;
+  .thumbnail{
+	  border: none;
+	  padding:0;
+	  margin: 0 10px 0;
+	  h5{
+	  	@include ellipsis;
+		}
+	  .caption{
+	  	text-align: center;
+		}
+	  a{
+	  	img{
+	  		height: 180px;
+				width: 100%;
+	  	}
+	  }
+	  p{
+	  	a{font-size: 12px;}
+	  }
+  }
+}
+/* 正在上映区样式 */
+#screenTop{
+	.thumbnail{
+		float: left;
+	}
+}
+/* 选电影区样式 */
+#fliterMovie{
+	img{
+		width: 100%;
+		margin: 0;
+	}
+}
+
+
+/* 本周口碑榜样式 */
+.billboard{
+	.billboard-hd{
+  	padding-bottom: 13px;
+  }
+  .billboard-bd{
+  	.order{
+  		font-size: 9px;
+  		width: 20px;
+  	}
+  	td{border-bottom: 1px solid #eee;}
+  	a{font: 12px Helvetica,Arial,sans-serif;}
+  }
+}
+
+
+/* 电影院搜索样式 */
+.cinemas-search {
+  background-color: #f6f3d3;
+  padding: 12px;
+  margin-top: 20px;
+  @include border-radius;
+  height: 50px;
+  .city{
+	  background-color: #fff;
+	  position: relative;
+	  float: left;
+	  width: 20%;
+		border: 1px solid #ddd;
+		height: 26px;
+		line-height: 26px;
+	  cursor: pointer;
+	  font-size: 12px;
+		margin-right: 5px;
+	  > span{
+	  		height: 100%;
+				padding-left: 5px;
+		 		display: block;
+  			text-align: left;
+	  }
+	  > i{
+		  position: absolute;
+		  left: 47px;
+		  top: 7px;
+		  cursor: pointer;
+	  }
+  }
+  .cities-list{
+	  position: absolute;
+	  top: 40px;
+	  border: 1px solid #dfdfdf;
+	  @include box-shadow(0,1px,2px,0,0,0,0.3);
+	  padding: 20px;
+	  // width: 366px;
+	  background-color: #fff;
+	  span{color: #2e7ab3;}
+  }
+  .cities-list-hd{
+  	cursor: pointer;
+  	span{
+  		margin-right: 20px;
+  		font-size: 14px;
+  	}
+  	.on{
+  		background-color: #69c;
+		  color: #fff;
+		  padding: 3px;
+		  @include border-radius(3px);
+  	}
+  }
+  .cities-list-bd{
+  	span{
+  		margin-right: 15px;
+		  white-space: nowrap;
+		  display: inline-block;
+		  line-height: 2em;
+		  a{
+			  text-decoration: none;
+			  font-size: 13px;
+		  }
+  	}
+  }
+  .cities-list-item{
+  	display: none;
+  	a:hover{
+		  background-color: #69c;
+		  color: #fff;
+		  @include border-radius(3px);
+  	}
+  }
+  .active{display: block;}
+  .city-suggestion{
+	  float: left;
+	  position: relative;
+	  width: 75%;
+	  input{
+	  	width: 100%;
+		  padding-left: 5px;
+		  font-size: 12px;
+		  height: 26px;
+		  line-height: 26px;
+	  }
+	  i{
+		  position: absolute;
+		  right: 5px;
+		  top: 6px;
+		  cursor: pointer;
+	  }
+  }
+  .city-suggestion-list{
+	  border: 1px solid #ddd;
+	  @include box-shadow(0,1px,1px,0,0,0,0.3);
+	  background-color: #fff;
+	  margin-top: 5px;
+	  position: absolute;
+	  width: 100%;
+	  h5{
+		  padding: 0 0 5px 10px;
+		  color: #111;
+	  }
+	  ul{
+		  list-style: none;
+		  padding-left: 0;
+	  }
+	  li{
+	  	padding: 5px 0 5px 10px;
+	  	&:hover{background-color: #f5f5f5;}
+	  }
+	  a{
+		  text-decoration: none;
+		  cursor: pointer;
+		  font-size: 13px;
+		  display: block;
+	  }
+  }
+}
+.class-top{
+	span{
+	  cursor: pointer;
+	  font-size: 18px;
+	  font-weight: bold;
+	}
+	.active{color: #37a;}
+}
+
+
+/* 电影首页广告列表样式 */
+//顶部右侧广告样式
+.top-advertisement{
+	margin: 20px 0;
+	text-align: center;
+}
+.advertisement-list{
+  background-color: #f2f7f6;
+  @include border-radius;
+  padding: 10px;
+  h4{color: #072;}
+  ul{
+  	li{padding-bottom: 3px;}
+  	a{
+  		text-decoration: none;
+  		&:hover{
+			  color: #fff;
+			  background-color: #37a;
+  		}
+  	}
+  }
+}
+//中间左侧广告样式
+.mid-advertisement{
+	margin: 20px 0;
+	img{
+		width: 100%;
+	}
+}
+
+/* 热门推荐区样式 */
+#galleryFrames{
+	.slide-content{
+	  list-style: none;
+	  padding: 0;
+	  position: relative;
+	}
+	.slide-item{
+		float: left;
+		img{
+		  float: left;
+		  width: 65%;
+		  height: 240px;
+		}
+	}
+	.slide-detail{
+	  float: left;
+	  background-color: #f9f9f9;
+	  width: 35%;
+	  height: 240px;
+	  padding: 48px 24px 24px;
+	}
+}
+
+
+/* 首页底部样式 */
+.footer-img{
+	img {
+	  margin: 0 auto;
+	  display: block;
+	  width: 100%;
+	}
+}

@@ -1,3 +1,12 @@
 /* detail #mediaList */
 #mediaList .createAt{font-size: 12px;}
 #mediaList h4{font-size: 17px;}
+
+.music_detail img{
+  width: 20%;
+  float: left;
+}
+.dl-horizontal{
+  float: left;
+  width: 75%;
+}

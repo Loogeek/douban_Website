@@ -23,8 +23,8 @@ module.exports = function(grunt) {
         }
       },
       styles: {
-        files: ['public/**/*.less'],
-        tasks: ['less'],
+        files: ['public/sass/*.scss','public/sass/**/*.scss'],
+        tasks: ['sass'],
         options: {
           nospawn: true
         }
@@ -36,22 +36,17 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc',
         ignores: ['public/libs/**/*.js']
       },
-      all: ['public/js/*.js', 'test/**/*.js', 'app/**/*.js']
+      all: ['public/js/**/*.js', 'test/**/*.js', 'app/**/*.js']
     },
-
-    less: {
-      development: {
-        options: {
-          compress: true,
-          yuicompress: true,
-          optimization: 2
-        },
-        files: {
-          'public/build/index.css': 'public/less/index.less'
+    sass: {                              
+      dist: {                           
+        files: {                        
+          'public/css/music/music_index.css': 'public/sass/music/music_index.scss', 
+          'public/css/movie/movie_index.css': 'public/sass/movie/movie_index.scss', 
+          'public/css/header.css': 'public/sass/header.scss',       
         }
       }
     },
-
     uglify: {
       development: {
         files: {
@@ -90,7 +85,7 @@ module.exports = function(grunt) {
     },
 
     concurrent: {
-      tasks: ['nodemon', 'watch', 'less', 'uglify', 'jshint'],
+      tasks: ['nodemon', 'watch', 'sass', 'uglify', 'jshint'],
       options: {
         logConcurrentOutput: true
       }
@@ -102,12 +97,11 @@ module.exports = function(grunt) {
   // 加载插件
   grunt.loadNpmTasks('grunt-contrib-watch');  //监控文件变化，主要检测文件有变化就会重新执行里面监控的任务
   grunt.loadNpmTasks('grunt-nodemon');  //实时监听入口文件（app.js)
-  grunt.loadNpmTasks('grunt-concurrent');//针对慢任务  如Sass、less，优化构建时间，跑多个阻塞任务
+  grunt.loadNpmTasks('grunt-concurrent');//针对慢任务  如Sass、优化构建时间，跑多个阻塞任务
   grunt.loadNpmTasks('grunt-mocha-test'); //单元测试模块
-  grunt.loadNpmTasks('grunt-contrib-less');//less编译
   grunt.loadNpmTasks('grunt-contrib-uglify');//JS压缩
   grunt.loadNpmTasks('grunt-contrib-jshint');//用于检测文件格式、语法等问题模块
-
+  grunt.loadNpmTasks('grunt-contrib-sass'); //使用Sass构建模块
   //注册默认任务
   grunt.registerTask('default', ['concurrent']);
 

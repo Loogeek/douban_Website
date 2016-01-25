@@ -1,0 +1,14 @@
+extends ./music_layout
+
+block content
+  .container
+    .row
+      form.form-horizontal(method="post", action="/admin/music/programme")     
+        .form-group
+          label.col-sm-3.control-label(for="inputProgrammeName") 音乐热门榜单名称
+          .col-sm-6
+            input#inputProgrammeName.form-control(type="text", name="programme[name]", value=programme.name)
+        .form-group
+          .col-sm-offset-3.col-sm-9
+            button.btn.btn-default(type="submit") 录入
+                    

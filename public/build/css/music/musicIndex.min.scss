@@ -1,0 +1,373 @@
+
+/*
+	豆瓣音乐首页样式
+ */
+
+/* 组件及公共样式 */
+$h4Size: 16px;
+$aHoverColor: #138A64;
+@mixin border-radius($redius:3px){
+	-webkit-border-radius: $redius;
+	-moz-border-radius: $redius;
+	-o-border-radius: $redius;
+	-ms-border-radius: $redius;
+	border-radius: $redius;
+}
+@mixin ellipsis{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow:ellipsis;
+}
+h4{font-size: $h4Size;}
+h5{
+	font-size: 14px;
+	color:#138A64;
+	cursor:pointer;
+	@include ellipsis;
+}
+.row{margin:0;}
+.col-md-4{
+	margin-left: 30px;
+}
+/* 分类头部标题及更多文字样式 */
+.g-classTop{
+	h4{
+		font-size: 14px;
+		color:#222;
+		line-height: 25px;
+		display: inline-block;
+		margin-top:0;
+	}
+	.more{
+		float: right;
+		margin-top:8px;
+		color:#999;
+		font:12px Arial,Helvetica,sans-serif;
+		cursor:pointer;
+		text-decoration: none;
+	}	
+}
+
+
+/* 顶部轮播广告样式 */
+.screen{
+	.panel{	
+		border:none;
+		overflow: hidden;
+	}
+	.m-screenHeader{
+		background-color:#fff;
+	}	
+}
+.m-screenHeader{
+	position: relative;
+	padding:0;
+	h4{
+		display:inline-block;
+		span{
+			font-size:15px;
+			margin-left:20px;
+			cursor:pointer;
+		}
+	}
+	.slide-tip{
+		float:right;
+		position: absolute;
+		top:13px;
+		right:0;
+		.ui-side-max{
+			margin-right: 10px;
+		}
+		.glyphicon{
+			cursor: pointer;
+		}
+	}	
+}
+
+
+/* 热门推荐样式 */
+#m-galleryFrames{
+	.u-slideContent{
+		list-style:none;
+		// width:5445px;
+		padding:0;
+		position: relative;
+	}
+	.u-slideItem{
+		float:left;
+		img{
+			float:left;
+			height:240px;
+		}
+	}	
+}
+
+
+/* 广告列表样式 */
+.m-advertisement{
+	margin-top:30px
+}
+/* 中间广告样式 */
+.screen{
+	.middleImg{
+		margin:20px 0;
+	}
+}
+
+/* 编辑推荐样式  */
+#editorFeatured{
+	.m-screenBody{
+		height:380px;
+		position: relative;
+		padding:15px 0;
+		background-color: #f5f7f8;		
+	}
+	.thumbnail{
+		border:none;
+		width:172px;
+		height:350px;
+		float:left;
+		margin:0 10px 0;
+		a{
+			img{
+				height:130px;
+				width:130px;
+			}
+		}
+		.caption {
+			p{
+				font-size: 12px;
+				color:#999;
+			}
+			div{
+				font-size: 12px;
+				height: 100px; 
+				overflow: hidden;
+			}
+		}		
+	}	
+}
+
+
+/* 热门音乐人分类样式 */
+.tagBlock{
+	margin-top: 10px;
+	td{
+		width:50%;
+		border-bottom: 1px solid #ddd;
+		a{
+			color:#138a64;
+			font-size: 14px;
+		}
+		&:nth-child(odd){
+			border-right:1px solid #ddd;
+		}		
+	}
+}
+
+
+/* 本周单曲榜样式  */
+.playButton{
+	float:right;
+	color:#fff;
+	background-color: #139D72;
+	border:1px solid #138A64;
+	font-size: 12px;
+	@include border-radius;
+	width:88px;
+	height: 23px;
+	line-height: 23px;
+	text-align: center;
+	cursor: pointer;
+	&:hover{
+		text-decoration: none;
+		background-color: #13ba72;
+		color:#fff;
+	}
+	span{padding-left: 5px;}
+}
+.hotArtistSongs{
+	ul{
+		list-style: none;
+		padding:0;
+		li{
+			position: relative;
+			padding-left: 60px;
+			height:60px;
+			line-height: 60px;
+			img{
+				width:48px;
+				height:48px;
+				@include border-radius(50%);
+				overflow: hidden;
+				position: absolute;
+				top:6px;
+				left: 2px;
+			}
+			h5{
+				padding:12px 0 8px;
+				margin:0;
+			}
+			p{
+				font-size: 12px;
+				color:#999;
+				line-height: 12px;
+			}
+			span{
+				position: absolute;
+				right: 10px;
+				top:0;
+				font-size: 34px;
+				color:#E6E6E6;
+			}
+			&:hover{
+				background-color:#eee;
+				cursor:pointer;
+			}
+			a:hover{text-decoration: none;}
+		}
+	}
+}
+
+
+/* 新碟榜样式 */
+.classTop{
+	span{
+		display: inline-block;
+		margin-right: 15px;
+		display: inline-block;		
+	}
+	a{
+		font-size: 12px;
+		cursor:pointer;
+		text-decoration: none;
+		color:#999;		
+	}
+	.more{
+		&:hover{
+			background-color: #999;
+			color:#fff;
+		}		
+	}
+	.on{
+		a{color: $aHoverColor;}		
+	} 
+	> ul{
+		list-style: none;
+		display: inline-block;
+		padding:0;
+		li{
+			display: inline-block;
+			&:before{
+				content: '|';
+				color:#222;
+				padding:0 3px;
+			}
+			&:first-child:before{
+				content: '';
+				color:transparent;
+			}
+			a:hover{
+				color: $aHoverColor;
+				text-decoration:underline;
+			}
+		}
+	}
+}
+.m-screenBody{
+	background-color: #F5F7F8;
+	border-top: 2px solid #02A682;
+	.thumbnail{
+		background-color: #F5F7F8;
+		width:25%;
+		height:200px;
+		border:none;
+		margin-bottom: 20px;
+		float: left;
+		img{
+			width:130px;
+			height:130px;
+		}
+		p{
+			font-size: 12px;
+			color:#999;
+		}
+	}
+}
+
+
+/* 豆瓣音乐250样式 */
+.m-billboard{
+	.m-billboardHd{
+		border-bottom: 1px solid #e4e2e2;
+		height:30px;
+		line-height: 30px;
+		.more{
+			&:hover{
+				background-color:#999;
+				color:#fff;
+			}
+		}
+	}
+	.m-billboardBd{margin-top: 10px;}
+	.thumbnail{
+		width:33.33%;
+		border:none;
+		float:left;
+		height:110px;
+		margin:0;
+		a{text-decoration: none;}
+		img{
+			height: 80px;
+			width:80px;
+		}
+		h5{
+			font-size:12px;
+			text-align: center;
+		}
+	}
+}
+
+
+/* 近期热门歌单样式 */
+#HotProgrammes{
+	margin-top: 20px;
+	.thumbnail{
+		position: relative;
+		width:50%;
+		height:auto;
+		padding:0 10px 0 0;
+	}
+	.inner{
+		background-color:#fff;
+		border:1px solid #eee;
+		padding:16px 13px 16px 63px;
+		font-size: 12px;
+		color:#666;
+		line-height:18px;
+		h5{margin-top:0;}
+		img{
+			width:40px;
+			height:40px;
+			position:absolute;
+			top:16px;
+			left:14px;
+		}
+		p{
+			font-size: 12px;
+			color:#666;
+			line-height:18px;
+			margin: 0;
+			@include ellipsis;
+		}
+	}
+}
+
+
+/* 底部样式 */
+.footerImg{
+	img{
+		margin:0 auto;
+		display:block;		
+	}
+}

@@ -1,17 +1,18 @@
-var express = require('express');//加载express模块
+var express = require('express');					          	//加载express模块
 var path = require('path');
-var bodyParser = require('body-parser');  
+var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var logger = require('morgan');
-var fs = require('fs');       //文件读写模块
-
-
+var fs = require('fs');       							          //文件读写模块
 var cookieParser = require('cookie-parser');
-var session = require('express-session');  //session依赖cookie模块
-var mongoStore = require('connect-mongo')(session);//用来对session进行持久化
+var session = require('express-session');  				    //session依赖cookie模块
+var mongoStore = require('connect-mongo')(session);		//用来对session进行持久化
+var http = require('http');
+var ccap = require('ccap')();
 
-var port = process.env.PORT || 4000;  //设置监听端口	
-var app = express();   //起点Web服务器
+
+var port = process.env.PORT || 4000;                  //设置监听端口
+var app = express();                                  //起点Web服务器
 
 var dbUrl = 'mongodb://127.0.0.1/imooc';
 mongoose.connect(dbUrl);
@@ -44,7 +45,7 @@ app.use(express.static(path.join(__dirname,'public')));
 app.locals.moment = require('moment');
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // parse application/json
 app.use(bodyParser.json());
@@ -54,9 +55,9 @@ app.use(session({
 	resave: false,
 	saveUninitialized: true,
 	//使用mongo对session进行持久化，将session存储进数据库中
-	store: new mongoStore({ 
+	store: new mongoStore({
 		url: dbUrl,
-		collection: 'sessions'  
+		collection: 'sessions'
 	})
 }));
 
@@ -69,14 +70,12 @@ if ('development' === env) {
 	app.use(logger(':method :url :status'));
 	//源码格式化，不要压缩
 	app.locals.pretty = true;
-	mongoose.set('debug',true);
+	// mongoose.set('debug',true);
 }
 
 
-require('./config/router')(app);
+require('./route/router')(app);
 
 app.listen(port);	//服务器监听端口
 
-console.log('Movie started on port:' + port);
-
-
+console.log('douban started on port:' + port);

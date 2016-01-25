@@ -1,0 +1,24 @@
+extends ./music_layout
+block link
+  link(href="/css/detail.css",rel="stylesheet")
+block content
+  .container
+    .row
+      .col-md-6.music_detail
+        img(src=music.image)
+        .dl-horizontal
+          dt 音乐名字
+          dd= music.title
+          dt 别名
+          dd= music.altTitle
+          dt 歌手
+          dd= music.singer
+          dt 专辑类型
+          dd= music.version
+          dt 介质
+          dd= music.media
+          dt 发行时间
+          dd= music.pubdate
+          dt 歌曲简介
+          dd= music.summary
+  script(src="/scripts/js/music/music_detail.js")

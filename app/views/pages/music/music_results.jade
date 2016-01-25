@@ -1,0 +1,41 @@
+extends ./music_layout
+
+block content
+  .container
+    .row
+      .panel.panel-success
+        .panel-heading
+          h4 #{keyword}
+        .panel-body
+          if musics && musics.length > 0
+            each item in musics
+              .col-md-2
+                .thumbnail
+                  a(href="/music/#{item._id}")
+                    img(src="#{item.image}" alt="#{item.title}" style="height: 80px;")
+                  .caption
+                    h5(style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;") #{item.title}
+          if musicCats && musicCats.length > 0
+            each item in musicCats
+              .panel.panel-info
+                .panel-heading
+                  h5 #{item.name}
+                .panel-body  
+                  each music in item.musics
+                    .col-md-2
+                      .thumbnail
+                        a(href="/music/#{music._id}")
+                          img(src="#{music.image}", alt="#{music.title}" style="height: 80px;")
+                        .caption
+                          h6(style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;") #{music.title}
+      ul.pagination
+        - for (var i = 0; i < totalPage; i++) {
+          - if (currentPage == (i + 1)) {
+              li.active
+                span #{currentPage}
+          - }
+          - else {
+              li
+                a(href='/music/results?#{query}&p=#{i}') #{i + 1}
+          - }
+        - }

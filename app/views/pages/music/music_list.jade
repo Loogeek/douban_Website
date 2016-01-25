@@ -1,0 +1,40 @@
+extends ./music_layout
+
+block content
+  .container
+    .row
+      table.table.table-hover.table-bordered
+        thead
+          tr
+            th 音乐类别
+            th 音乐名字
+            th 别名
+            th 歌手
+            th 专辑类型
+            th 介质
+            th 发行时间
+            th 录入时间
+            th pv
+            th 查看
+            th 修改
+            th 删除
+        tbody
+          each item in musics
+            tr(class="item-id-#{item._id}")
+              if item.musicCategory
+                td #{item.musicCategory.name}
+              else
+                td #{item.musicCategory}  
+              td #{item.title}
+              td #{item.altTitle}
+              td #{item.singer}
+              td #{item.version}
+              td #{item.media}
+              td #{item.pubdate}
+              td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
+              td #{item.pv}
+              td: a(target="_blank", href="/music/#{item._id}") 查看
+              td: a(target="_blank", href="/admin/music/update/#{item._id}") 修改
+              td
+                button.btn.btn-danger.musicDel(type="button", data-id="#{item._id}") 删除
+  script(src="/scripts/js/music/music_admin.js")       

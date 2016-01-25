@@ -1,0 +1,18 @@
+extends ./movie_layout
+
+block content
+  .container
+    .row
+      form.form-horizontal(method="post", action="/admin/movie/city")     
+        .form-group
+          label.col-sm-3.control-label(for="inputCity") 城市
+          .col-sm-6
+            input#inputCity.form-control(type="text", name="city[cityName]", value=city.cityName)
+        .form-group
+          label.col-sm-3.control-label(for="inputCityName") 影院名称
+          .col-sm-6
+            input#inputCityName.form-control(type="text", name="city[name]", value=city.name)
+        .form-group
+          .col-sm-offset-3.col-sm-9
+            button.btn.btn-default(type="submit") 录入
+                    

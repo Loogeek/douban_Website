@@ -1,0 +1,19 @@
+.nav
+  .nav-wrap.clearfix
+    .nav-logo
+      a(href="/musicindex")
+        img(src="/images/music/navMusicLogo.png", alt="MusicLogo",style="width:115px;height:27px;")
+    .nav-search     
+      form(method='GET', action='/music/results')
+        input(type='text', name='q' placeholder="音乐搜索")
+        span
+          button.btn.btn-default(type='submit') 搜索     
+  .nav-wrap
+    if user && user.role > 10
+      ul.clearfix
+        li: a(href="/admin/music/new" target="_blank") 后台录入页
+        li: a(href="/admin/music/list" target="_blank") 列表页    
+        li: a(href="/admin/music/musicCategory/new" target="_blank") 分类页
+        li: a(href="/admin/music/musicCategory/list" target="_blank") 分类列表页         
+        li: a(href="/admin/music/programme/new" target="_blank") 热门榜单录入页
+        li: a(href="/admin/music/programme/list" target="_blank") 热门榜单列表页 

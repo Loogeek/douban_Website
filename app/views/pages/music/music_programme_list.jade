@@ -1,0 +1,27 @@
+extends ./music_layout
+
+block content
+  .container
+    .row
+      table.table.table-hover.table-bordered
+        thead
+          tr
+            th 榜单类名
+            th 歌单类名
+            th 更新时间
+            th 查看
+            th 修改
+            th 删除
+        tbody
+          each item in programmes
+            tr(class="item-id-#{item._id}")
+              td #{item.name}
+              td 
+                each unit in item.musicCategories
+                  #{unit.name}
+              td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
+              td: a(target="_blank", href="../movie/#{item._id}") 查看
+              td: a(target="_blank", href="../admin/update/#{item._id}") 修改
+              td
+                button.btn.btn-danger.programmeDel(type="button", data-id="#{item._id}") 删除
+  script(src="/scripts/js/music/music_admin.js")

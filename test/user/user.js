@@ -1,5 +1,5 @@
-var crypto = require('crypto');
-var bcrypt = require('bcrypt');
+var crypto = require('crypto'); //用户随机生成字符串
+var bcrypt = require('bcrypt'); //对密码加密
 
 //获取随机字符串，用来测试user
 function getRandomString(len) {
@@ -8,7 +8,7 @@ function getRandomString(len) {
   return crypto.randomBytes(Math.ceil(len / 2)).toString('hex');
 }
 
-var should = require('should');
+var should = require('should');  //测试框架
 var app = require('../../app');  //入口文件
 var mongoose = require('mongoose');
 var User = require('../../app/models/user');
@@ -30,7 +30,7 @@ describe('<Unit Test', function() {
 	});
 	//测试前确认用户getRandomString是不存在的
 	describe('Before Method save', function() {
-	  //it代表一个测试用例，done调用多次会出问题
+	  //it代表一个测试用例，测试随机生成一个未存储用户名
 	  it('should begin without test user', function(done) {
 		User.find({name: user.name}, function(err, users) {
 		  users.should.have.length(0);
@@ -39,7 +39,7 @@ describe('<Unit Test', function() {
 		});
 	  });
 	});
-
+	//测试用户保存时不会出问题
 	describe('User save', function() {
 	  it('should save without problems', function(done) {
 		var _user = new User(user);
@@ -73,6 +73,7 @@ describe('<Unit Test', function() {
 		});
 	  });
 	  
+	  //测试用户权限是否是默认0
 	  it('should have default role 0', function(done) {
 		var _user = new User(user);
 
