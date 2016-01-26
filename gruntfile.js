@@ -38,12 +38,12 @@ module.exports = function(grunt) {
       },
       all: ['public/js/**/*.js', 'test/**/*.js', 'app/**/*.js']
     },
-    sass: {                              
-      dist: {                           
-        files: {                        
-          'public/css/music/music_index.css': 'public/sass/music/music_index.scss', 
-          'public/css/movie/movie_index.css': 'public/sass/movie/movie_index.scss', 
-          'public/css/header.css': 'public/sass/header.scss',       
+    sass: {
+      dist: {
+        files: {
+          'public/css/music/music_index.css': 'public/sass/music/music_index.scss',
+          'public/css/movie/movie_index.css': 'public/sass/movie/movie_index.scss',
+          'public/css/header.css': 'public/sass/header.scss',
         }
       }
     },
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
       dev: {
         script: 'app.js',  //Script that nodemon runs and restarts when changes are detected.
         options: {
-          //file: 'app.js',  
+          //file: 'app.js',
           args: [],
           ignoredFiles: ['README.md', 'node_modules/**', '.DS_Store'],
           watchedExtensions: ['js'],
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
           debug: true,
           delayTime: 1,
           env: {
-            PORT: 4000
+            PORT: 3000
           },
           cwd: __dirname
         }
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
       }
     }
   })
- 
+
   grunt.option('force', true) //便于开发时不要因为某些语法错误中断整个任务
 
   // 加载插件

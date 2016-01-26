@@ -1,7 +1,7 @@
 {
   "name": "nodejs_movie",
   "version": "0.1.0",
-  "description": "NodeJs express Mongodb Mongoose bower jquery jade bootstrap",
+  "description": "NodeJs express Mongodb Mongoose bower jquery jade bootstrap Sass",
   "main": "app.js",
   "directories": {
     "test": "test"
@@ -48,8 +48,9 @@
     "bower",
     "jquery",
     "jade",
-    "bootstrap"
+    "bootstrap",
+    "Sass"
   ],
   "author": "Loogeek",
-  "license": "ISC"
+  "license": "MIT"
 }
