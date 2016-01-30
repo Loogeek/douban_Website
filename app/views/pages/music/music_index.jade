@@ -44,7 +44,7 @@ block content
                     if cat.musics && cat.musics.length > 0
                       each item in cat.musics
                         .thumbnail
-                          a(href="/music/#{item._id}")
+                          a(href="/music/#{item._id}" target="_blank")
                             if item.image.indexOf('http:') > -1
                               img(src="#{item.image}", alt="#{item.title}")
                             else
@@ -75,7 +75,7 @@ block content
                         - var len = Math.min(8,cat.musics.length)
                         - for(var i=0;i<len;i++)
                           .thumbnail
-                            a(href="/music/#{cat.musics[i]._id}")
+                            a(href="/music/#{cat.musics[i]._id}" target="_blank")
                               if cat.musics[i].image.indexOf('http:') > -1
                                 img(src="#{cat.musics[i].image}", alt="#{cat.musics[i].title}")
                               else
@@ -154,7 +154,7 @@ block content
                           ul
                             - var len = Math.min(10,cat.musics.length)
                             - for(var i=0;i<len;i++)
-                              li: a(href="/music/#{cat.musics[i]._id}")
+                              li: a(href="/music/#{cat.musics[i]._id}" target="_blank")
                                   img(src="#{cat.musics[i].image}")
                                   h5 #{cat.musics[i].title}
                                   p #{cat.musics[i].singer}&nbsp;/&nbsp;#{cat.musics[i].pv}次播放
@@ -172,7 +172,7 @@ block content
                         if cat.musics && cat.musics.length > 0
                           - for(var i=0;i<9;i++)
                             .thumbnail
-                              a(href="/music/#{cat.musics[i]._id}")
+                              a(href="/music/#{cat.musics[i]._id}" target="_blank")
                                 if cat.musics[i].image.indexOf('http:') > -1
                                   img(src="#{cat.musics[i].image}", alt="#{cat.musics[i].title}")
                                 else

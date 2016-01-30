@@ -6,21 +6,18 @@ $(function(){
 		顶部轮播图区 #galleryFrames
 	*/
 	var galleryFrames = (function(){
-		// 向右切换点击事件
-		var page = 1;   																			 // 页码变量
-		var $oLeft = $('#galleryFrames .slide-prev');					 // 向左箭头
-		var $oRight = $('#galleryFrames .slide-next');				 // 向右箭头
-		var $oUl = $('#galleryFrames .gallery-hot ul');				 // 获取轮播图列表对象
-		var len = $('#galleryFrames .slide-content li').length;// 总共热门推荐轮播图数量
- 		var $oDots = $('#galleryFrames .slide-dots');  				 // 获取轮播图滑动点列表对象
+		var page = 1,   																			 // 页码变量
+				$oLeft = $('#galleryFrames .slide-prev'),					 // 向左箭头
+				$oRight = $('#galleryFrames .slide-next'),				 // 向右箭头
+				$oUl = $('#galleryFrames .gallery-hot ul'),				 // 获取轮播图列表对象
+				len = $('#galleryFrames .slide-content li').length,// 总共热门推荐轮播图数量
+ 				$oDots = $('#galleryFrames .slide-dots');  				 // 获取轮播图滑动点列表对象
 
-		$oUl.width(oCol6_width * len);  //设置热门推荐区轮播图片的总宽度
-		// 设置每张轮播图片li的宽度
-		$('#galleryFrames img').width(oCol6_width);
+		$oUl.width(oCol6_width * len);  											 //设置热门推荐区轮播图片的总宽度
+		$('#galleryFrames img').width(oCol6_width);						 // 设置每张轮播图片li的宽度
 		// 设置轮播图显示第一张图片，偏移量为一张附属图宽度
-		$oUl.css('left', - oCol6_width);  //设置轮播图显示第一张图片，偏移量为一张附属图宽度
+		$oUl.css('left', - oCol6_width);
 
-		// $oUl[0].style.transform = 'translate3d(-'+ oCol6_width +'px,0,0)';
 		// 向右切换
 		$oRight.on('click',function() {
 			galleryMov('right');
@@ -32,9 +29,9 @@ $(function(){
 		// 轮播图滑动点对象点击事件
 		$oDots.on('click','li',function(){
 			$(this).addClass('slide-active').siblings().removeClass('slide-active');
-			var pageDiff =  $(this).text() - page; //获取需要滚动的页数
-			page = $(this).text(); 				   //将当前点击也赋值给page变量
-			$oUl.animate({left:'-='+oCol6_width * pageDiff},300); //滚动到当前点击页
+			var pageDiff =  $(this).text() - page; 								// 获取需要滚动的页数
+			page = $(this).text(); 				   											// 将当前点击也赋值给page变量
+			$oUl.animate({left:'-='+oCol6_width * pageDiff},300); // 滚动到当前点击页
 		});
 		// 定时器，每5秒钟向右切换一张图片
 		var timer = setInterval(function() {
@@ -66,7 +63,8 @@ $(function(){
 						$oUl.animate({left: - (oCol6_width*(len-2))},0);
 					}
 				}
-				$oDots.find('li:eq('+(page-1)+')').addClass('slide-active').siblings().removeClass('slide-active');//切换圆点导航样式
+				// 切换圆点导航样式
+				$oDots.find('li:eq('+(page-1)+')').addClass('slide-active').siblings().removeClass('slide-active');
 			}
 		};
 	})();
@@ -75,79 +73,75 @@ $(function(){
 		编辑推荐区事件
 	*/
 	var editorFeatured = (function(){
-		var $oEditorScreen = $('#editorFeatured .screen-body');  //获取编辑推荐区对象
-		var page = 1;  									  //初始页码
-		//获取左右按钮
-		var $oLeft = $('#editorFeatured .slide-prev');
-		var $oRight = $('#editorFeatured .slide-next');
-		var oThumbnail = $('#editorFeatured .thumbnail'); //获取音乐数量
-		var len = oThumbnail.length;					  //即将编辑推荐区音乐总数
-		var pageCount = Math.ceil(len / 3);               //即将编辑推荐区总页数
-		//每张海报的外边距及实际赋给每张海报内容宽度
-		var marginWidth = oThumbnail.outerWidth(true) - oThumbnail.outerWidth();
-		var oThumbnailWidth =  (oCol6_width - marginWidth * 3) / 3;
+		var $oEditorScreen = $('#editorFeatured .screen-body'),  //获取编辑推荐区对象
+				page = 1,  									  											 //初始页码
+				$oLeft = $('#editorFeatured .slide-prev'),					 //获取左按钮
+				$oRight = $('#editorFeatured .slide-next'),					 //获取右按钮
+				oThumbnail = $('#editorFeatured .thumbnail'), 			 //获取音乐数量
+				len = oThumbnail.length,					  								 //即将编辑推荐区音乐总数
+				pageCount = Math.ceil(len / 3),               			 //即将编辑推荐区总页数
+				// 每张海报的外边距及实际赋给每张海报内容宽度
+				marginWidth = oThumbnail.outerWidth(true) - oThumbnail.outerWidth(),
+				oThumbnailWidth =  (oCol6_width - marginWidth * 3) / 3;
+
+		// 设置每张海报的宽度
 		oThumbnail.outerWidth(oThumbnailWidth);
-		//设置编辑推荐区总宽度
+		// 设置编辑推荐区总宽度
 		$oEditorScreen.width(oCol6_width * pageCount);
-		//设置编辑推荐区总页数
+		// 设置编辑推荐区总页数
 		$('#editorFeatured .ui-side-max').html(pageCount);
 
-		//点击编辑推荐区右箭头
-		$oRight.on('click',function(){
+		// 点击编辑推荐区右箭头
+		$oRight.on('click',function() {
 			funMoving('right');
 		});
 
-	 	//点击编辑推荐区左箭头
-		$oLeft.on('click',function(){
+	 	// 点击编辑推荐区左箭头
+		$oLeft.on('click',function() {
 			funMoving('left');
 		});
-		//定时器，编辑推荐区每隔5s向右滚动一次
-		var timer = setInterval(function(){
+		// 定时器，编辑推荐区每隔5s向右滚动一次
+		var timer = setInterval(function() {
 			funMoving('right');
 		},5000);
-		//当鼠标划入编辑推荐区时动画停止，移开时重新开始运动
-		$('#editorFeatured').on('mouseover',function(){
+		// 当鼠标划入编辑推荐区时动画停止，移开时重新开始运动
+		$('#editorFeatured').on('mouseover',function() {
 			clearInterval(timer);
-		}).on('mouseout',function(){
-			timer = setInterval(function(){
+		}).on('mouseout',function() {
+			timer = setInterval(function() {
 				funMoving('right');
 			},5000);
 		});
 
 		// 编辑推荐区滚动函数
-		function funMoving(direction){
-			//获取整个编辑推荐区域宽度，注意和oCol6_width区别，oCol6_width是3张音乐海报所占宽度
-			//而pageWidth是一个分类全部音乐海报所占宽度
+		function funMoving(direction) {
+			// 获取整个编辑推荐区域宽度
 			var pageWidth = (pageCount - 1) * oCol6_width;
-			//设置编辑推荐区当前页码
+			// 设置编辑推荐区当前页码
 			var $editorIndex = $('#editorFeatured .ui-side-index');
-
-			//对当前编辑推荐区域是否有移动，如果没有移动点击才进行下一次动画移动，防止动画叠加
-			//造成快速点击一个方向箭头动画会持续运动一段时间
-			if(!$oEditorScreen.is(':animated')){
+			// 判断是否已在运动，防止动画叠加
+			if(!$oEditorScreen.is(':animated')) {
 				//向右移动
-				if(direction === 'right'){
-					if(page === pageCount){
+				if(direction === 'right') {
+					if(page === pageCount) {
 						page = 1;
-						//设置显示当前音乐页码
+						// 设置显示当前音乐页码
 						$editorIndex.html(page);
 						$oEditorScreen.animate({left:0},400);
-					}else{
+					}else {
 						page++;
-						$editorIndex.html(page);//设置显示当前音乐页码
-						//向右移动一页
+						$editorIndex.html(page);										// 设置显示当前音乐页码
 						$oEditorScreen.animate({left:'-='+oCol6_width},400);
 					}
-				//向左移动
-				}else{
+				// 向左移动
+				}else {
 					if(page === 1){
 						page = pageCount;
 						$editorIndex.html(page);
 						$oEditorScreen.animate({left:'-='+pageWidth},400);
-					}else{
+					}else {
 						page--;
 						$editorIndex.html(page);
-						//向左移动一页
 						$oEditorScreen.animate({left:'+='+oCol6_width},400);
 					}
 				}
@@ -164,43 +158,51 @@ $(function(){
 			return;
 		}else{
 			var albumName = $(this).text();     					 // 获取按钮文字内容
-			// 对中文进行编码
-			var URL = '/musicindex?albumName='+encodeURIComponent('新碟榜'+albumName);
+			var URL = '/musicindex?albumName='+encodeURIComponent('新碟榜'+albumName); 	// 对中文进行编码
 			// 发送Ajax请求
 			funAjax(URL,'GET',function(results) {
-				var data = results.data.musics; 						 // 获取Ajax返回的音乐分类数据
-				var oThumbnail = $('#newAlbums .thumbnail'); // 获取当前音乐列表中音乐数量
-				// 如果返回的数据少于当前音乐列表节点，则删除多余节点
-				if(data.length < oThumbnail.length){
-					// 如果当前音乐列表数量大于等于切换到另个分类返回的音乐数量，将多余的音乐节点删除
-					var dataStart = data.length - 1;					 // 设置切换到另外分类后数据起始位置
-					$('#newAlbums .thumbnail:gt('+dataStart+')').remove();
-				// 返回的分类电影数量大于原分类音乐数量节点则创建多出的节点
-				}else if(data.length > oThumbnail.length) {
-					//返回内容多于原音乐数量的创建新的节点并赋值
-					for(var j = oThumbnail.length; j < data.length; j++) {
-						$('#newAlbums').append('<div><div class="thumbnail"><a href="" target="_blank"></a><div class="caption"><h5></h5></div></div></div>');
-					}
-				}
-				// 切换前后音乐节点数量不变，则只替换节点内容
-				oThumbnail = $('#newAlbums .thumbnail');			// 重新获取当前音乐列表中音乐节点数量
-				for(var k = 0; k < oThumbnail.length; k++) {
-					//将原音乐连接、标题和海报换成切换后返回音乐数据相应内容
-					$(oThumbnail[k]).find('a').attr('href','/music/'+ data[k]._id);
-					$(oThumbnail[k]).find('h5').html(data[k].title);
-					var $oImg2 = $(oThumbnail[k]).find('img');
-
-					if (data[k].image) {
-						// 对音乐海报是否是自行上传进行判断
-						if(data[k].image.indexOf('http:') > -1) {
-							$oImg2.attr('src',data[k].image).attr('alt',data[k].image);
-						}else {
-							// 本地上传音乐图片
-							$oImg2.attr('src','/upload/'+data[k].image).attr('alt',data[k].image);
+				if (results.data) {
+					console.log(111);
+					var data = results.data.musics; 						 // 获取Ajax返回的音乐分类数据
+					var oThumbnail = $('#newAlbums .thumbnail'); // 获取当前音乐列表中音乐数量
+					// 如果返回的数据少于当前音乐列表节点，则删除多余节点
+					if(data.length < oThumbnail.length){
+						var dataStart = data.length - 1;					 // 设置切换到另外分类后数据起始位置
+						$('#newAlbums .thumbnail:gt('+dataStart+')').remove();
+						// 返回的分类电影数量大于原分类音乐数量节点则创建多出的节点
+					}else if(data.length > oThumbnail.length) {
+						console.log(222);
+						//返回内容多于原音乐数量的创建新的节点并赋值
+						for(var j = oThumbnail.length; j < data.length; j++) {
+							$('#newAlbums .panel-body').append('<div class="thumbnail"><a href="" target="_blank"><img src="" alt=""/></a><div class="caption"><h5></h5><p></p></div></div>');
 						}
 					}
+					// 切换前后音乐节点数量不变，则只替换节点内容
+					oThumbnail = $('#newAlbums .thumbnail');			// 重新获取当前音乐列表中音乐节点数量
+					for(var k = 0; k < oThumbnail.length; k++) {
+						console.log(33);
+						// 将原音乐连接、标题和海报换成切换后返回音乐数据相应内容
+						$(oThumbnail[k]).find('a').attr('href','/music/'+ data[k]._id);
+						$(oThumbnail[k]).find('h5').html(data[k].title);
+						$(oThumbnail[k]).find('p').html(data[k].singer);
+						var $oImg = $(oThumbnail[k]).find('img');
+
+						if (data[k].image) {
+							// 对音乐海报是否是自行上传进行判断
+							if(data[k].image.indexOf('http:') > -1) {
+								$oImg.attr('src',data[k].image).attr('alt',data[k].image);
+							}else {
+								// 本地上传音乐图片
+								$oImg.attr('src','/upload/'+data[k].image).attr('alt',data[k].image);
+							}
+						}
+					}
+					// 修改近期热门歌单标题更多的超链接URL
+					$('#newAlbums .class-top > a').attr('href','/music/results?cat='+ results.data._id+'&p=0');
+				// 如果切换的标题没有数据返回，则删除全部歌曲内容
+				}else {
+					$('#newAlbums .thumbnail').remove();
 				}
-				$('#newAlbums .class-top > a').attr('href','/music/results?cat='+ results.data._id+'&p=0');
 			});
 			// 点击当前新歌版分类添加on样式，其余删除该样式
 			$(this).addClass('on').siblings('li').removeClass('on');
@@ -229,7 +231,7 @@ $(function(){
 				// 返回音乐分类中歌单数量多于原歌单数量则创建新的节点并赋值
 				}else {
 					for(var k = oThumbnail.length; k < dataCars.length; k++) {
-						$('#hotProgrammes .panel-body').append('<div class="thumbnail"><div class="inner"><h5></h5><img src="" alt=""></div></div>');
+						$('#hotProgrammes .panel-body').append('<div class="thumbnail"><div class="inner"><h5></h5><img src="" alt="" /></div></div>');
 					}
 				}
 				oThumbnail = $('#hotProgrammes .thumbnail');  //重新获取歌曲分类中歌单的数量
@@ -300,7 +302,7 @@ $(function(){
 					var oDataMin = Math.min(10,data.length); // 重新添加最大的元素节点数量不能超过10个
 					//返回内容多于原音乐数量的创建新的节点并赋值
 					for(var j = oLi.length; j < oDataMin; j++) {
-						$('.hotArtist-songs ul').append('<li><a href=""></a><img src="" alt=""><h5></h5><p></p><span class="order"></span></li>');
+						$('.hotArtist-songs ul').append('<li><a href="" target="_blank"></a><img src="" alt=""><h5></h5><p></p><span class="order"></span></li>');
 					}
 				}
 				// 切换前后节点数量相同，则只替换节点内容
@@ -324,12 +326,12 @@ $(function(){
 				}
 			});
 		}
-		//给当前点击的音乐标题添加on样式，其余删除该样式
+		// 给当前点击的音乐标题添加on样式，其余删除该样式
 		$(this).addClass('on').siblings('li').removeClass('on');
 	});
 
-	//Ajax请求函数
-	var funAjax = function(URL,method,cb){
+	// Ajax请求函数
+	var funAjax = function(URL,method,cb) {
 		$.ajax({
 			url:URL,
 			cache:true,
@@ -337,5 +339,4 @@ $(function(){
 			crossDomain:true
 		}).done(cb);
 	};
-
 });
