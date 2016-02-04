@@ -6,40 +6,40 @@ var City = require('../../models/movie/movie_city');					// 引入电影院模�
 /* 电影首页控制器 */
 exports.index = function(req,res){
 	var _galleryName = req.query.galleryName,	// 获取正在上映和即将上映播放标题名
-			_className = req.query.className,   	// 选电影区电影分类标题名称
-			_cityName = req.query.suggest,	    	// 影院搜索区城市名称
-			_searchName = req.query.search;    	  // 影院搜索框输入的影院名
-	// 如果发送了搜索电影院请求，获取当前城市名及搜索影院名称
+			_fliterName = req.query.fliterName,   // 选电影/选电视剧区电影分类标题名称
+			_cityName = req.query.cityName,	    	// 电影院所在城市
+			_searchName = req.query.search;    	  // 影院搜索框输入的电影院名称
+	// 如果搜索框中输入了电影院名称
 	if(_searchName && _cityName) {
-		City.findOne({cityName:_cityName})
-			.exec(function(err,searchName){
-
+		City.findOne({cityName: _cityName})
+			.exec(function(err,searchName) {
 				var results = [];
-				if(searchName){
+				if(searchName) {
+					console.log(11);
 					var searchArr = searchName.name;
-					//通过正则获取影院名，其中先将对象转换成字符串后使用字符串的match方法
-					//[^\u0000-\u00FF]{0,}表示匹配零或多个中文字符
+					// 通过正则获取影院名，其中先将对象转换成字符串后使用字符串的match方法
+					// [^\u0000-\u00FF]{0,}表示匹配零或多个中文字符
 					results = searchArr.toString().match(new RegExp('[^\\u0000-\\u00FF]{0,}'+_searchName+'[^\\u0000-\\u00FF]{0,}','g'));
-					if(err){
+					if(err) {
 						console.log(err);
 					}
 					res.json(results);
 				}
 			});
-	//如果在影院搜索框中输入影院名称
+	// 如果在只选择了电影院所在城市，没有输入电影院名称
 	}else if(_cityName){
 		City.findOne({cityName:_cityName})
 			.exec(function(err,name){
-				// console.log(name);
+				console.log(name);
 				if(err){
 					console.log(err);
 				}
 				res.json({data: name});
 			});
 	// 如果是选电影/选电视剧区发送的分类切换请求
-	}else if(_className){
+	}else if(_fliterName){
 		Category
-			.findOne({name: _className})
+			.findOne({name: _fliterName})
 			.populate({
 				path:'movies',
 				select:'title poster',

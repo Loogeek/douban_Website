@@ -154,15 +154,14 @@ $(function(){
 	 */
 	$('#newAlbums').on('click','li',function() {
 		// 只有点击不同按钮才触发Ajax事件，避免对同一个按钮重复点击触发请求
-		if($(this).is('.on')){
+		if($(this).is('.on')) {
 			return;
-		}else{
+		}else {
 			var albumName = $(this).text();     					 // 获取按钮文字内容
 			var URL = '/musicindex?albumName='+encodeURIComponent('新碟榜'+albumName); 	// 对中文进行编码
 			// 发送Ajax请求
 			funAjax(URL,'GET',function(results) {
 				if (results.data) {
-					console.log(111);
 					var data = results.data.musics; 						 // 获取Ajax返回的音乐分类数据
 					var oThumbnail = $('#newAlbums .thumbnail'); // 获取当前音乐列表中音乐数量
 					// 如果返回的数据少于当前音乐列表节点，则删除多余节点
@@ -171,7 +170,6 @@ $(function(){
 						$('#newAlbums .thumbnail:gt('+dataStart+')').remove();
 						// 返回的分类电影数量大于原分类音乐数量节点则创建多出的节点
 					}else if(data.length > oThumbnail.length) {
-						console.log(222);
 						//返回内容多于原音乐数量的创建新的节点并赋值
 						for(var j = oThumbnail.length; j < data.length; j++) {
 							$('#newAlbums .panel-body').append('<div class="thumbnail"><a href="" target="_blank"><img src="" alt=""/></a><div class="caption"><h5></h5><p></p></div></div>');
@@ -180,7 +178,6 @@ $(function(){
 					// 切换前后音乐节点数量不变，则只替换节点内容
 					oThumbnail = $('#newAlbums .thumbnail');			// 重新获取当前音乐列表中音乐节点数量
 					for(var k = 0; k < oThumbnail.length; k++) {
-						console.log(33);
 						// 将原音乐连接、标题和海报换成切换后返回音乐数据相应内容
 						$(oThumbnail[k]).find('a').attr('href','/music/'+ data[k]._id);
 						$(oThumbnail[k]).find('h5').html(data[k].title);
@@ -197,8 +194,8 @@ $(function(){
 							}
 						}
 					}
-					// 修改近期热门歌单标题更多的超链接URL
-					$('#newAlbums .class-top > a').attr('href','/music/results?cat='+ results.data._id+'&p=0');
+					// 修改新碟榜标题更多的超链接URL
+					$('#newAlbums .class-top > a').attr('href','/music/results?cat='+ results.data._id +'&p=0');
 				// 如果切换的标题没有数据返回，则删除全部歌曲内容
 				}else {
 					$('#newAlbums .thumbnail').remove();
@@ -224,29 +221,29 @@ $(function(){
 			funAjax(URL,'GET',function(results) {
 				var dataCars = results.data;											//获取Ajax返回的音乐分类数据
 				var oThumbnail = $('#hotProgrammes .thumbnail');  //获取当前音乐分类中歌单数量
-				// 如果当前音乐分类中歌单数量大于切换后的歌单数量，将多余的歌单节点删除
-				if(dataCars.length < oThumbnail.length) {
-					var dataStart = dataCars.length - 1;
-					$('#hotProgrammes .thumbnail:gt(' + dataStart + ')').remove();
-				// 返回音乐分类中歌单数量多于原歌单数量则创建新的节点并赋值
-				}else {
-					for(var k = oThumbnail.length; k < dataCars.length; k++) {
-						$('#hotProgrammes .panel-body').append('<div class="thumbnail"><div class="inner"><h5></h5><img src="" alt="" /></div></div>');
+				if(dataCars) {
+					// 如果当前音乐分类中歌单数量大于切换后的歌单数量，将多余的歌单节点删除
+					if(dataCars.length < oThumbnail.length) {
+						var dataStart = dataCars.length - 1;
+						$('#hotProgrammes .thumbnail:gt(' + dataStart + ')').remove();
+					// 返回音乐分类中歌单数量多于原歌单数量则创建新的节点
+					}else {
+						for(var k = oThumbnail.length; k < dataCars.length; k++) {
+							$('#hotProgrammes .panel-body').append('<div class="thumbnail"><div class="inner"><h5></h5><img src="" alt="" /></div></div>');
+						}
 					}
-				}
-				oThumbnail = $('#hotProgrammes .thumbnail');  //重新获取歌曲分类中歌单的数量
-				// 切换歌曲分类前后歌单数量相同，则只替换相应歌曲节点
-				for(var i = 0; i < dataCars.length; i ++) {
-						// 将原音乐链接、标题和海报换成切换后音乐数据相应内容
+					oThumbnail = $('#hotProgrammes .thumbnail');  //重新获取歌曲分类中歌单的数量
+					// 将原音乐链接、标题和海报换成切换后音乐数据相应内容
+					for(var i = 0; i < dataCars.length; i ++) {
 						$(oThumbnail[i]).find('h5').html(dataCars[i].name); //替换歌单标题名称
-						var oALen = $(oThumbnail[i]).find('a').length;  		//查找每个歌单中原歌曲数目
+						var oALen = $(oThumbnail[i]).find('a').length; 		//查找每个歌单中原歌曲数目
 						// 如果返回的歌单中歌曲数量小于切换前，则将多出歌曲节点删除
 						if(dataCars[i].musics.length < oALen) {
 							var oThumbnailRemove = dataCars[i].musics.length > 0 ? $(oThumbnail[i]).find('a:gt('+ (dataCars[i].musics.length - 1) +')') : $(oThumbnail[i]).find('a') ;
 							oThumbnailRemove.remove();
 							//删除歌单中的...的span标签
 							$('#hotProgrammes .thumbnail:eq('+ i +') span' ).remove();
-						// 返回的歌曲数量大于原歌单中歌曲数量则创建新歌曲节点
+							// 返回的歌曲数量大于原歌单中歌曲数量则创建新歌曲节点
 						}else if(dataCars[i].musics.length > oALen){
 							for(var z = 0; z < Math.min(3,dataCars[i].musics.length - oALen); z++){
 								$('#hotProgrammes .thumbnail:eq('+ i +') .inner').append('<a href =/music/'+ dataCars[i].musics[z]._id +' target =_blank title = '+  dataCars[i].musics[z].title +'><p>'+ (z + 1) + '.' + dataCars[i].musics[z].title +'</p></a>');
@@ -265,17 +262,25 @@ $(function(){
 						// 判断每个歌单海报是否存在及是否是自行上传
 						if(dataCars[i].musics[0]) {
 							if(dataCars[i].musics[0].image.indexOf('http:') > -1){
-								$oImg.attr('src',dataCars[i].musics[0].image).attr('alt',dataCars[i].musics[0].image);
+								$oImg.attr('src',dataCars[i].musics[0].image).attr('alt',dataCars[i].musics[0].image).attr('style','display: inline');
 							}else{
-								//自行上传的海报图片路径不同
-								$oImg.attr('src','/upload/'+dataCars[i].musics[0].image).attr('alt',dataCars[i].musics[0].image);
+								// 自行上传的海报图片路径不同
+								$oImg.attr('src','/upload/'+dataCars[i].musics[0].image).attr('alt',dataCars[i].musics[0].image).attr('style','display: inline');
 							}
+						}else {
+							$oImg.attr('style','display: none');  // 若歌单中没有内容则隐藏img标签
 						}
 					}
+					// 修改近期热门歌单标题更多的超链接URL
+					$('#hotProgrammes .class-top > a').attr('href','/music/results?pro='+ results.dataPro._id +'&p=0');
+				}else {
+					// 若没有数据返回则清空内容
+					$('#hotProgrammes .thumbnail').remove();
+				}
 			});
+			//给当前点击的歌曲分类添加on样式，其他删除样式
+			$(this).addClass('on').siblings('li').removeClass('on');
 		}
-		//给当前点击的歌曲分类添加on样式，其他删除样式
-		$(this).addClass('on').siblings('li').removeClass('on');
 	});
 
 	/*
@@ -291,38 +296,43 @@ $(function(){
 			var URL = '/musicindex?hotSongs='+encodeURIComponent('本周单曲榜'+hotSongs);
 			// 发送Ajax请求
 			funAjax(URL,'GET',function(results) {
-				var data = results.data.musics;				// 获取Ajax返回的音乐分类数据
-				var oLi = $('.hotArtist-songs li');		// 获取当前音乐列表中音乐数量
-				// 如果返回音乐节点数量小于切换后的音乐节点数量，将多余的音乐节点删除
-				if(data.length < oLi.length) {
-					var dataStart = data.length - 1;		// 设置切换到另外分类后数据起始位置
-					$('.hotArtist-songs li:gt('+ dataStart +')').remove();
-				// 若返回分类的音乐数量大于原分类音乐节点数量则创建多出的节点
-				}else if(data.length > oLi.length) {
-					var oDataMin = Math.min(10,data.length); // 重新添加最大的元素节点数量不能超过10个
-					//返回内容多于原音乐数量的创建新的节点并赋值
-					for(var j = oLi.length; j < oDataMin; j++) {
-						$('.hotArtist-songs ul').append('<li><a href="" target="_blank"></a><img src="" alt=""><h5></h5><p></p><span class="order"></span></li>');
-					}
-				}
-				// 切换前后节点数量相同，则只替换节点内容
-				oLi = $('.hotArtist-songs li');				// 重新获取当前音乐列表中音乐数量
-				for(var k = 0;k < oLi.length; k++) {
-					//将原音乐连接、标题和海报换成切换后返回音乐数据相应内容
-					$(oLi[k]).find('a').attr('href','/music/'+data[k]._id);
-					$(oLi[k]).find('h5').html(data[k].title);
-					$(oLi[k]).find('p').html(data[k].singer+'&nbsp;/&nbsp;'+data[k].pv+'次播放');
-					$(oLi[k]).find('span').html(k+1);
-					var $oImg = $(oLi[k]).find('img');
-					//对音乐海报是否是自行上传进行判断
-					if (data[k].image) {
-						if(data[k].image.indexOf('http:')>-1) {
-							$oImg.attr('src',data[k].image).attr('alt',data[k].image);
-						}else {
-							//自行上传的海报图片路径不同
-							$oImg.attr('src','/upload/'+data[k].image).attr('alt',data[k].image);
+				if(results.data) {
+					var data = results.data.musics;				// 获取Ajax返回的音乐分类数据
+					var oLi = $('.hotArtist-songs li');		// 获取当前音乐列表中音乐数量
+					// 如果返回音乐节点数量小于切换后的音乐节点数量，将多余的音乐节点删除
+					if(data.length < oLi.length) {
+						var dataStart = data.length - 1;		// 设置切换到另外分类后数据起始位置
+						$('.hotArtist-songs li:gt('+ dataStart +')').remove();
+						// 若返回分类的音乐数量大于原分类音乐节点数量则创建多出的节点
+					}else if(data.length > oLi.length) {
+						var oDataMin = Math.min(10,data.length); // 重新添加最大的元素节点数量不能超过10个
+						//返回内容多于原音乐数量的创建新的节点并赋值
+						for(var j = oLi.length; j < oDataMin; j++) {
+							$('.hotArtist-songs ul').append('<li><a href="" target="_blank"></a><img src="" alt=""><h5></h5><p></p><span class="order"></span></li>');
 						}
 					}
+					// 切换前后节点数量相同，则只替换节点内容
+					oLi = $('.hotArtist-songs li');				// 重新获取当前音乐列表中音乐数量
+					for(var k = 0;k < oLi.length; k++) {
+						//将原音乐连接、标题和海报换成切换后返回音乐数据相应内容
+						$(oLi[k]).find('a').attr('href','/music/'+data[k]._id);
+						$(oLi[k]).find('h5').html(data[k].title);
+						$(oLi[k]).find('p').html(data[k].singer+'&nbsp;/&nbsp;'+data[k].pv+'次播放');
+						$(oLi[k]).find('span').html(k+1);
+						var $oImg = $(oLi[k]).find('img');
+						//对音乐海报是否是自行上传进行判断
+						if (data[k].image) {
+							if(data[k].image.indexOf('http:')>-1) {
+								$oImg.attr('src',data[k].image).attr('alt',data[k].image);
+							}else {
+								//自行上传的海报图片路径不同
+								$oImg.attr('src','/upload/'+data[k].image).attr('alt',data[k].image);
+							}
+						}
+					}
+				}else {
+					// 若没有数据返回则清空内容
+					$('#hotArtistSongs .hotArtist-songs li').remove();
 				}
 			});
 		}

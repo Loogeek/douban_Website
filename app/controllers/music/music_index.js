@@ -56,10 +56,12 @@ exports.index = function(req,res) {
 								}
 								dataMusics.push(musics);
 								if(count === len){
-									res.json({data: dataMusics});
+									res.json({data: dataMusics,dataPro: programme});
 								}
 							});
 					}
+				}else {
+					res.json({data: programme});
 				}
 			});
 	// 如果是本周单曲榜部分发送Ajax请求

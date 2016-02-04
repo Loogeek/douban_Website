@@ -74,9 +74,11 @@
   float: left; }
 
 /* 选电影区样式 */
-#fliterMovie img {
-  width: 100%;
-  margin: 0; }
+#fliterMovies .class-top ul {
+  list-style: none;
+  padding: 0; }
+  #fliterMovies .class-top ul li {
+    display: inline; }
 
 /* 本周口碑榜样式 */
 .billboard .billboard-hd {
@@ -135,8 +137,11 @@
     .cinemas-search .cities-list span {
       color: #2e7ab3; }
   .cinemas-search .cities-list-hd {
-    cursor: pointer; }
-    .cinemas-search .cities-list-hd span {
+    cursor: pointer;
+    list-style: none;
+    padding: 0; }
+    .cinemas-search .cities-list-hd li {
+      display: inline;
       margin-right: 20px;
       font-size: 14px; }
     .cinemas-search .cities-list-hd .on {
@@ -158,14 +163,30 @@
       font-size: 13px; }
   .cinemas-search .cities-list-item {
     display: none; }
-    .cinemas-search .cities-list-item a:hover {
-      background-color: #69c;
-      color: #fff;
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      -o-border-radius: 3px;
-      -ms-border-radius: 3px;
-      border-radius: 3px; }
+    .cinemas-search .cities-list-item ul {
+      list-style: none;
+      padding: 0; }
+      .cinemas-search .cities-list-item ul li {
+        display: inline-block;
+        font-size: 13px;
+        margin-right: 10px; }
+        .cinemas-search .cities-list-item ul li a {
+          text-decoration: none; }
+        .cinemas-search .cities-list-item ul li a:hover {
+          background-color: #69c;
+          color: #fff;
+          -webkit-border-radius: 3px;
+          -moz-border-radius: 3px;
+          -o-border-radius: 3px;
+          -ms-border-radius: 3px;
+          border-radius: 3px; }
+        .cinemas-search .cities-list-item ul li a:visited {
+          color: #669; }
+        .cinemas-search .cities-list-item ul li a:active {
+          background-color: #f93;
+          color: #fff; }
+  .cinemas-search .city-mod dt {
+    margin-bottom: 5px; }
   .cinemas-search .active {
     display: block; }
   .cinemas-search .city-suggestion {

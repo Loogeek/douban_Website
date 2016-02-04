@@ -1,13 +1,13 @@
 extends ./movie_layout
 block link
   link(href="/css/movie/movie_index.css",rel="stylesheet")
-  script(src="/scripts/js/movie/movie_index.js")
 block content
   .wrapper
     .content
       .container-fluid
         .row
           .col-md-6.col-md-offset-1.col-xs-7.screen
+            // 正在上映标签节点
             #screenTop
               each cat in categories
                 if cat.name === '正在上映'
@@ -23,7 +23,7 @@ block content
                         span.side-max
                         button.slide-prev
                         button.slide-next
-                    .panel-body.screen-body#screenBody
+                    #screenBody.panel-body.screen-body(style="width:10000px;")
                       if cat.movies && cat.movies.length > 0
                         each item in cat.movies
                           .thumbnail
@@ -35,44 +35,61 @@ block content
                             .caption
                               h5 #{item.title}
                               p: a.btn.btn-primary(href="/movie/#{item._id}" role="button" target="_blank") 观看预告片
+            // 正在上映下方广告标签节点
             .mid-advertisement
               a(href="javascript:;")
                 img(src="/images/movie/middleImg/1.jpg" alt="middelImg")
-            .screen#fliterMovie
-              .class-top
-                span.active 选电影
-                i &nbsp;/&nbsp;
-                span 选电视剧
-                hr
-                button.btn.btn-primary 热门
-                button.btn.btn-default 最新
-                button.btn.btn-default 经典
-                button.btn.btn-default 豆瓣高分
-                button.btn.btn-default 冷门佳片
-                button.btn.btn-default 华语
-                button.btn.btn-default 欧美
-                button.btn.btn-default 韩国
-                button.btn.btn-default 日本
-                button.btn.btn-default 动作
-                button.btn.btn-default 喜剧
-                hr
+            // 选电影/选电视剧标签节点
+            #fliterMovies
               .screen
-              each cat in categories
-                if cat.name === '热门电影'
-                  .panel.panel-default
-                    #classBody.panel-body.screen-body
-                      if cat.movies && cat.movies.length > 0
-                        each item in cat.movies
-                          .col-md-3.col-xs-4
-                            .thumbnail
-                              a(href="/movie/#{item._id}" target="_blank")
-                                if item.poster.indexOf('http:') > -1
-                                  img(src="#{item.poster}", alt="#{item.title}")
-                                else
-                                  img(src="/upload/#{item.poster}", alt="#{item.title}")
-                              .caption
-                                h5 #{item.title}
-            .panel.panel-default#galleryFrames
+                .class-top
+                  span.active 选电影
+                  i &nbsp;/&nbsp;
+                  span 选电视剧
+                  hr
+                  ul
+                    li
+                      button.btn.btn-primary 热门
+                    li
+                      button.btn.btn-default 最新
+                    li
+                      button.btn.btn-default 经典
+                    li
+                      button.btn.btn-default 豆瓣高分
+                    li
+                      button.btn.btn-default 冷门佳片
+                    li
+                      button.btn.btn-default 华语
+                    li
+                      button.btn.btn-default 欧美
+                    li
+                      button.btn.btn-default 韩国
+                    li
+                      button.btn.btn-default 日本
+                    li
+                      button.btn.btn-default 动作
+                    li
+                      button.btn.btn-default 喜剧
+                  hr
+                // 热门电影标签节点
+                .screen-body
+                  each cat in categories
+                    if cat.name === '热门电影'
+                      .panel.panel-default
+                        #classBody.panel-body.screen-body
+                          if cat.movies && cat.movies.length > 0
+                            each item in cat.movies
+                              .col-md-3.col-xs-4
+                                .thumbnail
+                                  a(href="/movie/#{item._id}" target="_blank")
+                                    if item.poster.indexOf('http:') > -1
+                                      img(src="#{item.poster}", alt="#{item.title}")
+                                    else
+                                      img(src="/upload/#{item.poster}", alt="#{item.title}")
+                                  .caption
+                                    h5 #{item.title}
+            // 热门推荐标签节点
+            #galleryFrames.panel.panel-default
               .panel-heading.screen-header
                 h4 热门推荐
                 .slide-tip
@@ -137,98 +154,108 @@ block content
                           h5 豆瓣会客厅】王千源：用实力证明不凡
                       .slide-hd
                         p 在《解救吾先生》中扮演悍匪华子的王千源做客豆瓣会客厅。
+          // 电影院搜索标签节点
           .col-md-4.col-xs-4
             .cinemas-search
-              .city#cityId
+              #cityId.city
                 span 广州
                 i.glyphicon.glyphicon-triangle-bottom
-                .cities-list#citiesList(style="display:none")
-                  .cities-list-hd
-                    span.on(index=1) 热门
-                    span(index=2)  A - G
-                    span(index=3)  H - L
-                    span(index=4)  M - T
-                    span(index=5)  W - Z
+                #citiesList.cities-list(style="display:none")
+                  ul.cities-list-hd
+                    li.on(index=1) 热门
+                    li(index=2)  A - G
+                    li(index=3)  H - L
+                    li(index=4)  M - T
+                    li(index=5)  W - Z
                   hr
                   .cities-list-bd
                     .cities-list-item.active
-                      span: a.city-item(href="javascript:;") 北京
-                      span: a.city-item(href="javascript:;") 上海
-                      span: a.city-item(href="javascript:;") 广州
-                      span: a.city-item(href="javascript:;") 深圳
-                      span: a.city-item(href="javascript:;") 成都
-                      span: a.city-item(href="javascript:;") 武汉
-                      span: a.city-item(href="javascript:;") 郑州
-                      span: a.city-item(href="javascript:;") 杭州
-                      span: a.city-item(href="javascript:;") 重庆
-                      span: a.city-item(href="javascript:;") 南京
-                      span: a.city-item(href="javascript:;") 西安
-                      span: a.city-item(href="javascript:;") 苏州
-                      span: a.city-item(href="javascript:;") 天津
-                      span: a.city-item(href="javascript:;") 长沙
-                      span: a.city-item(href="javascript:;") 福州
-                      span: a.city-item(href="javascript:;") 沈阳
-                      span: a.city-item(href="javascript:;") 济南
-                      span: a.city-item(href="javascript:;") 温州
-                      span: a.city-item(href="javascript:;") 哈尔滨
-                      span: a.city-item(href="javascript:;") 合肥
-                      span: a.city-item(href="javascript:;") 青岛
-                      span: a.city-item(href="javascript:;") 大连
-                      span: a.city-item(href="javascript:;") 厦门
-                      span: a.city-item(href="javascript:;") 东莞
-                      span: a.city-item(href="javascript:;") 长春
-                      span: a.city-item(href="javascript:;") 海口
+                      ul
+                        li: a.city-item(href="javascript:;") 北京
+                        li: a.city-item(href="javascript:;") 上海
+                        li: a.city-item(href="javascript:;") 广州
+                        li: a.city-item(href="javascript:;") 深圳
+                        li: a.city-item(href="javascript:;") 成都
+                        li: a.city-item(href="javascript:;") 武汉
+                        li: a.city-item(href="javascript:;") 郑州
+                        li: a.city-item(href="javascript:;") 杭州
+                        li: a.city-item(href="javascript:;") 重庆
+                        li: a.city-item(href="javascript:;") 南京
+                        li: a.city-item(href="javascript:;") 西安
+                        li: a.city-item(href="javascript:;") 苏州
+                        li: a.city-item(href="javascript:;") 天津
+                        li: a.city-item(href="javascript:;") 长沙
+                        li: a.city-item(href="javascript:;") 福州
+                        li: a.city-item(href="javascript:;") 沈阳
+                        li: a.city-item(href="javascript:;") 济南
+                        li: a.city-item(href="javascript:;") 温州
+                        li: a.city-item(href="javascript:;") 哈尔滨
+                        li: a.city-item(href="javascript:;") 合肥
+                        li: a.city-item(href="javascript:;") 青岛
+                        li: a.city-item(href="javascript:;") 大连
+                        li: a.city-item(href="javascript:;") 厦门
+                        li: a.city-item(href="javascript:;") 东莞
+                        li: a.city-item(href="javascript:;") 长春
+                        li: a.city-item(href="javascript:;") 海口
                     .cities-list-item
                       dl.city-mod
                         dt A
                         dd
-                          span: a.city-item(href="javascript:;") 安庆
-                          span: a.city-item(href="javascript:;") 安阳
+                          ul
+                            li: a.city-item(href="javascript:;") 安庆
+                            li: a.city-item(href="javascript:;") 安阳
                         hr
                       dl.city-mod
                         dt B
                         dd
-                          span: a.city-item(href="javascript:;") 北京
-                          span: a.city-item(href="javascript:;") 保定
+                          ul
+                            li: a.city-item(href="javascript:;") 北京
+                            li: a.city-item(href="javascript:;") 保定
                         hr
                       dl.city-mod
                         dt C
                         dd
-                          span: a.city-item(href="javascript:;") 重庆
-                          span: a.city-item(href="javascript:;") 成都
+                          ul
+                            li: a.city-item(href="javascript:;") 重庆
+                            li: a.city-item(href="javascript:;") 成都
                         hr
                       dl.city-mod
                         dt D
                         dd
-                          span: a.city-item(href="javascript:;") 东莞
-                          span: a.city-item(href="javascript:;") 大连
+                          ul
+                            li: a.city-item(href="javascript:;") 东莞
+                            li: a.city-item(href="javascript:;") 大连
                         hr
                     .cities-list-item
                       dl.city-mod
                         dt H
                         dd
-                          span: a.city-item(href="javascript:;") 杭州
-                          span: a.city-item(href="javascript:;") 合肥
+                          ul
+                            li: a.city-item(href="javascript:;") 杭州
+                            li: a.city-item(href="javascript:;") 合肥
                         hr
                       dl.city-mod
                         dt I
                         dd
-                          span: a.city-item(href="javascript:;") 济南
-                          span: a.city-item(href="javascript:;") 嘉兴
+                          ul
+                            li: a.city-item(href="javascript:;") 济南
+                            li: a.city-item(href="javascript:;") 嘉兴
                         hr
                       dl.city-mod
                         dt K
                         dd
-                          span: a.city-item(href="javascript:;") 昆明
-                          span: a.city-item(href="javascript:;") 开封
+                          ul
+                            li: a.city-item(href="javascript:;") 昆明
+                            li: a.city-item(href="javascript:;") 开封
                         hr
                       dl.city-mod
                         dt L
                         dd
-                          span: a.city-item(href="javascript:;") 兰州
-                          span: a.city-item(href="javascript:;") 临沂
+                          ul
+                            li: a.city-item(href="javascript:;") 兰州
+                            li: a.city-item(href="javascript:;") 临沂
                         hr
-              .city-suggestion#citySug
+              #citySug.city-suggestion
                 .city-suggestion-input
                   input(placeholder="搜索本地电影院")
                   i.placeholder.glyphicon.glyphicon-search
@@ -263,3 +290,4 @@ block content
             .advertisement
               a(href="javascript:;")
                 img(src="/images/movie/advertisements/2.jpg")
+  script(src="/scripts/js/movie/movie_index.js")

@@ -152,13 +152,13 @@ $(function(){
 			选电影/电视剧区JS代码
 			导航栏点击事件
 	*/
-	$('#fliterMovie .class-top').on('click','button',function() {
+	$('#fliterMovies .class-top').on('click','button',function() {
 		// 只有点击不同按钮才触发Ajax事件，避免对同一个按钮重复点击触发请求
 		if($(this).is('.btn-primary')) {
 			return;
 		}else {
-			var className = $(this).html();      // 获取按钮文字内容
-			var URL = '/?className=' + encodeURIComponent(className + '电影');// 对中文进行编码
+			var fliterName = $(this).html();      // 获取按钮文字内容
+			var URL = '/?fliterName=' + encodeURIComponent(fliterName + '电影');// 对中文进行编码
 			// 发送Ajax请求
 			funAjax(URL,'GET',function(results) {
 				if (results.data === null || results.data.movies.length === 0) {
@@ -169,7 +169,7 @@ $(function(){
 					var dataStart = data.length - 1; // 获取切换到另外分类返回电影数据数量
 					// 如果切换后返回的电影数量小于切换前原电影数量，则将多余的电影节点删除
 					if(data.length < oThumbnail.length) {
-						$('#fliterMovie .col-md-3:gt('+dataStart+')').remove();
+						$('#fliterMovies .col-md-3:gt('+dataStart+')').remove();
 					// 如果切换后返回的电影数量大于切换前原电影数量，则创建新节点
 					}else if((data.length > oThumbnail.length)) {
 						for(var i = oThumbnail.length; i<data.length; i++) {
@@ -198,7 +198,7 @@ $(function(){
 				}
 			});
 			// 给当前点击的电影按钮添加primary样式并删除default样式
-			$(this).addClass('btn-primary').removeClass('btn-default').siblings('button').addClass('btn-default').removeClass('btn-primary');
+			$(this).addClass('btn-primary').removeClass('btn-default').parent().siblings().children().addClass('btn-default').removeClass('btn-primary');
 		}
 	});
 
@@ -206,12 +206,12 @@ $(function(){
 			热门推荐部分
 	 */
 	var galleryFrames = (function(){
-		var page = 1;   																	// 页码变量
-		var $oLeft = $('#galleryFrames .slide-prev');			// 向左箭头
-		var $oRight = $('#galleryFrames .slide-next');		// 向右箭头
-		var len = $('#galleryFrames li').length;					// 热门推荐轮播图片数量
-		var $oUl = $('#galleryFrames ul');								// 获取轮播图列表的对象
-		var $oItem = $('#galleryFrames .slide-item');			// 获取展示区对象
+		var page = 1,   																	// 页码变量
+				$oLeft = $('#galleryFrames .slide-prev'),			// 向左箭头
+				$oRight = $('#galleryFrames .slide-next'),		// 向右箭头
+				len = $('#galleryFrames li').length,					// 热门推荐轮播图片数量
+				$oUl = $('#galleryFrames ul'),								// 获取轮播图列表的对象
+				$oItem = $('#galleryFrames .slide-item');			// 获取展示区对象
 		// 设置轮播图总数量，因为在轮播图首位各有一张附属图，所以总数量要减去2张
 		$('#galleryFrames .side-max').html(len-2);
 
@@ -282,7 +282,7 @@ $(function(){
 		$cList.outerWidth($city.width() + $citySug.width());
 
 		//选择电影院所在城市
-		$city.find('>span').on('click',function(){
+		$city.find(' > span').on('click',function(){
 			if($cList.css('display') === 'none'){
 				$cList.css('display','block');
 			}else{
@@ -291,8 +291,8 @@ $(function(){
 		});
 
 		//切换城市列表头部事件
-		$('.cities-list-hd').on('click','span',function(){
-			var index = $(this).attr('index');			//当前点击的是那个范围城市span
+		$('.cities-list-hd').on('click','li',function(){
+			var index = $(this).attr('index');			//当前点击的是那个范围城市
 			$(this).addClass('on').siblings().removeClass('on');//城市头部添加样式
 			$cList.find('.cities-list-item').eq(index-1).addClass('active')
 				  .siblings().removeClass('active');//添加active样式，让其点击范围的城市显示
@@ -301,22 +301,22 @@ $(function(){
 		//切换当前城市事件
 		$('#citiesList .cities-list-item').on('click','a',function(){
 			$city.find('>span').html($(this).html());   //点击城市名替换默认的广州城市
-			$cList.css('display','none');				//城市列表隐藏
-			$citySugInput.val('');					   	//每次切换城市时搜索框中关键字清空
+			$cList.css('display','none');								//城市列表隐藏
+			$citySugInput.val('');					   					//每次切换城市时搜索框中关键字清空
 		});
 
 		//输入框获得焦点时发送Ajax请求具体城市电影院
 		$citySugInput.on('focus',function(){
 			//获取城市名称并发送Ajax请求该城市的影院
-			var cityName = $city.find('span').html();
-			var searchName = $(this).val();  			//获取影院搜索框中的文本值
-			var URL;									//发送给服务器的URL地址
+			var cityName = $city.find('span').html(),
+					searchName = $(this).val(),  			//获取影院搜索框中的文本值
+					URL;															//发送给服务器的URL地址
 			//每次添加影院列表前先清空列表，避免叠加
 			$cityTip.html('');
 			//当搜索框中文本值为空时发送给服务器请求该城市全部影院名字
 			if(!$citySugInput.val()){
 
-				URL = '/?suggest='+encodeURIComponent(cityName);//对中文影院名进行编码
+				URL = '/?cityName='+encodeURIComponent(cityName);//对中文影院名进行编码
 				funAjax(URL,'GET',function(results){
 					//$cityTip.html('');
 					if(results.data){
@@ -331,7 +331,7 @@ $(function(){
 				});
 			//当搜索框中存在用户输入的影院名字时发送带有关键字的影院名给服务器
 			}else{
-				URL = '/?suggest='+encodeURIComponent(cityName)+'&&search='+encodeURIComponent(searchName);		//发送给服务器的URL地址
+				URL = '/?cityName='+encodeURIComponent(cityName)+'&&search='+encodeURIComponent(searchName);		//发送给服务器的URL地址
 				//发送Ajax请求
 				funAjax(URL,'GET',function(results){
 					var data = results || [];
@@ -348,7 +348,7 @@ $(function(){
 			$citySugInput.on('keyup',function(event){
 				cityName = $city.html();
 				searchName = $(this).val();
-				URL = '/?suggest='+encodeURIComponent(cityName)+'&&search='+encodeURIComponent(searchName);
+				URL = '/?cityName='+encodeURIComponent(cityName)+'&&search='+encodeURIComponent(searchName);
 				//当按下键盘空格键或1-9数字键时才发送Ajax请求
 				if(49<event.keyCode && event.keyCode<57 || event.keyCode===32){
 					//发送Ajax请求

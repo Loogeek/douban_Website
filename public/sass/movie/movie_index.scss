@@ -110,10 +110,15 @@
 	}
 }
 /* 选电影区样式 */
-#fliterMovie{
-	img{
-		width: 100%;
-		margin: 0;
+#fliterMovies{
+	.class-top{
+		ul{
+			list-style: none;
+			padding: 0;
+			li{
+				display: inline;
+			}
+		}
 	}
 }
 
@@ -177,7 +182,10 @@
   }
   .cities-list-hd{
   	cursor: pointer;
-  	span{
+		list-style: none;
+		padding: 0;
+  	li{
+			display: inline;
   		margin-right: 20px;
   		font-size: 14px;
   	}
@@ -202,12 +210,34 @@
   }
   .cities-list-item{
   	display: none;
-  	a:hover{
-		  background-color: #69c;
-		  color: #fff;
-		  @include border-radius(3px);
-  	}
+		ul{
+			list-style: none;
+			padding: 0;
+			li{
+				display: inline-block;
+				font-size: 13px;
+				margin-right: 10px;
+				a{
+					text-decoration: none;
+				}
+				a:hover{
+					background-color: #69c;
+					color: #fff;
+					@include border-radius(3px);
+				}
+				a:visited{
+					color: #669;
+				}
+				a:active{
+					background-color: #f93;
+					color: #fff;
+				}
+			}
+		}
   }
+	.city-mod{
+		dt{margin-bottom: 5px;}
+	}
   .active{display: block;}
   .city-suggestion{
 	  float: left;

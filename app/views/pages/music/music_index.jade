@@ -61,7 +61,7 @@ block content
               each cat in musicCategories
                 if cat.name === '新碟榜最热'
                   .class-top
-                    span.active 新碟榜
+                    span 新碟榜
                     ul
                       li.on: a(href="javascript:;") 最热
                       li: a(href="javascript:;") 华语
@@ -77,9 +77,9 @@ block content
                           .thumbnail
                             a(href="/music/#{cat.musics[i]._id}" target="_blank")
                               if cat.musics[i].image.indexOf('http:') > -1
-                                img(src="#{cat.musics[i].image}", alt="#{cat.musics[i].title}")
+                                img(src="#{cat.musics[i].image}" alt="#{cat.musics[i].title}")
                               else
-                                img(src="/upload/#{cat.musics[i].image}", alt="#{cat.musics[i].title}")
+                                img(src="/upload/#{cat.musics[i].image}" alt="#{cat.musics[i].title}")
                             .caption
                               h5 #{cat.musics[i].title}
                               p #{cat.musics[i].singer}
@@ -87,7 +87,7 @@ block content
               each cat in programmes
                 if cat.name === '近期热门歌单最热'
                   .class-top
-                    span.active 近期热门歌单
+                    span 近期热门歌单
                     ul
                       li.on: a(href="javascript:;") 最热
                       li: a(href="javascript:;") 流行

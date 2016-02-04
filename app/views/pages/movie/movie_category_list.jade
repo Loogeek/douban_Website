@@ -18,10 +18,10 @@ block content
               td #{item.name}
               td
                 each unit in item.movies
-                  #{unit.title}              
+                  #{unit.title}
               td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
-              td: a(target="_blank", href="../#{item._id}") 查看
-              td: a(target="_blank", href="../admin/update/#{item._id}") 修改
+              td: a(target="_blank", href="/movie/results?cat=#{item._id}&p=0") 查看
+              td: a(target="_blank", href="/admin/movie/list") 修改
               td
                 button.btn.btn-danger.ctyDel(type="button", data-id="#{item._id}") 删除
   script(src="/scripts/js/movie/movie_admin.js")
