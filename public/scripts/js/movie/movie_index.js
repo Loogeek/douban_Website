@@ -6,16 +6,16 @@ $(function(){
 			即将上映和正在上映点击切换事件
 	*/
 	var gallerySwitch = (function() {
-		var $oPanel = $('#screenTop .panel'),	 						// 获取顶部轮播图面板对象
+		var $oPanel = $('#scrollMoives .panel'),	 						// 获取顶部轮播图面板对象
 				$oTitle = $('#headerNow span'),     					// 获取即将上映标题对象
 				page = 1,  																		// 初始页码
-				$oLeft = $('#screenTop .slide-prev'),					// 获取左箭头按钮
-				$oRight = $('#screenTop .slide-next'),				// 获取右箭头按钮
-				$oThumbnail = $('#screenTop .thumbnail'),			// 获取电影对象
+				$oLeft = $('#scrollMoives .slide-prev'),					// 获取左箭头按钮
+				$oRight = $('#scrollMoives .slide-next'),				// 获取右箭头按钮
+				$oThumbnail = $('#scrollMoives .thumbnail'),			// 获取电影对象
 				len = $oThumbnail.length,											// 即将电影轮播展示区电影总数
 				pageTotal = Math.ceil(len / 4);           		// 即将电影轮播展示区总页数
 		// 设置两个电影展示区总页数
-		$('#screenTop .side-max').html(pageTotal);
+		$('#scrollMoives .side-max').html(pageTotal);
 		// 设置电影展示区总宽度
 		$('#screenBody').width(oCol6_width * pageTotal);
 		// 获取海报的外边距，并给计算每张海报应赋予的宽度值
@@ -43,7 +43,7 @@ $(function(){
 
 				// 如果切换后电影列表数量小于原电影数量,则将多余节点删除
 				if(dataLength < $oThumbnail.length){
-					$('#screenTop .thumbnail:gt('+dataLength+')').remove();
+					$('#scrollMoives .thumbnail:gt('+dataLength+')').remove();
 				// 如果切换后电影列表数量大于原电影数量,则创建多出的节点
 				}else if(dataLength > $oThumbnail.length) {
 					for(var j = $oThumbnail.length; j < dataLength; j++) {
@@ -52,12 +52,12 @@ $(function(){
 					// 给新添加的电影节点设置宽度
 					$('#screenBody .thumbnail:gt('+ ($oThumbnail.length -1)  +')').width(oThumbnailWidth);
 				}
-				$oThumbnail = $('#screenTop .thumbnail');			// 重新获取电影对象
+				$oThumbnail = $('#scrollMoives .thumbnail');			// 重新获取电影对象
 				// 重新获取轮播展示区电影数量及总页数
 				len = $oThumbnail.length;
 				pageTotal = Math.ceil(len / 4);
 				// 设置切换后电影展示区总页数
-				$('#screenTop .side-max').html(pageTotal);
+				$('#scrollMoives .side-max').html(pageTotal);
 				// 设置电影展示区总宽度
 				$('#screenBody').width(oCol6_width * pageTotal);
 
@@ -82,7 +82,7 @@ $(function(){
 				// 则需要将page修改为pageTotal，即切换后最后页，并移动到最后页
 				if(page > pageTotal){
 					page = pageTotal;
-					$('#screenTop .side-index').html(page);
+					$('#scrollMoives .side-index').html(page);
 					$('#screenBody').animate({left:-oCol6_width * (page-1)},0);
 				}
 			});
@@ -104,7 +104,7 @@ $(function(){
 			funMoving('right');
 		},5000);
 		// 当鼠标划入电影展示区时动画停止，移开时重新开始运动
-		$('#screenTop').on('mouseover',function() {
+		$('#scrollMoives').on('mouseover',function() {
 			clearInterval(timer);
 		}).on('mouseout',function(){
 			timer = setInterval(function() {
@@ -123,11 +123,11 @@ $(function(){
 					if(page === pageTotal) {
 						page = 1;
 						// 设置显示当前电影页码
-						$('#screenTop .side-index').html(page);
+						$('#scrollMoives .side-index').html(page);
 						$('#screenBody').animate({left:0},500);
 					}else {
 						page ++;
-						$('#screenTop .side-index').html(page); //设置显示当前电影页码
+						$('#scrollMoives .side-index').html(page); //设置显示当前电影页码
 						// 找到单击元素所在电影滚动面板元素
 						$('#screenBody').animate({left:'-='+oCol6_width},500);
 					}
@@ -135,11 +135,11 @@ $(function(){
 				}else {
 					if(page === 1) {
 						page = pageTotal;
-						$('#screenTop .side-index').html(page);
+						$('#scrollMoives .side-index').html(page);
 						$('#screenBody').animate({left:'-='+pageWidth},500);
 					}else {
 						page --;
-						$('#screenTop .side-index').html(page);
+						$('#scrollMoives .side-index').html(page);
 						// 找到单击元素所在电影滚动面板元素
 						$('#screenBody').animate({left:'+='+oCol6_width},500);
 					}
@@ -272,17 +272,17 @@ $(function(){
 			电影院搜索
 	*/
 	var cinemasSearch = (function(){
-		var $city = $('#cityId'),																//获取城市输入框对象
-				$cList = $('#citiesList'),													//获取城市列表对象
-				$citySug = $('#citySug'),														//获取可售票影院输入框对象
-				$citySugList = $('#citySug .city-suggestion-list'), //获取可售票影院列表对象
-				$cityTip = $('#citySug .auto-tip'),									//获取可售票影院列表ul对象
-				$citySugInput = $('#citySug input');  							//获取可售票影院搜索框对象
-		//设置可售票影院列表宽度
+		var $city = $('#citySearch'),														// 电影院所在城市
+				$cList = $('#citiesList'),													// 全国各城市名称列表
+				$citySug = $('#citySug'),														// 电影院对象
+				$citySugList = $('#citySug .city-suggestion-list'), // 电影院名称列表对象
+				$cityTip = $('#citySug .auto-tip'),									// 可售票影院列表ul对象
+				$citySugInput = $('#citySug input');  							// 可售票影院搜索框对象
+		// 设置可售票影院列表宽度
 		$cList.outerWidth($city.width() + $citySug.width());
 
-		//选择电影院所在城市
-		$city.find(' > span').on('click',function(){
+		// 选择电影院所在城市
+		$city.children('span').on('click',function() {
 			if($cList.css('display') === 'none'){
 				$cList.css('display','block');
 			}else{
@@ -290,98 +290,67 @@ $(function(){
 			}
 		});
 
-		//切换城市列表头部事件
-		$('.cities-list-hd').on('click','li',function(){
-			var index = $(this).attr('index');			//当前点击的是那个范围城市
-			$(this).addClass('on').siblings().removeClass('on');//城市头部添加样式
+		// 选择城市所在的分类标题
+		$('.cities-list-hd').on('click','li',function() {
+			var index = $(this).attr('index');									// 当前选择的是哪个范围城市
+			$(this).addClass('on').siblings().removeClass('on');// 城市头部添加样式
 			$cList.find('.cities-list-item').eq(index-1).addClass('active')
-				  .siblings().removeClass('active');//添加active样式，让其点击范围的城市显示
+				  .siblings().removeClass('active');		// 添加active样式，让其点击范围的城市显示
 		});
 
-		//切换当前城市事件
-		$('#citiesList .cities-list-item').on('click','a',function(){
-			$city.find('>span').html($(this).html());   //点击城市名替换默认的广州城市
-			$cList.css('display','none');								//城市列表隐藏
-			$citySugInput.val('');					   					//每次切换城市时搜索框中关键字清空
+		// 切换当前城市事件
+		$('#citiesList .cities-list-item').on('click','a',function() {
+			$city.children('span').html($(this).html());		// 点击城市名替换默认的广州城市
+			$cList.css('display','none');										// 城市列表隐藏
+			$citySugInput.val('');					   							// 每次切换城市时搜索框中关键字清空
 		});
 
-		//输入框获得焦点时发送Ajax请求具体城市电影院
-		$citySugInput.on('focus',function(){
-			//获取城市名称并发送Ajax请求该城市的影院
-			var cityName = $city.find('span').html(),
-					searchName = $(this).val(),  			//获取影院搜索框中的文本值
-					URL;															//发送给服务器的URL地址
-			//每次添加影院列表前先清空列表，避免叠加
-			$cityTip.html('');
-			//当搜索框中文本值为空时发送给服务器请求该城市全部影院名字
-			if(!$citySugInput.val()){
+		// 电影院搜索框获得焦点时发送Ajax请求该城市的电影院
+		$citySugInput.on('focus',function() {
+			funGetCityCinemas();
+			$cList.css('display','none');						// 当电影院搜索框获得焦点时要隐藏城市列表框
+		});
 
-				URL = '/?cityName='+encodeURIComponent(cityName);//对中文影院名进行编码
-				funAjax(URL,'GET',function(results){
-					//$cityTip.html('');
-					if(results.data){
-						var data = results.data.name;
-						//将Ajax返回的数据添加到影院列表中
-						for(var i=0;i<data.length;i++){
-							$cityTip.append('<li><a href="javascript:;">' + data[i] + '</a></li>');
-						}
-						//显示影院列表
-						$citySugList.css('display','block');
-					}
-				});
-			//当搜索框中存在用户输入的影院名字时发送带有关键字的影院名给服务器
-			}else{
-				URL = '/?cityName='+encodeURIComponent(cityName)+'&&search='+encodeURIComponent(searchName);		//发送给服务器的URL地址
-				//发送Ajax请求
-				funAjax(URL,'GET',function(results){
-					var data = results || [];
-					//每次添加影院列表前先清空列表，避免叠加
-					//$cityTip.html('');
-					for(var i=0;i<data.length;i++){
-						$cityTip.append('<li><a href="javascript:;">' + data[i] + '</a></li>');
-					}
-					//显示影院列表
-					$citySugList.css('display','block');
-				});
+		// 当电影院搜索框中监听到键盘事件时将输入的影院名称发送给服务器
+		$citySugInput.keyup(function(event) {
+			// 当按下键盘空格键或1-9数字键或删除键时才发送Ajax请求
+			if(49 < event.keyCode && event.keyCode < 57 || event.keyCode === 32 || event.keyCode === 8) {
+				funGetCityCinemas();
 			}
-			//当监听到键盘事件时将输入的影院名称发送给服务器
-			$citySugInput.on('keyup',function(event){
-				cityName = $city.html();
-				searchName = $(this).val();
-				URL = '/?cityName='+encodeURIComponent(cityName)+'&&search='+encodeURIComponent(searchName);
-				//当按下键盘空格键或1-9数字键时才发送Ajax请求
-				if(49<event.keyCode && event.keyCode<57 || event.keyCode===32){
-					//发送Ajax请求
-					funAjax(URL,'GET',function(results){
-					var data = results || [];
-					//每次添加影院列表前先清空列表，避免叠加
-					$cityTip.html('');
-						for(var i=0;i<data.length;i++){
-							$cityTip.append('<li><a href="javascript:;">' + data[i] + '</a></li>');
-						}
-						//显示影院列表
-						$citySugList.css('display','block');
-					});
-				}
-			});
-			//隐藏城市列表
-			$cList.css('display','none');
 		});
-		//选择影院
-		$citySugList.on('mousedown','a',function(){
+
+		// 选择影院
+		$citySugList.on('mousedown','a',function() {
 			$citySugInput.val($(this).html());
 			$citySugList.css('display','none');
 		});
 
-		//输入框失去焦点时隐藏影院列表
-		$citySugInput.on('blur',function(){
+		// 输入框失去焦点时隐藏影院列表
+		$citySugInput.on('blur',function() {
 			$citySugList.css('display','none');
 		});
 
+		var funGetCityCinemas = function() {
+			var cityName = $city.children('span').text(),
+					searchName = $citySugInput.val(),
+					URL = '/?cityName='+encodeURIComponent(cityName)+'&&search='+encodeURIComponent(searchName);
+
+			// 发送Ajax请求
+			funAjax(URL,'GET',function(results) {
+				var data = results || [];
+				$cityTip.html('');											// 每次添加影院列表前先清空电影院列表，避免叠加
+				for(var i = 0;i < data.length; i++) {
+					$cityTip.append('<li><a href="javascript:;">' + data[i] + '</a></li>');
+				}
+				// 显示影院列表
+				$citySugList.css('display','block');
+			});
+		}
 	})();
 
+
 	//Ajax请求函数
-	var funAjax = function(URL,method,cb){
+	var funAjax = function(URL,method,cb) {
 		$.ajax({
 			url:URL,
 			cache:true,

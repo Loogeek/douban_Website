@@ -70,7 +70,7 @@
       font-size: 12px; }
 
 /* 正在上映区样式 */
-#screenTop .thumbnail {
+#scrollMoives .thumbnail {
   float: left; }
 
 /* 选电影区样式 */
@@ -117,7 +117,9 @@
       height: 100%;
       padding-left: 5px;
       display: block;
-      text-align: left; }
+      text-align: left;
+      position: relative;
+      z-index: 10; }
     .cinemas-search .city > i {
       position: absolute;
       left: 47px;

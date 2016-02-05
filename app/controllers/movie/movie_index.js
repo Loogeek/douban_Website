@@ -9,13 +9,12 @@ exports.index = function(req,res){
 			_fliterName = req.query.fliterName,   // 选电影/选电视剧区电影分类标题名称
 			_cityName = req.query.cityName,	    	// 电影院所在城市
 			_searchName = req.query.search;    	  // 影院搜索框输入的电影院名称
-	// 如果搜索框中输入了电影院名称
-	if(_searchName && _cityName) {
+	// 如果是电影院搜索框中发送了Ajax请求
+	if(_cityName) {
 		City.findOne({cityName: _cityName})
 			.exec(function(err,searchName) {
 				var results = [];
 				if(searchName) {
-					console.log(11);
 					var searchArr = searchName.name;
 					// 通过正则获取影院名，其中先将对象转换成字符串后使用字符串的match方法
 					// [^\u0000-\u00FF]{0,}表示匹配零或多个中文字符
@@ -26,18 +25,8 @@ exports.index = function(req,res){
 					res.json(results);
 				}
 			});
-	// 如果在只选择了电影院所在城市，没有输入电影院名称
-	}else if(_cityName){
-		City.findOne({cityName:_cityName})
-			.exec(function(err,name){
-				console.log(name);
-				if(err){
-					console.log(err);
-				}
-				res.json({data: name});
-			});
 	// 如果是选电影/选电视剧区发送的分类切换请求
-	}else if(_fliterName){
+	}else if(_fliterName) {
 		Category
 			.findOne({name: _fliterName})
 			.populate({
@@ -52,7 +41,7 @@ exports.index = function(req,res){
 				res.json({data: category});
 			});
 	// 顶部正在上映和即将上映电影展示区切换
-	}else if(_galleryName){
+	}else if(_galleryName) {
 		Category
 			.findOne({name: _galleryName})
 			.populate({
@@ -73,15 +62,22 @@ exports.index = function(req,res){
 			.populate({
 				path:'movies',
 				select:'title poster',
-				option:{limit: 6}        //限制最多6条数据
+				option:{limit: 6}        					 //限制最多6条数据
 			})
 			.exec(function(err,categories) {
 				if(err){
 					console.log(err);
 				}
-				res.render('movie/movie_index',{
-					title:'豆瓣电影首页',
-					categories: categories
+				City.find({})
+					.exec(function(err,cinemas) {
+						if(err){
+							console.log(err);
+						}
+						res.render('movie/movie_index',{
+							title:'豆瓣电影首页',
+							categories: categories,
+							cinemas: cinemas
+					});
 				});
 			});
 		}

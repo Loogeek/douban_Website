@@ -12,7 +12,7 @@ exports.new = function(req, res) {
 exports.save = function(req, res) {
     var _city = req.body.city;
 
-    City.findOne({cityName:_city.cityName}).exec(function(err,city){
+    City.findOne({cityName: _city.cityName}).exec(function(err,city){
 
         //如果城市名已存在则将电影院名称存入相应城市的电影院列表中
         if(city){
@@ -25,7 +25,7 @@ exports.save = function(req, res) {
                         console.log(err);
                     }
                    res.redirect('/admin/movie/city/list');  //重定向到电影院列表页
-                }); 
+                });
            }else{
                 //无法重复在一个城市中输入相同电影院名称
                 res.redirect('/admin/movie/city/new');
@@ -38,7 +38,7 @@ exports.save = function(req, res) {
                     console.log(err);
                 }
                res.redirect('/admin/movie/city/list');
-            });        
+            });
         }
     });
 

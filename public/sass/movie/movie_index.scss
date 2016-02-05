@@ -104,7 +104,7 @@
   }
 }
 /* 正在上映区样式 */
-#screenTop{
+#scrollMoives{
 	.thumbnail{
 		float: left;
 	}
@@ -162,6 +162,8 @@
 				padding-left: 5px;
 		 		display: block;
   			text-align: left;
+				position: relative;
+				z-index: 10;
 	  }
 	  > i{
 		  position: absolute;

@@ -5,7 +5,6 @@ var ObjectId = Schema.Types.ObjectId;
 var CitySchema = new Schema({
   cityName: String,
   name: [{}],
-  //movies: [{type: ObjectId, ref: 'Movie'}],
   meta: {
     createAt: {
       type: Date,
@@ -18,7 +17,6 @@ var CitySchema = new Schema({
   }
 });
 
-// var ObjectId = mongoose.Schema.Types.ObjectId
 CitySchema.pre('save', function(next) {
   if (this.isNew) {
     this.meta.createAt = this.meta.updateAt = Date.now();

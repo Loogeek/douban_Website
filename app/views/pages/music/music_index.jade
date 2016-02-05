@@ -7,6 +7,7 @@ block content
       .container-fluid
         .row
           .col-md-6.col-md-offset-1.col-xs-7.screen
+            // 顶部轮播图标签节点
             #galleryFrames
               .panel.panel-default
                 .pannel-body.gallery-hot
@@ -14,11 +15,10 @@ block content
                     li.slide-item
                       a(href="javascript:;")
                         img(src="/images/music/gallery/" + fileList.length + '.jpg' alt="")
-                    - for(var i = 1; i <= fileList.length; i++) {
+                    - for(var i = 1; i <= fileList.length; i++)
                         li.slide-item
                           a(href="javascript:;")
                             img(src="/images/music/gallery/" + i + '.jpg' alt="")
-                    - }
                     li.slide-item
                       a(href="javascript:;")
                         img(src="/images/music/gallery/1.jpg" alt="")

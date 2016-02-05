@@ -2,13 +2,14 @@ extends ./movie_layout
 block link
   link(href="/css/movie/movie_index.css",rel="stylesheet")
 block content
+  // 容器标签节点
   .wrapper
     .content
       .container-fluid
         .row
           .col-md-6.col-md-offset-1.col-xs-7.screen
-            // 正在上映标签节点
-            #screenTop
+            // 顶部轮播图标签节点
+            #scrollMoives.scroll-movies
               each cat in categories
                 if cat.name === '正在上映'
                   .panel.panel-default
@@ -35,12 +36,12 @@ block content
                             .caption
                               h5 #{item.title}
                               p: a.btn.btn-primary(href="/movie/#{item._id}" role="button" target="_blank") 观看预告片
-            // 正在上映下方广告标签节点
+            // 顶部轮播图下方广告标签节点
             .mid-advertisement
               a(href="javascript:;")
                 img(src="/images/movie/middleImg/1.jpg" alt="middelImg")
             // 选电影/选电视剧标签节点
-            #fliterMovies
+            #fliterMovies.fliter-movies
               .screen
                 .class-top
                   span.active 选电影
@@ -157,10 +158,11 @@ block content
           // 电影院搜索标签节点
           .col-md-4.col-xs-4
             .cinemas-search
-              #cityId.city
+              #citySearch.city
                 span 广州
                 i.glyphicon.glyphicon-triangle-bottom
                 #citiesList.cities-list(style="display:none")
+                  // 电影院标题分类名称
                   ul.cities-list-hd
                     li.on(index=1) 热门
                     li(index=2)  A - G
@@ -168,35 +170,14 @@ block content
                     li(index=4)  M - T
                     li(index=5)  W - Z
                   hr
+                  // 全国城市分类列表
                   .cities-list-bd
+                    // 热门城市列表
                     .cities-list-item.active
                       ul
-                        li: a.city-item(href="javascript:;") 北京
-                        li: a.city-item(href="javascript:;") 上海
-                        li: a.city-item(href="javascript:;") 广州
-                        li: a.city-item(href="javascript:;") 深圳
-                        li: a.city-item(href="javascript:;") 成都
-                        li: a.city-item(href="javascript:;") 武汉
-                        li: a.city-item(href="javascript:;") 郑州
-                        li: a.city-item(href="javascript:;") 杭州
-                        li: a.city-item(href="javascript:;") 重庆
-                        li: a.city-item(href="javascript:;") 南京
-                        li: a.city-item(href="javascript:;") 西安
-                        li: a.city-item(href="javascript:;") 苏州
-                        li: a.city-item(href="javascript:;") 天津
-                        li: a.city-item(href="javascript:;") 长沙
-                        li: a.city-item(href="javascript:;") 福州
-                        li: a.city-item(href="javascript:;") 沈阳
-                        li: a.city-item(href="javascript:;") 济南
-                        li: a.city-item(href="javascript:;") 温州
-                        li: a.city-item(href="javascript:;") 哈尔滨
-                        li: a.city-item(href="javascript:;") 合肥
-                        li: a.city-item(href="javascript:;") 青岛
-                        li: a.city-item(href="javascript:;") 大连
-                        li: a.city-item(href="javascript:;") 厦门
-                        li: a.city-item(href="javascript:;") 东莞
-                        li: a.city-item(href="javascript:;") 长春
-                        li: a.city-item(href="javascript:;") 海口
+                        - for(var i = 0; i < cinemas.length; i++)
+                            li: a.city-item(href="javascript:;") #{cinemas[i].cityName}
+                    // A-G城市列表
                     .cities-list-item
                       dl.city-mod
                         dt A
@@ -255,6 +236,7 @@ block content
                             li: a.city-item(href="javascript:;") 兰州
                             li: a.city-item(href="javascript:;") 临沂
                         hr
+              // 电影院搜索节点标签
               #citySug.city-suggestion
                 .city-suggestion-input
                   input(placeholder="搜索本地电影院")
@@ -262,15 +244,18 @@ block content
                 .city-suggestion-list(style="display:none;")
                   h5 可售票影院
                   ul.auto-tip
+            // 电影院下方广告节点标签
             .top-advertisement
               a(href="/fullpage" target="_blank")
                 img(src="/images/movie/advertisements/1.jpg")
+            // 电影活动部分节点标签
             .advertisement-list
               h4 电影活动&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·
               ul
                 li: a(href="javascript:;") 观影大福利！《头脑特工队》周边限量抢
                 li: a(href="javascript:;") 【有奖】怒吼你心中的怪兽(╰_╯)#
                 li: a(href="javascript:;") 资讯|《小王子》曝光终极预告海报
+            // 本周口碑榜节点标签
             .billboard
               each cat in categories
                 if cat.name === '本周口碑榜'
@@ -287,7 +272,9 @@ block content
                                 td.order=i++
                                 td
                                   a(href="/movie/#{item._id}" target="_blank") #{item.title}
+            // 本周口碑榜下方广告部分节点标签
             .advertisement
               a(href="javascript:;")
                 img(src="/images/movie/advertisements/2.jpg")
+  // 电影首页JS脚本
   script(src="/scripts/js/movie/movie_index.js")
