@@ -22,7 +22,7 @@ block content
               if item.category
                 td #{item.category.name}
               else
-                td #{item.category}  
+                td 
               td #{item.title}
               td #{item.doctor}
               td #{item.country}
@@ -33,4 +33,4 @@ block content
               td: a(target="_blank", href="/admin/movie/update/#{item._id}") 修改
               td
                 button.btn.btn-danger.movieDel(type="button", data-id="#{item._id}") 删除
-  script(src="/scripts/js/movie/movie_admin.js")       
+  script(src="/scripts/js/movie/movie_admin.js")

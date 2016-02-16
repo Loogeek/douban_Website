@@ -16,13 +16,14 @@ block content
             input#inputProgramme.form-control(type="text", name="musicCategory[programmeName]", value=musicCategory.programmeName)
         .form-group
           label.col-sm-2.control-label 榜单分类选择
-          each cat in programmes
-            label.radio-inline
-              if musicCategory._id
-                input(type="radio", name="musicCategory[programmeId]", value=cat._id, checked=cat._id.toString()==musicCategory.programme.toString())
-              else
-                input(type="radio", name="musicCategory[programmeId]", value=cat._id)
-              | #{cat.name}              
+          .col-sm-10
+            each cat in programmes
+              label.radio-inline
+                if musicCategory._id
+                  input(type="radio", name="musicCategory[programmeId]", value=cat._id, checked=cat._id.toString()==musicCategory.programme.toString())
+                else
+                  input(type="radio", name="musicCategory[programmeId]", value=cat._id)
+                | #{cat.name}              
         .form-group
           .col-sm-offset-2.col-sm-10
             button.btn.btn-default(type="submit") 录入

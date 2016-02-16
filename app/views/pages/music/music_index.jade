@@ -29,6 +29,7 @@ block content
                   - for(var i = 2; i <= fileList.length; i++) {
                       li= i
                   - }
+            // 编辑推荐标签节点
             each cat in musicCategories
               if cat.name === '编辑推荐'
                 .panel.panel-default#editorFeatured
@@ -57,6 +58,7 @@ block content
             .middle-img
               a(href="javascript:;")
                 img(src="/images/music/1.jpg" alt="小老虎全国巡演")
+            // 新碟榜
             .screen#newAlbums
               each cat in musicCategories
                 if cat.name === '新碟榜最热'
@@ -83,6 +85,7 @@ block content
                             .caption
                               h5 #{cat.musics[i].title}
                               p #{cat.musics[i].singer}
+            // 近期热门歌单
             #hotProgrammes
               each cat in programmes
                 if cat.name === '近期热门歌单最热'
@@ -114,9 +117,11 @@ block content
                                         |#{musicItem.musics[j].title}
                                   span ...
           .col-md-4.col-xs-4
+            // 顶部右侧广告
             .advertisement
               a(href="/fullpage" target="_blank")
                 img(src="/images/music/advertisements/1.jpg")
+            // 热门音乐人分类
             .tag-block#tagBlock
               .screen
                 .billboard-hd.class-top
@@ -133,6 +138,7 @@ block content
                               td: a #{cat.musicCategories[i].name}
                               - i++
                               td: a #{cat.musicCategories[i].name}
+            // 本周单曲榜
             #hotArtistSongs
               .billboard
                 each cat in musicCategories
@@ -159,6 +165,7 @@ block content
                                   h5 #{cat.musics[i].title}
                                   p #{cat.musics[i].singer}&nbsp;/&nbsp;#{cat.musics[i].pv}次播放
                                   span.order=i+1
+            // 豆瓣音乐250                      
             #recInfo
               .billboard
                 each cat in musicCategories

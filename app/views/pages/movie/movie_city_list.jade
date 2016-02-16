@@ -1,0 +1,41 @@
+extends ./movie_layout
+
+block content
+  .container
+    .row
+      table.table.table-hover.table-bordered
+        thead
+          tr
+            th 分类
+            th 城市
+            th 影院
+            th 分类归类
+            th 时间
+            th 查看
+            th 修改
+            th 删除
+        tbody
+          each cityCategoryItem in cityCategoryList
+            tr(class="item-id-#{cityCategoryItem._id}")
+              td #{cityCategoryItem.name}
+              if cityCategoryItem.cities.length > 0
+                td
+                  each cityItem in cityCategoryItem.cities
+                    | #{cityItem.name},
+                td
+                  each cityItem in cityCategoryItem.cities
+                    | #{cityItem.cinemas},
+              else
+                td
+                td
+              if cityCategoryItem.cityProgramme.length > 0
+                each cityProgrammeItem in cityCategoryItem.cityProgramme
+                  td #{cityProgrammeItem.name}
+              else
+                td
+              td #{moment(cityCategoryItem.meta.updateAt).format('MM/DD/YYYY')}
+              td: a(href="#") 查看
+              td: a(href="#") 修改
+              td
+                button.btn.btn-danger.citydel(type="button", data-id="#{cityCategoryItem._id}") 删除
+  script(src="/scripts/js/movie/movie_admin.js")

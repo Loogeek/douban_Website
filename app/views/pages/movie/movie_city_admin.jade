@@ -1,0 +1,38 @@
+extends ./movie_layout
+
+block content
+  .container
+    .row
+      form.form-horizontal(method="post", action="/admin/movie/city")
+        .form-group
+          label.col-sm-3.control-label(for="cityProgrammeName") 新建分类归类
+          .col-sm-6
+            input#cityProgrammeName.form-control(type="text",name="city[cityProgrammeName]",value=city.cityProgrammeName)
+        .form-group
+          label.col-sm-3.control-label 分类归类
+          .col-sm-6
+            each cat in cityProgrammes
+              label.radio-inline
+                input(type="radio",name="city[cityProgrammeId]",value=cat._id)
+                | #{cat.name}
+        .form-group
+          label.col-sm-3.control-label(for="cityCategoryName") 新建城市分类
+          .col-sm-6
+            input#cityCategoryName.form-control(type="text",name="city[cityCategoryName]",value=city.cityCategoryName)
+        .form-group
+          label.col-sm-3.control-label 分类选择
+          .col-sm-1
+            select.form-control(name="city[cityCategoryId]" multiple="multiple")
+              each cat in cityCategories
+                option(value=cat._id) #{cat.name}
+        .form-group
+          label.col-sm-3.control-label(for="city") 城市
+          .col-sm-6
+            input#city.form-control(type="text",name="city[name]",value=city.name)
+        .form-group
+          label.col-sm-3.control-label(for="cityCinemas") 影院名称
+          .col-sm-6
+            input#cityCinemas.form-control(type="text",name="city[cinemas]",value=city.cinemas)
+        .form-group
+          .col-sm-offset-3.col-sm-6
+            button.btn.btn-default(type="submit") 录入

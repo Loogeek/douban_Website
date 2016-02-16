@@ -16,13 +16,14 @@ block content
             input#inputMusicCategory.form-control(type="text", name="music[musicCategoryName]", value=music.musicCategoryName)
         .form-group
           label.col-sm-2.control-label 分类选择
-          each cat in musicCategories
-            label.radio-inline
-              if music._id
-                input(type="radio", name="music[musicCategory]", value=cat._id, checked=cat._id.toString()==music.musicCategory.toString())
-              else
-                input(type="radio", name="music[musicCategory]", value=cat._id)
-              | #{cat.name}
+          .col-sm-10
+            each cat in musicCategories
+              label.radio-inline
+                if music._id
+                  input(type="radio", name="music[musicCategory]", value=cat._id, checked=cat._id.toString()==music.musicCategory.toString())
+                else
+                  input(type="radio", name="music[musicCategory]", value=cat._id)
+                | #{cat.name}
         .form-group
           label.col-sm-2.control-label(for="inputMusicTitle") 音乐名字
           .col-sm-10
@@ -30,7 +31,7 @@ block content
         .form-group
           label.col-sm-2.control-label(for="inputMusicAltTitle") 别名
           .col-sm-10
-            input#inputMusicAltTitle.form-control(type="text", name="music[altTitle]", value=music.altTitle)              
+            input#inputMusicAltTitle.form-control(type="text", name="music[altTitle]", value=music.altTitle)
         .form-group
           label.col-sm-2.control-label(for="inputMusicSinger") 歌手
           .col-sm-10

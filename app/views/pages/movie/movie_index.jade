@@ -9,7 +9,7 @@ block content
         .row
           .col-md-6.col-md-offset-1.col-xs-7.screen
             // 顶部轮播图标签节点
-            #scrollMoives.scroll-movies
+            #scrollMoives
               each cat in categories
                 if cat.name === '正在上映'
                   .panel.panel-default
@@ -164,78 +164,34 @@ block content
                 #citiesList.cities-list(style="display:none")
                   // 电影院标题分类名称
                   ul.cities-list-hd
-                    li.on(index=1) 热门
-                    li(index=2)  A - G
-                    li(index=3)  H - L
-                    li(index=4)  M - T
-                    li(index=5)  W - Z
+                    - for(var i = 0; i < cityProgrammeList.length; i++)
+                      if cityProgrammeList[i].name === '热门'
+                        li.on(index=1) 热门
+                      else
+                        li(index=i+1) #{cityProgrammeList[i].name}
                   hr
                   // 全国城市分类列表
                   .cities-list-bd
                     // 热门城市列表
-                    .cities-list-item.active
-                      ul
-                        - for(var i = 0; i < cinemas.length; i++)
-                            li: a.city-item(href="javascript:;") #{cinemas[i].cityName}
-                    // A-G城市列表
-                    .cities-list-item
-                      dl.city-mod
-                        dt A
-                        dd
+                    - for(var j = 0; j < cityProgrammeList.length; j++)
+                      if cityProgrammeList[j].name === '热门'
+                        .cities-list-item.active
                           ul
-                            li: a.city-item(href="javascript:;") 安庆
-                            li: a.city-item(href="javascript:;") 安阳
-                        hr
-                      dl.city-mod
-                        dt B
-                        dd
-                          ul
-                            li: a.city-item(href="javascript:;") 北京
-                            li: a.city-item(href="javascript:;") 保定
-                        hr
-                      dl.city-mod
-                        dt C
-                        dd
-                          ul
-                            li: a.city-item(href="javascript:;") 重庆
-                            li: a.city-item(href="javascript:;") 成都
-                        hr
-                      dl.city-mod
-                        dt D
-                        dd
-                          ul
-                            li: a.city-item(href="javascript:;") 东莞
-                            li: a.city-item(href="javascript:;") 大连
-                        hr
-                    .cities-list-item
-                      dl.city-mod
-                        dt H
-                        dd
-                          ul
-                            li: a.city-item(href="javascript:;") 杭州
-                            li: a.city-item(href="javascript:;") 合肥
-                        hr
-                      dl.city-mod
-                        dt I
-                        dd
-                          ul
-                            li: a.city-item(href="javascript:;") 济南
-                            li: a.city-item(href="javascript:;") 嘉兴
-                        hr
-                      dl.city-mod
-                        dt K
-                        dd
-                          ul
-                            li: a.city-item(href="javascript:;") 昆明
-                            li: a.city-item(href="javascript:;") 开封
-                        hr
-                      dl.city-mod
-                        dt L
-                        dd
-                          ul
-                            li: a.city-item(href="javascript:;") 兰州
-                            li: a.city-item(href="javascript:;") 临沂
-                        hr
+                            - for(var h = 0; h < cityCategoryList.length; h++)
+                              if cityCategoryList[h].name === '热门'
+                                - for(var k = 0; k < cityCategoryList[h].cities.length; k++)
+                                  li: a.city-item(href="javascript:;") #{cityCategoryList[h].cities[k].name}
+                      else
+                        .cities-list-item
+                          - for(var y = 0; y < cityCategoryList.length; y++)
+                            if cityProgrammeList[j].name === cityCategoryList[y].cityProgramme[0].name
+                              dl.city-mod
+                                dt #{cityCategoryList[y].name}
+                                dd
+                                  ul
+                                    - for(var z = 0; z < cityCategoryList[y].cities.length; z++)
+                                      li: a.city-item(href="javascript:;") #{cityCategoryList[y].cities[z].name}
+                                hr
               // 电影院搜索节点标签
               #citySug.city-suggestion
                 .city-suggestion-input

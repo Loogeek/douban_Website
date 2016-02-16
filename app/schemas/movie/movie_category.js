@@ -17,7 +17,6 @@ var CategorySchema = new Schema({
   }
 });
 
-// var ObjectId = mongoose.Schema.Types.ObjectId
 CategorySchema.pre('save', function(next) {
   if (this.isNew) {
     this.meta.createAt = this.meta.updateAt = Date.now();

@@ -334,7 +334,6 @@ $(function(){
 			var cityName = $city.children('span').text(),
 					searchName = $citySugInput.val(),
 					URL = '/?cityName='+encodeURIComponent(cityName)+'&&search='+encodeURIComponent(searchName);
-
 			// 发送Ajax请求
 			funAjax(URL,'GET',function(results) {
 				var data = results || [];

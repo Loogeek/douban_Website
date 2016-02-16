@@ -73,12 +73,10 @@ exports.save = function(req,res) {
 	var id = req.body.music._id,
 			musicObj = req.body.music,
 			_music;
-
 	// 如果有自定义上传海报  将musicObj中的海报地址改成自定义上传海报的地址
 	if(req.image){
 		musicObj.image = req.image;
 	}
-
 	// 如果数据已存在，则更新相应修改字段
 	if(id){
 		Music.findById(id,function(err,music) {
@@ -116,19 +114,29 @@ exports.save = function(req,res) {
 				});
 			// 输入新的音乐分类
 			}else if(musicCategoryName) {
-				//创建新的音乐分类
-				var musicCategory = new MusicCategory({
-					name: musicCategoryName,
-					musics: [music._id]
-				});
-				// 保存新创建的音乐分类
-				musicCategory.save(function(err,musicCategory) {
-					// 将新创建的音乐保存，musicCategory的ID值为对应的分类ID值
-					// 这样可通过populate方法进行相应值的索引
-					music.musicCategory = musicCategory._id;
-					music.save(function(err,music) {
-						res.redirect('/music/' + music._id);
-					});
+				MusicCategory.findOne({name: musicCategoryName}, function(err, _musicCategoryName) {
+					if(err) {
+						console.log(err);
+					}
+					if(_musicCategoryName) {
+						console.log('音乐分类已存在');
+						res.redirect('/admin/music/musicCategory/list');
+					}else {
+						//创建新的音乐分类
+						var musicCategory = new MusicCategory({
+							name: musicCategoryName,
+							musics: [music._id]
+						});
+						// 保存新创建的音乐分类
+						musicCategory.save(function(err,musicCategory) {
+							// 将新创建的音乐保存，musicCategory的ID值为对应的分类ID值
+							// 这样可通过populate方法进行相应值的索引
+							music.musicCategory = musicCategory._id;
+							music.save(function(err,music) {
+								res.redirect('/music/' + music._id);
+							});
+						});
+					}
 				});
 			}
 		});

@@ -2,13 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 
-var CitySchema = new Schema({
+var CityCategorySchema = new Schema({
   name: String,
-  cinemas: [{}],
-  cityCategory: [{
-    type:ObjectId,
-    ref:'CityCategory'
-  }],
+  cities: [{type: ObjectId, ref: 'City'}],
+  cityProgramme: [{type: ObjectId, ref: 'CityProgramme'}],
   meta: {
     createAt: {
       type: Date,
@@ -21,7 +18,7 @@ var CitySchema = new Schema({
   }
 });
 
-CitySchema.pre('save', function(next) {
+CityCategorySchema.pre('save', function(next) {
   if (this.isNew) {
     this.meta.createAt = this.meta.updateAt = Date.now();
   }
@@ -32,7 +29,7 @@ CitySchema.pre('save', function(next) {
   next();
 });
 
-CitySchema.statics = {
+CityCategorySchema.statics = {
   fetch: function(cb) {
     return this
       .find({})
@@ -46,4 +43,4 @@ CitySchema.statics = {
   }
 };
 
-module.exports = CitySchema;
+module.exports = CityCategorySchema;

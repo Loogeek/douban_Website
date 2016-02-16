@@ -171,13 +171,17 @@
 		  top: 7px;
 		  cursor: pointer;
 	  }
+		hr{
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
   }
   .cities-list{
 	  position: absolute;
 	  top: 40px;
 	  border: 1px solid #dfdfdf;
 	  @include box-shadow(0,1px,2px,0,0,0,0.3);
-	  padding: 20px;
+	  padding: 20px 20px 0;
 	  // width: 366px;
 	  background-color: #fff;
 	  span{color: #2e7ab3;}

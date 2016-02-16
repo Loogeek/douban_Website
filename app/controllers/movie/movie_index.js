@@ -1,7 +1,9 @@
 /* 与首页进行交互 */
-var Movie = require('../../models/movie/movie');							// 引入电影模型
-var Category = require('../../models/movie/movie_category');	// 引入电影分类模型
-var City = require('../../models/movie/movie_city');					// 引入电影院模型
+var Movie = require('../../models/movie/movie'),											// 引入电影模型
+		Category = require('../../models/movie/movie_category'),					// 引入电影分类模型
+		City = require('../../models/movie/movie_city'),									// 引入电影院模型
+		CityCategory = require('../../models/movie/movie_cityCategory'),  // 电影院分类模型
+		CityProgramme = require('../../models/movie/movie_cityProgramme');// 电影院分类股归类
 
 /* 电影首页控制器 */
 exports.index = function(req,res){
@@ -9,18 +11,23 @@ exports.index = function(req,res){
 			_fliterName = req.query.fliterName,   // 选电影/选电视剧区电影分类标题名称
 			_cityName = req.query.cityName,	    	// 电影院所在城市
 			_searchName = req.query.search;    	  // 影院搜索框输入的电影院名称
+
 	// 如果是电影院搜索框中发送了Ajax请求
 	if(_cityName) {
-		City.findOne({cityName: _cityName})
-			.exec(function(err,searchName) {
+		City.findOne({name: _cityName})
+			.exec(function(err,searchResults) {
 				var results = [];
-				if(searchName) {
-					var searchArr = searchName.name;
-					// 通过正则获取影院名，其中先将对象转换成字符串后使用字符串的match方法
-					// [^\u0000-\u00FF]{0,}表示匹配零或多个中文字符
-					results = searchArr.toString().match(new RegExp('[^\\u0000-\\u00FF]{0,}'+_searchName+'[^\\u0000-\\u00FF]{0,}','g'));
-					if(err) {
-						console.log(err);
+				if(searchResults) {
+					var searchCinemas = searchResults.cinemas;
+					if(_searchName) {
+						// 通过正则获取影院名，其中先将对象转换成字符串后使用字符串的match方法
+						// [^\u0000-\u00FF]{0,}表示匹配零或多个中文字符
+						results = searchCinemas.toString().match(new RegExp('[^\\u0000-\\u00FF]{0,}'+_searchName+'[^\\u0000-\\u00FF]{0,}','g'));
+						if(err) {
+							console.log(err);
+						}
+					}else {
+						results = searchCinemas;
 					}
 					res.json(results);
 				}
@@ -30,9 +37,9 @@ exports.index = function(req,res){
 		Category
 			.findOne({name: _fliterName})
 			.populate({
-				path:'movies',
-				select:'title poster',
-				option:{limit: 6}        					//限制最多6条数据
+				path: 'movies',
+				select: 'title poster',
+				option: {limit: 6}        					//限制最多6条数据
 			})
 			.exec(function(err,category){
 				if(err){
@@ -45,9 +52,9 @@ exports.index = function(req,res){
 		Category
 			.findOne({name: _galleryName})
 			.populate({
-				path:'movies',
-				select:'title poster',
-				option:{limit: 6}        					//限制最多6条数据
+				path: 'movies',
+				select: 'title poster',
+				option: {limit: 6}        					//限制最多6条数据
 			})
 			.exec(function(err,category) {
 				if(err){
@@ -60,9 +67,9 @@ exports.index = function(req,res){
 		Category
 			.find({})
 			.populate({
-				path:'movies',
-				select:'title poster',
-				option:{limit: 6}        					 //限制最多6条数据
+				path: 'movies',
+				select: 'title poster',
+				option: {limit: 6}        					 //限制最多6条数据
 			})
 			.exec(function(err,categories) {
 				if(err){
@@ -73,12 +80,29 @@ exports.index = function(req,res){
 						if(err){
 							console.log(err);
 						}
-						res.render('movie/movie_index',{
-							title:'豆瓣电影首页',
-							categories: categories,
-							cinemas: cinemas
+						CityProgramme.find({})
+							.populate('cityCategories', 'name')
+							.exec(function(err, cityProgrammeList) {
+								if(err){
+									console.log(err);
+								}
+								CityCategory.find({})
+									.populate('cities','name')
+									.populate('cityProgramme','name')
+									.exec(function(err,cityCategoryList) {
+										if(err){
+											console.log(err);
+										}
+										res.render('movie/movie_index',{
+											title: '豆瓣电影首页',
+											categories: categories,
+											cinemas: cinemas,
+											cityProgrammeList: cityProgrammeList,
+											cityCategoryList: cityCategoryList
+										});
+									});
+							});
 					});
-				});
 			});
 		}
 };

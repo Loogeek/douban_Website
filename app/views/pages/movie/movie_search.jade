@@ -3,17 +3,17 @@
     .nav-logo
       a(href="/")
         img(src="/images/movie/navMovieLogo.png", alt="MovieLogo")
-    .nav-search     
+    .nav-search
       form(method='GET', action='/movie/results')
         input(type='text', name='q' placeholder="电影搜索")
         span
-          button.btn.btn-default(type='submit') 搜索 
+          button.btn.btn-default(type='submit') 搜索
   .nav-wrap
     if user && user.role > 10
       ul.clearfix
         li: a(href="/admin/movie/new" target="_blank") 电影后台录入页
-        li: a(href="/admin/movie/list" target="_blank") 电影列表页    
-        li: a(href="/admin/movie/category/new" target="_blank") 电影分类页
-        li: a(href="/admin/movie/category/list" target="_blank") 分类列表页         
+        li: a(href="/admin/movie/list" target="_blank") 电影列表页
+        li: a(href="/admin/movie/category/new" target="_blank") 电影分类录入页
+        li: a(href="/admin/movie/category/list" target="_blank") 电影分类列表页
         li: a(href="/admin/movie/city/new" target="_blank") 电影院录入页
-        li: a(href="/admin/movie/city/list" target="_blank") 电影院列表页 
+        li: a(href="/admin/movie/city/list" target="_blank") 电影院列表页
