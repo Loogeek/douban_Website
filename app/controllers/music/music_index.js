@@ -1,15 +1,17 @@
+"use strict";
+
 /* 音乐首页交互 */
-var Music = require('../../models/music/music');		// 引入music模型
-var MusicCategory = require('../../models/music/music_category');  // 引入音乐分类模型
-var Programme = require('../../models/music/music_programme');// 引入近期热门歌单区域模型
-var fs = require('fs');															// 读写文件模块
-var path = require('path');													// 路径模块
+var Music = require('../../models/music/music'),									// 引入music模型
+		MusicCategory = require('../../models/music/music_category'), // 引入音乐分类模型
+		Programme = require('../../models/music/music_programme'),		// 引入近期热门歌单区域模型
+		fs = require('fs'),																						// 读写文件模块
+		path = require('path');																				// 路径模块
 
 /* 音乐首页 */
 exports.index = function(req,res) {
-	var albumName = req.query.albumName;  						// 获取新碟榜区分类请求名称
-	var hotProName = req.query.hotProName; 						// 获取近期热门歌单分类请求名称
-	var hotSongs = req.query.hotSongs; 								// 获取本周单曲榜区分类请求名称
+	var albumName = req.query.albumName,  						// 获取新碟榜区分类请求名称
+			hotProName = req.query.hotProName, 						// 获取近期热门歌单分类请求名称
+			hotSongs = req.query.hotSongs; 								// 获取本周单曲榜区分类请求名称
 	// 如果是新碟榜部分发送Ajax请求
 	if(albumName) {
 		MusicCategory
@@ -144,7 +146,7 @@ exports.search = function(req,res) {
 				console.log(err);
 			}
 			if(musicCategories) {
-				var musicCategory = musicCategories[0] || {},			// 查询到的音乐分类
+				var musicCategory = musicCategories[0] || {},	// 查询到的音乐分类
 				musics = musicCategory.musics || [],					// 分类中包含的音乐
 				results = musics.slice(index, index + count); // 分类页面每页显示的音乐数量
 
@@ -195,9 +197,9 @@ exports.search = function(req,res) {
 								// results = dataMusics.slice(index, index + count);
 								res.render('music/music_results', {
 									title: '近期热门歌单分类列表页面',
-									keyword: musicCategories[0].name,						// 分类名称
-									currentPage: (page + 1),										// 当前页
-									query: 'pro=' + proId,											// 切换到另一页
+									keyword: musicCategories[0].name,					// 分类名称
+									currentPage: (page + 1),									// 当前页
+									query: 'pro=' + proId,										// 切换到另一页
 									totalPage: Math.ceil(dataMusics.length / count),// 总页数，需向上取整
 									musicCats: dataMusics     								// 查询到音乐分类下所含的音乐
 								});

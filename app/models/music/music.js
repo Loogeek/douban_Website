@@ -1,5 +1,7 @@
-var mongoose = require('mongoose');
-var MusicSchema = require('../../schemas/music/music');
+"use strict";
+
+var mongoose = require('mongoose'),
+    MusicSchema = require('../../schemas/music/music');
 
 //使用mongoose的模型方法编译生成模型
 var Music = mongoose.model('Music',MusicSchema);

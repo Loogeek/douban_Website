@@ -1,19 +1,20 @@
 
-var MovieIndex = require('../app/controllers/movie/movie_index'), // 电影首页控制器
+var MovieIndex = require('../app/controllers/movie/movie_index'), 		// 电影首页控制器
 		// 电影首页模块路由控制器
-		User = require('../app/controllers/user/user'),	  						// 用户模块路由控制器
-		Movie = require('../app/controllers/movie/movie'),   					// 电影模块路由控制器
-		Comment = require('../app/controllers/movie/movie_comment'), 	// 电影评论控制器
-		Category = require('../app/controllers/movie/movie_category'),// 电影分类控制器
-		City = require('../app/controllers/movie/movie_city'),       	// 电影院分类控制器
+		User = require('../app/controllers/user/user'),	  								// 用户模块路由控制器
+		Movie = require('../app/controllers/movie/movie'),   							// 电影模块路由控制器
+		MovieComment = require('../app/controllers/movie/movie_comment'), // 电影评论控制器
+		Category = require('../app/controllers/movie/movie_category'),		// 电影分类控制器
+		City = require('../app/controllers/movie/movie_city'),       			// 电影院分类控制器
 
 		// 音乐首页模块路由控制器
-		MusicIndex = require('../app/controllers/music/music_index'), // 音乐首页控制器
-		Music = require('../app/controllers/music/music'),   					// 音乐模块路由控制器
+		MusicIndex = require('../app/controllers/music/music_index'), 		// 音乐首页控制器
+		Music = require('../app/controllers/music/music'),   							// 音乐模块路由控制器
 		/* 音乐分类控制器 */
 		MusicCategory = require('../app/controllers/music/music_category'),
 		/* 音乐热门榜单控制器 */
 		Programmer = require('../app/controllers/music/music_programme'),
+		MusicComment = require('../app/controllers/music/music_comment'), // 音乐评论控制器
 
 		multipart = require('connect-multiparty'),
 		multipartMiddleware = multipart();
@@ -55,9 +56,10 @@ module.exports = function(app){
 	// 电影广告页
 	app.get('/fullpage',MovieIndex.fullpage);
 
-	// 详细页面路由
+	// 电影详细页面路由
 	app.get('/movie/:id',Movie.detail);
-	app.delete('/movie/:id',Comment.del);
+	app.delete('/movie/:id',MovieComment.del);
+	app.post('/admin/movie/movieComment',User.signinRequired,MovieComment.save);// 用户评论
 
 	// 后台录入路由
 	// User.signinRequired 用户登录控制
@@ -71,9 +73,6 @@ module.exports = function(app){
 	app.get('/admin/movie/list',User.signinRequired,User.adminRequired,Movie.list);
 	// 电影列表删除电影路由
 	app.delete('/admin/movie/list',Movie.del);
-
-	// 用户评论路由
-	app.post('/admin/movie/comment',User.signinRequired,Comment.save);
 
 	// 电影分类路由
 	app.get('/admin/movie/category/new',User.signinRequired,User.adminRequired,Category.new);
@@ -92,14 +91,15 @@ module.exports = function(app){
 
 	/*
 		豆瓣音乐网站路由
-	 */
+	*/
 	// 音乐主页路由
 	app.get('/musicindex',MusicIndex.index);
 	// 豆瓣音乐搜索结果页
 	app.get('/music/results',MusicIndex.search);
-	// 详细页面路由
+	// 音乐详细页面路由
 	app.get('/music/:id',Music.detail);
-	app.delete('/music/:id',Comment.del);
+	app.delete('/music/:id',MusicComment.del);
+	app.post('/admin/music/musicComment',User.signinRequired,MusicComment.save);// 用户评论
 
 	// 后台录入路由
 	// User.signinRequired 用户登录控制

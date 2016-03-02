@@ -1,3 +1,5 @@
+"use strict";
+
 var City = require('../../models/movie/movie_city'),                  // 电影影院数据模型
     CityCategory = require('../../models/movie/movie_cityCategory'),  // 电影院分类模型
     CityProgramme = require('../../models/movie/movie_cityProgramme');// 电影院分类股归类
@@ -68,7 +70,7 @@ exports.save = function(req, res) {
         var newCityProgramme = new CityProgramme({
           name: cityProgrammeName,               // 城市分类名称
         });
-        newCityProgramme.save(function(err, _newCityProgramme) {
+        newCityProgramme.save(function(err) {
           if(err) {
             console.log(err);
           }
@@ -95,7 +97,7 @@ exports.save = function(req, res) {
           name: cityCategoryName,                       // 城市分类名称
         });
         // 保存新建城市分类
-        newCityCategory.save(function(err, _newCityCategory) {
+        newCityCategory.save(function(err) {
           if(err) {
             console.log(err);
           }
@@ -117,7 +119,7 @@ exports.save = function(req, res) {
         // 若电影院不存在
         if(_city.cinemas.indexOf(cinemas) === -1) {
           _city.cinemas.push(cinemas);                   // 将电影院添加到该城市列表中
-          _city.save(function(err, _city) {
+          _city.save(function(err) {
             if (err) {
               console.log(err);
             }

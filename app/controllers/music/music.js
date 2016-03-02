@@ -1,7 +1,9 @@
+"use strict";
+
 var Music = require('../../models/music/music'),       						//音乐数据模型
-		CommentMusic = require('../../models/movie/movie_comment'),   //音乐评论模型
+		MusicComment = require('../../models/music/music_comment'),   //音乐评论模型
 		MusicCategory = require('../../models/music/music_category'), //音乐分类模型
-		_ = require('underscore'),   													//该模块用来对变化字段进行更新
+		_ = require('underscore'),   																//该模块用来对变化字段进行更新
 		fs = require('fs'),																						//读写文件模块
 		path = require('path');																				//路径模块
 
@@ -14,11 +16,11 @@ exports.detail = function(req,res) {
 			console.log(err);
 		}
 	});
-	// CommentMusic存储到数据库中的_id值与相应的Music _id值相同
+	// MusicComment存储到数据库中的_id值与相应的Music _id值相同
 	Music.findById(_id,function(err,music) {
 		// 查找该_id值所对应的评论信息
-		CommentMusic
-			.find({music:  _id})
+		MusicComment
+			.find({music: _id})
 			.populate('from','name')
 			.populate('reply.from reply.to','name')							// 查找评论人和回复人的名字
 			.exec(function(err,comments) {
@@ -48,16 +50,22 @@ exports.savePoster = function(req, res, next) {
 			filePath = imageData.path,															//文件路径
 			originalFilename = imageData.originalFilename;					//原始名字
 
-	if(originalFilename){
-		fs.readFile(filePath,function(err,data) {
+	if(originalFilename) {
+		fs.readFile(filePath, function(err,data) {
+			if(err) {
+				console.log(err);
+			}
 			var timestamp = Date.now(),  														//获取时间
 					type = imageData.type.split('/')[1], 								//获取图片类型 如jpg png
 					image = timestamp + '.' + type,  										//上传海报新名字
 					//将新创建的海报图片存储到/public/upload 文件夹下
-					newPath = path.join(__dirname,'../../','/public/upload/' + image);
+					newPath = path.join(__dirname,'../../../','/public/upload/music/' + image);
 
 			// 写入文件
 			fs.writeFile(newPath,data,function(err) {
+				if(err){
+					console.log(err);
+				}
 				req.image = image;
 				next();
 			});
@@ -78,7 +86,7 @@ exports.save = function(req,res) {
 		musicObj.image = req.image;
 	}
 	// 如果数据已存在，则更新相应修改字段
-	if(id){
+	if(id) {
 		Music.findById(id,function(err,music) {
 			if(err) {
 				console.log(err);
@@ -97,7 +105,6 @@ exports.save = function(req,res) {
 		// 获取音乐所属分类名称和ID值
 		var musicCategoryId = musicObj.musicCategory,
 				musicCategoryName = musicObj.musicCategoryName;
-
     // 创建一个音乐新数据
 		_music = new Music(musicObj);
 		_music.save(function(err,music) {
@@ -107,8 +114,14 @@ exports.save = function(req,res) {
 			// 选择了音乐所属的音乐分类
 			if(musicCategoryId) {
 				MusicCategory.findById(musicCategoryId,function(err,musicCategory) {
+					if(err){
+						console.log(err);
+					}
 					musicCategory.musics.push(music._id);
-					musicCategory.save(function(err,musicCategory) {
+					musicCategory.save(function(err) {
+						if(err){
+							console.log(err);
+						}
 						res.redirect('/music/' + music._id);
 					});
 				});
@@ -138,6 +151,8 @@ exports.save = function(req,res) {
 						});
 					}
 				});
+			}else {
+				res.redirect('/admin/music/musicCategory/list');
 			}
 		});
 	}
@@ -180,13 +195,33 @@ exports.list = function(req,res)  {
 exports.del = function(req,res) {
 	// 获取客户端Ajax发送的URL值中的id值
 	var id  = req.query.id;
-	if(id){
-		// 如果id存在则服务器中将该条数据删除并返回删除成功的json数据
-		Music.remove({_id: id},function(err,music) {
+	if(id) {
+		Music.findById(id, function(err,music) {				// 查找该条音乐信息
 			if(err) {
 				console.log(err);
 			}
-			res.json({success: 1});
+			// 查找包含这条音乐的音乐分类
+			MusicCategory.findById(music.musicCategory, function(err, musicCategory) {
+				if(err) {
+					console.log(err);
+				}
+				// 在音乐分类musics数组中查找该值所在位置
+				if(musicCategory) {
+					var index = musicCategory.musics.indexOf(id);
+					musicCategory.musics.splice(index,1);					// 从分类中删除该数据
+					musicCategory.save(function(err) {						// 对变化的音乐分类数据进行保存
+						if(err) {
+							console.log(err);
+						}
+					});
+				}
+				Music.remove({_id: id}, function(err) {		// 音乐模型中删除该电影数据
+					if(err) {
+						console.log(err);
+					}
+					res.json({success: 1});									// 返回删除成功的json数据给游览器
+				});
+			});
 		});
 	}
 };

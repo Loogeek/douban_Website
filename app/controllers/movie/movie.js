@@ -1,9 +1,11 @@
+"use strict";
+
 var Movie = require('../../models/movie/movie'),       				  // 电影数据模型
-		CommentMovie = require('../../models/movie/movie_comment'), // 电影评论模型
+		MovieComment = require('../../models/movie/movie_comment'), // 电影评论模型
 		Category = require('../../models/movie/movie_category'), 	  // 电影分类模型
 		_ = require('underscore'),   														// 该模块用来对变化字段进行更新
-		fs = require('fs'),																			// 读写文件模块
-		path = require('path');																	// 路径模块
+		fs = require('fs'),																					// 读写文件模块
+		path = require('path');																			// 路径模块
 
 // 详细页面路由
 exports.detail = function(req,res) {
@@ -14,10 +16,10 @@ exports.detail = function(req,res) {
 			console.log(err);
 		}
 	});
-	// CommentMovie存储到数据库中的_id值与相应的Movie _id值相同
+	// MovieComment存储到数据库中的_id值与相应的Movie _id值相同
 	Movie.findById(_id, function(err,movie) {
 		// 查找该_id值所对应的评论信息
-		CommentMovie
+		MovieComment
 			.find({movie: _id})
 			.populate('from','name')
 			.populate('reply.from reply.to','name')// 查找评论人和回复人的名字
@@ -49,14 +51,20 @@ exports.savePoster = function(req, res, next) {
 			originalFilename = posterData.originalFilename;					// 原始名字
 
 	if(originalFilename) {
-		fs.readFile(filePath,function(err,data) {
+		fs.readFile(filePath, function(err,data) {
+			if(err) {
+				console.log(err);
+			}
 			var timestamp = Date.now(),  														// 获取时间
 					type = posterData.type.split('/')[1], 							// 获取图片类型 如jpg png
 					poster = timestamp + '.' + type,   									// 上传海报新名字
 					// 将新创建的海报图片存储到/public/upload 文件夹下
-					newPath = path.join(__dirname,'../../../','/public/upload/' + poster);
+					newPath = path.join(__dirname,'../../../','/public/upload/movie/' + poster);
 			// 写入文件
 			fs.writeFile(newPath,data,function(err) {
+				if(err) {
+					console.log(err);
+				}
 				req.poster = poster;
 				next();
 			});
@@ -104,8 +112,14 @@ exports.save = function(req,res) {
 			// 如果选取了存在的电影分类
 			if(categoryId) {
 				Category.findById(categoryId,function(err,category) {
+					if(err) {
+						console.log(err);
+					}
 					category.movies.push(movie._id);
-					category.save(function(err,category) {
+					category.save(function(err) {
+						if(err) {
+							console.log(err);
+						}
 						res.redirect('/movie/' + movie._id);
 					});
 				});
@@ -171,13 +185,31 @@ exports.list = function(req,res) {
 exports.del = function(req,res) {
 	// 获取客户端Ajax发送的URL值中的id值
 	var id  = req.query.id;
+	// 如果id存在则服务器中将该条数据删除并返回删除成功的json数据
 	if(id) {
-		// 如果id存在则服务器中将该条数据删除并返回删除成功的json数据
-		Movie.remove({_id: id}, function(err,movie) {
+		Movie.findById(id, function(err,movie) {				// 查找该条电影信息
 			if(err) {
 				console.log(err);
 			}
-			res.json({success: 1});
+			// 查找包含这条电影的电影分类
+			Category.findById(movie.category, function(err, category) {
+				if(err) {
+					console.log(err);
+				}
+				var index = category.movies.indexOf(id);	// 在电影分类movies数组中查找该值所在位置
+				category.movies.splice(index,1);					// 从分类中删除该数据
+				category.save(function(err) {							// 对变化的电影分类数据进行保存
+					if(err) {
+						console.log(err);
+					}
+				});
+				Movie.remove({_id: id}, function(err) {		// 电影模型中删除该电影数据
+					if(err) {
+						console.log(err);
+					}
+					res.json({success: 1});									// 返回删除成功的json数据给游览器
+				});
+			});
 		});
 	}
 };

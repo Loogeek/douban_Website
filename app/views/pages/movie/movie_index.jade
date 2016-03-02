@@ -32,12 +32,12 @@ block content
                               if item.poster.indexOf('http:') > -1
                                 img(src="#{item.poster}", alt="#{item.title}")
                               else
-                                img(src="/upload/#{item.poster}", alt="#{item.title}")
+                                img(src="/upload/movie/#{item.poster}", alt="#{item.title}")
                             .caption
                               h5 #{item.title}
                               p: a.btn.btn-primary(href="/movie/#{item._id}" role="button" target="_blank") 观看预告片
             // 顶部轮播图下方广告标签节点
-            .mid-advertisement
+            .left-advertisement
               a(href="javascript:;")
                 img(src="/images/movie/middleImg/1.jpg" alt="middelImg")
             // 选电影/选电视剧标签节点
@@ -65,12 +65,6 @@ block content
                       button.btn.btn-default 欧美
                     li
                       button.btn.btn-default 韩国
-                    li
-                      button.btn.btn-default 日本
-                    li
-                      button.btn.btn-default 动作
-                    li
-                      button.btn.btn-default 喜剧
                   hr
                 // 热门电影标签节点
                 .screen-body
@@ -89,6 +83,7 @@ block content
                                       img(src="/upload/#{item.poster}", alt="#{item.title}")
                                   .caption
                                     h5 #{item.title}
+                        a.more(href="javascript:;" role="button") 加载更多
             // 热门推荐标签节点
             #galleryFrames.panel.panel-default
               .panel-heading.screen-header
@@ -201,11 +196,11 @@ block content
                   h5 可售票影院
                   ul.auto-tip
             // 电影院下方广告节点标签
-            .top-advertisement
+            .right-advertisement
               a(href="/fullpage" target="_blank")
                 img(src="/images/movie/advertisements/1.jpg")
             // 电影活动部分节点标签
-            .advertisement-list
+            .right-advertisementList
               h4 电影活动&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·
               ul
                 li: a(href="javascript:;") 观影大福利！《头脑特工队》周边限量抢
@@ -229,7 +224,7 @@ block content
                                 td
                                   a(href="/movie/#{item._id}" target="_blank") #{item.title}
             // 本周口碑榜下方广告部分节点标签
-            .advertisement
+            .right-advertisement
               a(href="javascript:;")
                 img(src="/images/movie/advertisements/2.jpg")
   // 电影首页JS脚本

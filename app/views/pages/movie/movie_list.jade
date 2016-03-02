@@ -8,8 +8,11 @@ block content
           tr
             th 类别
             th 电影名字
+            th 又名
             th 导演
+            th 主演
             th 国家
+            th 评分
             th 上映年份
             th 录入时间
             th pv
@@ -22,10 +25,13 @@ block content
               if item.category
                 td #{item.category.name}
               else
-                td 
+                td
               td #{item.title}
+              td #{item.aka}
               td #{item.doctor}
+              td #{item.casts}
               td #{item.country}
+              td #{item.rating}
               td #{item.year}
               td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
               td #{item.pv}

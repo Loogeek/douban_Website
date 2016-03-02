@@ -1,13 +1,15 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
+"use strict";
+
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    ObjectId = Schema.Types.ObjectId;
 
 var CitySchema = new Schema({
   name: String,
   cinemas: [{}],
   cityCategory: [{
-    type:ObjectId,
-    ref:'CityCategory'
+    type: ObjectId,
+    ref: 'CityCategory'
   }],
   meta: {
     createAt: {

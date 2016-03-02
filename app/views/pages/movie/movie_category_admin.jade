@@ -3,11 +3,11 @@ extends ./movie_layout
 block content
   .container
     .row
-      form.form-horizontal(method="post", action="/admin/movie/category")
+      form.form-horizontal(method="post" action="/admin/movie/category")
         .form-group
-          label.col-sm-2.control-label(for="inputCategory") 电影分类
-          .col-sm-10
-            input#inputCategory.form-control(type="text", name="category[name]", value=category.name)
+          label.col-sm-3.control-label(for="inputCategory") 电影分类
+          .col-sm-6
+            input#inputCategory.form-control(type="text" name="category[name]" value=category.name)
         .form-group
-          .col-sm-offset-2.col-sm-10
+          .col-sm-offset-3.col-sm-6
             button.btn.btn-default(type="submit") 录入

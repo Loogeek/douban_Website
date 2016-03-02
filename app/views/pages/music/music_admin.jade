@@ -5,18 +5,18 @@ block content
     .row
       form.form-horizontal(method="post", action="/admin/music",enctype="multipart/form-data")
         .form-group
-          label.col-sm-2.control-label 豆瓣音乐同步
-          .col-sm-10
+          label.col-sm-3.control-label 豆瓣音乐同步
+          .col-sm-6
             input#doubanMusic.form-control(type="text")
         if music._id
           input(type="hidden", name="music[_id]", value=music._id)
         .form-group
-          label.col-sm-2.control-label(for="inputMusicCategory") 音乐分类
-          .col-sm-10
+          label.col-sm-3.control-label(for="inputMusicCategory") 音乐分类
+          .col-sm-6
             input#inputMusicCategory.form-control(type="text", name="music[musicCategoryName]", value=music.musicCategoryName)
         .form-group
-          label.col-sm-2.control-label 分类选择
-          .col-sm-10
+          label.col-sm-3.control-label 分类选择
+          .col-sm-6
             each cat in musicCategories
               label.radio-inline
                 if music._id
@@ -25,42 +25,54 @@ block content
                   input(type="radio", name="music[musicCategory]", value=cat._id)
                 | #{cat.name}
         .form-group
-          label.col-sm-2.control-label(for="inputMusicTitle") 音乐名字
-          .col-sm-10
+          label.col-sm-3.control-label(for="inputMusicTitle") 音乐名字
+          .col-sm-6
             input#inputMusicTitle.form-control(type="text", name="music[title]", value=music.title)
         .form-group
-          label.col-sm-2.control-label(for="inputMusicAltTitle") 别名
-          .col-sm-10
+          label.col-sm-3.control-label(for="inputMusicAltTitle") 别名
+          .col-sm-6
             input#inputMusicAltTitle.form-control(type="text", name="music[altTitle]", value=music.altTitle)
         .form-group
-          label.col-sm-2.control-label(for="inputMusicSinger") 歌手
-          .col-sm-10
+          label.col-sm-3.control-label(for="inputMusicSinger") 歌手
+          .col-sm-6
             input#inputMusicSinger.form-control(type="text", name="music[singer]", value=music.singer)
         .form-group
-          label.col-sm-2.control-label(for="inputMusicVersion") 专辑类型
-          .col-sm-10
+          label.col-sm-3.control-label(for="inputMusicVersion") 专辑类型
+          .col-sm-6
             input#inputMusicVersion.form-control(type="text", name="music[version]", value=music.version)
         .form-group
-          label.col-sm-2.control-label(for="inputMusicMedia") 介质
-          .col-sm-10
+          label.col-sm-3.control-label(for="inputMusicMedia") 介质
+          .col-sm-6
             input#inputMusicMedia.form-control(type="text", name="music[media]", value=music.media)
         .form-group
-          label.col-sm-2.control-label(for="inputMusicImage") 歌曲封面
-          .col-sm-10
+          label.col-sm-3.control-label(for="inputMusicImage") 歌曲封面
+          .col-sm-6
             input#inputMusicImage.form-control(type="text", name="music[image]", value=music.image)
         .form-group
-          label.col-sm-2.control-label(for="uploadMusicImage") 海报上传
-          .col-sm-10
+          label.col-sm-3.control-label(for="uploadMusicImage") 海报上传
+          .col-sm-6
             input#uploadMusicImage(type="file", name="uploadMusicImage")
         .form-group
-          label.col-sm-2.control-label(for="inputMusicPubdate") 发行时间
-          .col-sm-10
+          label.col-sm-3.control-label(for="inputMusicSrc") 音乐地址
+          .col-sm-6
+            input#inputMusicSrc.form-control(type="text", name="music[src]", value=music.src)
+        .form-group
+          label.col-sm-3.control-label(for="inputMusicPubdate") 发行时间
+          .col-sm-6
             input#inputMusicPubdate.form-control(type="text", name="music[pubdate]", value=music.pubdate)
         .form-group
-          label.col-sm-2.control-label(for="inputMusicSummary") 歌曲简介
-          .col-sm-10
+          label.col-sm-3.control-label(for="inputMusicPublisher") 出版者
+          .col-sm-6
+            input#inputMusicPublisher.form-control(type="text", name="music[publisher]", value=music.publisher)
+        .form-group
+          label.col-sm-3.control-label(for="inputMusicRating") 豆瓣评分
+          .col-sm-6
+            input#inputMusicRating.form-control(type="text", name="music[rating]", value=music.rating)
+        .form-group
+          label.col-sm-3.control-label(for="inputMusicSummary") 歌曲简介
+          .col-sm-6
             textarea#inputMusicSummary.form-control(type="text", name="music[summary]")= music.summary
         .form-group
-          .col-sm-offset-2.col-sm-10
+          .col-sm-offset-3.col-sm-6
             button.btn.btn-default(type="submit") 录入
   script(src='/scripts/js/music/music_admin.js')

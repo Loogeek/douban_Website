@@ -1,39 +1,44 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
-//电影数据类型
+"use strict";
+
+var mongoose = require('mongoose'),
+		Schema = mongoose.Schema,
+		ObjectId = Schema.Types.ObjectId;
+// 电影数据类型
 var MovieSchema = new Schema({
-	doctor: String,
-	title: String,
-	language: String,
-	country: String,
-	summary: String,
-	flash: String,
-	poster: String,
-	year: Number,
-	pv:{
+	doctor: String,											// 导演
+	title: String,											// 标题
+	country: String, 										// 上映城市
+	summary: String, 										// 简介
+	flash: String,	 										// 片源地址
+	poster: String,	 										// 电影海报
+	year: Number,    										// 上映时间
+	aka: String,		 										// 又名
+	casts: String,		 									// 主演
+	genres: String,											// 类型
+	rating: String,											// 豆瓣评分
+	pv:{																// 访问量
 		type:Number,
 		default:0
 	},
-	category:{
-		type:ObjectId,
-		ref:'Category'
+	category: {													// 电影分类
+		type: ObjectId,
+		ref: 'Category'
 	},
-    meta: {
-    	createAt: {
-	    	type: Date,
-	    	default: Date.now()
-    },
-    updateAt: {
+  meta: {
+  	createAt: {												// 创建时间
+    	type: Date,
+    	default: Date.now()
+  	},
+	  updateAt: {												// 更新时间
 	    type: Date,
 	    default: Date.now()
-    }
-  }
+	  }
+	}
 });
 
-//模式保存前执行下面函数,如果当前数据是新创建，则创建时间和更新时间都是当前时间，否则更新时间是当前时间
-MovieSchema.pre('save',function(next){
-	if(this.isNew){
+// 模式保存前执行下面函数,如果当前数据是新创建，则创建时间和更新时间都是当前时间，否则更新时间是当前时间
+MovieSchema.pre('save',function(next) {
+	if(this.isNew) {
 		this.meta.createAt = this.meta.updateAt = Date.now();
 	}else{
 		this.meta.updateAt = Date.now();
@@ -41,17 +46,17 @@ MovieSchema.pre('save',function(next){
 	next();
 });
 
-//静态方法不会与数据库直接交互，需要经过模型编译实例化后才会具有该方法
+// 静态方法不会与数据库直接交互，需要经过模型编译实例化后才会具有该方法
 MovieSchema.statics = {
-	fetch : function(cb){
+	fetch: function(cb) {
 		return this
 			.find({})
 			.sort('meta.updateAt')
-			.exec(cb);		
+			.exec(cb);
 	},
-	findById : function(id,cb){
+	findById: function(id,cb) {
 		return this
-			.findOne({_id:id})
+			.findOne({_id: id})
 			.exec(cb);
 	}
 };

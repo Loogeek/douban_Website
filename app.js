@@ -12,24 +12,25 @@ var express = require('express'),					          	// 加载express模块
     port = process.env.PORT || 3000,                  // 设置监听端口
     app = express(),                                  // 生成Web服务器实例
 
-    dbUrl = 'mongodb://127.0.0.1/imooc';              // 连接本地数据库及数据库名称
+    dbUrl = 'mongodb://127.0.0.1/douban';             // 连接本地数据库及数据库名称
 
 mongoose.connect(dbUrl);
 
 // models loading
-var models_path = __dirname + '/app/models';
+var models_path = __dirname + '/app/models';           // 加载模型所在路径
 var walk = function(path) {
   fs
     .readdirSync(path)
     .forEach(function(file) {
       var newPath = path + '/' + file;
       var stat = fs.statSync(newPath);
-
+      // 如果是文件
       if (stat.isFile()) {
         if (/(.*)\.(js|coffee)/.test(file)) {
           require(newPath);
         }
       }
+      // 如果是文件夹则继续遍历
       else if (stat.isDirectory()) {
         walk(newPath);
       }
@@ -50,7 +51,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(session({
-	secret:'imooc',
+	secret:'douban',
 	resave: false,
 	saveUninitialized: true,
 	// 使用mongo对session进行持久化，将session存储进数据库中

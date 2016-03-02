@@ -1,10 +1,13 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
+"use strict";
+
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    ObjectId = Schema.Types.ObjectId;
 
 var MusicCategorySchema = new Schema({
   name: String,
   musics: [{type: ObjectId, ref: 'Music'}],
+  programme: [{type: ObjectId, ref: 'Programme'}],
   meta: {
     createAt: {
       type: Date,

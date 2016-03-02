@@ -1,3 +1,5 @@
+"use strict";
+
 /* 与首页进行交互 */
 var Movie = require('../../models/movie/movie'),											// 引入电影模型
 		Category = require('../../models/movie/movie_category'),					// 引入电影分类模型

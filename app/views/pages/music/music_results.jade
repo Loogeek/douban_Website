@@ -20,7 +20,7 @@ block content
               .panel.panel-info
                 .panel-heading
                   h5 #{item.name}
-                .panel-body  
+                .panel-body
                   each music in item.musics
                     .col-md-2
                       .thumbnail
@@ -29,6 +29,9 @@ block content
                         .caption
                           h6(style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;") #{music.title}
       ul.pagination
+        li
+          a(href="javascript:;" aria-label="Previous")
+            span(aria-hidden="true") &laquo;
         - for (var i = 0; i < totalPage; i++) {
           - if (currentPage == (i + 1)) {
               li.active
@@ -39,3 +42,6 @@ block content
                 a(href='/music/results?#{query}&p=#{i}') #{i + 1}
           - }
         - }
+        li
+          a(href="javascript:;" aria-label="Previous")
+            span(aria-hidden="true") &raquo;

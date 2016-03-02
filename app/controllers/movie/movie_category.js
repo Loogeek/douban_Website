@@ -1,3 +1,5 @@
+"use strict";
+
 var Category = require('../../models/movie/movie_category');    // 电影分类数据模型
 
 // 新建电影分类控制器
@@ -18,7 +20,7 @@ exports.save = function(req, res) {
       res.redirect('/admin/movie/category/list');
     }else {
       var category = new Category(category);
-      category.save(function(err, category) {
+      category.save(function(err) {
         if (err) {
           console.log(err);
         }
@@ -33,16 +35,16 @@ exports.list = function(req, res) {
   Category
     .find({})
     .populate({
-      path:'movies',
-      select:'title',
+      path: 'movies',
+      select: 'title',
     })
     .exec(function(err,categories) {
       if(err) {
         console.log(err);
       }
       res.render('movie/movie_category_list',{
-        title:'豆瓣电影分类列表页',
-        categories:categories
+        title: '豆瓣电影分类列表页',
+        categories: categories
       });
     });
 };
@@ -53,11 +55,11 @@ exports.del = function(req,res) {
   var id  = req.query.id;
   if(id) {
     // 如果id存在则服务器中将该条数据删除并返回删除成功的json数据
-    Category.remove({_id:id},function(err,category) {
+    Category.remove({_id: id},function(err) {
       if(err) {
           console.log(err);
       }
-      res.json({success:1});
+      res.json({success: 1});
     });
   }
 };

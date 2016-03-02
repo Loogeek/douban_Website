@@ -8,10 +8,10 @@ block content
         .row
           .col-md-6.col-md-offset-1.col-xs-7.screen
             // 顶部轮播图标签节点
-            #galleryFrames
+            #galleryFrames.gallery-frames
               .panel.panel-default
                 .pannel-body.gallery-hot
-                  ul.slide-content.clearfix(style="width:10000px;")
+                  ul.slide-content.clearfix(style="width: 10000px; left: -585px")
                     li.slide-item
                       a(href="javascript:;")
                         img(src="/images/music/gallery/" + fileList.length + '.jpg' alt="")
@@ -32,7 +32,7 @@ block content
             // 编辑推荐标签节点
             each cat in musicCategories
               if cat.name === '编辑推荐'
-                .panel.panel-default#editorFeatured
+                .panel.panel-default#editorFeatured.editor-featured
                   .panel-heading.screen-header
                     h4 #{cat.name}
                     .slide-tip
@@ -49,17 +49,18 @@ block content
                             if item.image.indexOf('http:') > -1
                               img(src="#{item.image}", alt="#{item.title}")
                             else
-                              img(src="/upload/#{item.image}", alt="#{item.title}")
+                              img(src="/upload/music/#{item.image}", alt="#{item.title}")
                           .caption
                             p #{item.version}
-                            h5 #{item.title}
+                            h5
+                              a(href="/music/#{item._id}" target="_blank") #{item.title}
                             p #{item.singer}
                             div #{item.summary}
-            .middle-img
+            .left-advertisement
               a(href="javascript:;")
                 img(src="/images/music/1.jpg" alt="小老虎全国巡演")
             // 新碟榜
-            .screen#newAlbums
+            .screen#newAlbums.new-albums
               each cat in musicCategories
                 if cat.name === '新碟榜最热'
                   .class-top
@@ -75,15 +76,16 @@ block content
                     .panel-body.screen-body
                       if cat.musics && cat.musics.length > 0
                         - var len = Math.min(8,cat.musics.length)
-                        - for(var i=0;i<len;i++)
+                        - for(var i = 0; i < len; i++)
                           .thumbnail
                             a(href="/music/#{cat.musics[i]._id}" target="_blank")
                               if cat.musics[i].image.indexOf('http:') > -1
                                 img(src="#{cat.musics[i].image}" alt="#{cat.musics[i].title}")
                               else
-                                img(src="/upload/#{cat.musics[i].image}" alt="#{cat.musics[i].title}")
+                                img(src="/upload/music/#{cat.musics[i].image}" alt="#{cat.musics[i].title}")
                             .caption
-                              h5 #{cat.musics[i].title}
+                              h5
+                               a(href="/music/#{cat.musics[i]._id}" target="_blank") #{cat.musics[i].title}
                               p #{cat.musics[i].singer}
             // 近期热门歌单
             #hotProgrammes
@@ -102,23 +104,25 @@ block content
                     .panel-body.screen-body
                       if cat.musicCategories && cat.musicCategories.length > 0
                         - var ctyLen = Math.min(6,cat.musicCategories.length)
-                        - for(var i=0;i<ctyLen;i++)
+                        - for(var i = 0; i < ctyLen; i++)
                           .thumbnail
                             .inner
-                              h5 #{cat.musicCategories[i].name}
-                              each musicItem in musicCategories
-                                if musicItem.name === cat.musicCategories[i].name
-                                  if musicItem.musics[0]
-                                    img(src="#{musicItem.musics[0].image}")
-                                  - var len = Math.min(3,musicItem.musics.length)
-                                  - for(var j=0;j<len;j++)
-                                    a(href="/music/#{musicItem.musics[j]._id}" target="_blank" title="#{musicItem.musics[j].title}")
-                                      p=j+1 + '.'
-                                        |#{musicItem.musics[j].title}
-                                  span ...
+                              h5
+                                a(href="/music/results?cat=#{cat.musicCategories[i]._id}&p=0" target="_blank") #{cat.musicCategories[i].name}
+                              .content
+                                each musicItem in musicCategories
+                                  if musicItem.name === cat.musicCategories[i].name
+                                    if musicItem.musics[0]
+                                      img(src="#{musicItem.musics[0].image}")
+                                    - var len = Math.min(3,musicItem.musics.length)
+                                    - for(var j=0;j<len;j++)
+                                      a(href="/music/#{musicItem.musics[j]._id}" target="_blank" title="#{musicItem.musics[j].title}")
+                                        p=j+1 + '.'
+                                          |#{musicItem.musics[j].title}
+                                    span ...
           .col-md-4.col-xs-4
             // 顶部右侧广告
-            .advertisement
+            .right-advertisement.clearfix
               a(href="/fullpage" target="_blank")
                 img(src="/images/music/advertisements/1.jpg")
             // 热门音乐人分类
@@ -133,7 +137,7 @@ block content
                       table.table.table-hover
                         tbody
                           - var len = Math.min(10,cat.musicCategories.length)
-                          - for(var i=0;i<len;i++)
+                          - for(var i = 0; i < len; i++)
                             tr
                               td: a #{cat.musicCategories[i].name}
                               - i++
@@ -149,7 +153,7 @@ block content
                         i.glyphicon.glyphicon-play
                         span 播放全部
                     .billboard-bd.class-top
-                      ul
+                      ul.hot-artistTop
                         li.on: a(href="javascript:;") 最热
                         li: a(href="javascript:;") 摇滚
                         li: a(href="javascript:;") 民谣
@@ -159,13 +163,13 @@ block content
                         if cat.musics && cat.musics.length > 0
                           ul
                             - var len = Math.min(10,cat.musics.length)
-                            - for(var i=0;i<len;i++)
+                            - for(var i = 0; i < len; i++)
                               li: a(href="/music/#{cat.musics[i]._id}" target="_blank")
                                   img(src="#{cat.musics[i].image}")
                                   h5 #{cat.musics[i].title}
                                   p #{cat.musics[i].singer}&nbsp;/&nbsp;#{cat.musics[i].pv}次播放
                                   span.order=i+1
-            // 豆瓣音乐250                      
+            // 豆瓣音乐250
             #recInfo
               .billboard
                 each cat in musicCategories
@@ -173,16 +177,22 @@ block content
                     .billboard-hd.class-top
                       h4 豆瓣音乐250
                       a.more(href="/music/results?cat=#{cat._id}&p=0" target="_blank") 更多
-                    .billboard-bd
-                    table.table.table-hover
-                      tbody
-                        if cat.musics && cat.musics.length > 0
-                          - for(var i=0;i<9;i++)
-                            .thumbnail
+                    .billboard-bd.clearfix
+                      // table.table.table-hover
+                      //   tbody
+                      if cat.musics && cat.musics.length > 0
+                        - var len = Math.min(9,cat.musics.length)
+                        - for(var i = 0; i < len; i++)
+                          .thumbnail
+                            if(cat.musics[i])
                               a(href="/music/#{cat.musics[i]._id}" target="_blank")
                                 if cat.musics[i].image.indexOf('http:') > -1
                                   img(src="#{cat.musics[i].image}", alt="#{cat.musics[i].title}")
                                 else
-                                  img(src="/upload/#{cat.musics[i].image}", alt="#{cat.musics[i].title}")
+                                  img(src="/upload/music/#{cat.musics[i].image}", alt="#{cat.musics[i].title}")
                                 h5 #{cat.musics[i].title}
+              // 豆瓣音乐250下方广告部分节点标签
+              .right-advertisement.clearfix
+                a(href="/fullpage" target="_blank")
+                  img(src="/images/music/advertisements/2.jpg")
   script(src="/scripts/js/music/music_index.js")
