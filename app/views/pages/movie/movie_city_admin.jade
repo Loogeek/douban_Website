@@ -1,4 +1,4 @@
-extends ./movie_layout
+extends ../../includes/layout
 
 block content
   .container
@@ -26,9 +26,15 @@ block content
               each cat in cityCategories
                 option(value=cat._id) #{cat.name}
         .form-group
-          label.col-sm-3.control-label(for="city") 城市
+          label.col-sm-3.control-label(for="city") 新建城市
           .col-sm-6
             input#city.form-control(type="text",name="city[name]",value=city.name)
+        .form-group
+          label.col-sm-3.control-label 选择所在城市
+          .col-sm-1
+            select.form-control(name="city[cityId]")
+              each cat in cities
+                option(value=cat._id) #{cat.name}
         .form-group
           label.col-sm-3.control-label(for="cityCinemas") 影院名称
           .col-sm-6

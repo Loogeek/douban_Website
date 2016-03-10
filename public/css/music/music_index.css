@@ -37,8 +37,8 @@ h5 { font-size: 14px; color: #138A64; cursor: pointer; overflow: hidden; white-s
 
 /* 顶部轮播图样式 */
 .gallery-frames .panel-default { position: relative; }
-.gallery-frames .panel-default .slide-prev, .gallery-frames .panel-default .slide-next { position: absolute; border: none; outline: none; top: 50%; background: url(/images/music/banner_arrow.png); width: 36px; height: 51px; }
-.gallery-frames .panel-default .slide-prev:hover, .gallery-frames .panel-default .slide-next:hover { background: url(/images/music/banner_arrow.png); }
+.gallery-frames .panel-default .slide-prev, .gallery-frames .panel-default .slide-next { position: absolute; border: none; outline: none; top: 50%; background: url(/libs/images/music/banner_arrow.png); width: 36px; height: 51px; }
+.gallery-frames .panel-default .slide-prev:hover, .gallery-frames .panel-default .slide-next:hover { background: url(/libs/images/music/banner_arrow.png); }
 .gallery-frames .panel-default .slide-prev { background-position: 0 51px; left: 0; margin-top: -25px; }
 .gallery-frames .panel-default .slide-prev:hover { background-position: 0 122px; left: 0; margin-top: -25px; }
 .gallery-frames .panel-default .slide-next { background-position: 36px 51px; right: 0; margin-top: -25px; }
@@ -62,12 +62,12 @@ h5 { font-size: 14px; color: #138A64; cursor: pointer; overflow: hidden; white-s
 .editor-featured .slide-tip { position: absolute; top: 10px; right: 0; height: 20px; }
 .editor-featured .slide-tip .ui-side-max { margin-right: 10px; }
 .editor-featured .slide-tip .glyphicon { cursor: pointer; }
-.editor-featured .slide-tip .slide-next, .editor-featured .slide-tip .slide-prev { border: none; background: url(/images/music/editor_arrow.png) no-repeat; width: 20px; height: 20px; opacity: 0.5; outline: none; }
+.editor-featured .slide-tip .slide-next, .editor-featured .slide-tip .slide-prev { border: none; background: url(/libs/images/music/editor_arrow.png) no-repeat; width: 20px; height: 20px; opacity: 0.5; outline: none; }
 .editor-featured .slide-tip .slide-next { background-position: -28px 0; }
 .editor-featured .slide-tip .slide-prev:hover, .editor-featured .slide-tip .slide-next:hover { opacity: 1; }
-.editor-featured .screen-body { height: 380px; position: relative; padding: 15px 0; background-color: #f5f7f8; }
-.editor-featured .thumbnail { border: none; height: 350px; float: left; background-color: #fff; margin: 0 10px 0; }
-.editor-featured .thumbnail a img { height: 130px; width: 80%; }
+.editor-featured .screen-body { height: 350px; position: relative; padding: 15px 0; background-color: #f5f7f8; }
+.editor-featured .thumbnail { overflow: hidden; border: none; height: 320px; float: left; background-color: #fff; margin: 0 10px 0; }
+.editor-featured .thumbnail a img { height: 100px; width: 100px; }
 .editor-featured .thumbnail .caption h5 a { color: #138A64; }
 .editor-featured .thumbnail .caption h5 a:hover { background-color: #138A64; color: #fff; text-decoration: none; }
 .editor-featured .thumbnail .caption p { font-size: 12px; color: #999; }
@@ -105,10 +105,11 @@ h5 { font-size: 14px; color: #138A64; cursor: pointer; overflow: hidden; white-s
 .billboard .billboard-hd h4 { margin: 0; display: inline-block; }
 .billboard .billboard-hd .more:hover { background-color: #999; color: #fff; }
 .billboard .billboard-bd { margin-top: 10px; }
-.billboard .thumbnail { width: 33.33%; border: none; float: left; height: 110px; margin: 0; }
+.billboard .thumbnail { width: 33.33%; border: none; float: left; height: 110px; margin: 0; text-align: center; }
 .billboard .thumbnail a { text-decoration: none; }
 .billboard .thumbnail img { width: 80px; height: 80px; }
-.billboard .thumbnail h5 { font-size: 12px; text-align: center; }
+.billboard .thumbnail h5 { font-size: 12px; text-align: center; display: inline-block; }
+.billboard .thumbnail h5:hover { background-color: #138A64; color: #fff; }
 
 /* 近期热门歌单样式 */
 #hotProgrammes { margin-top: 20px; }
@@ -123,5 +124,3 @@ h5 { font-size: 14px; color: #138A64; cursor: pointer; overflow: hidden; white-s
 /* 底部样式 */
 .footer-img { margin: 60px 0 20px; }
 .footer-img img { margin: 0 auto; display: block; width: 100%; height: 90px; }
-
-/*# sourceMappingURL=music_index.css.map */

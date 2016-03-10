@@ -2,7 +2,7 @@
   .container-fluid
     .navbar-header.clearfix
       a.navbar-brand(href="/") 电影
-      a.navbar-brand(href="/musicindex") 音乐
+      a.navbar-brand(href="/musicIndex") 音乐
     if user
       p.navbar-text.navbar-right
         a: span 欢迎您:#{user.name}
@@ -33,6 +33,7 @@
             label(for="signupConfirmPassword") 确认密码
             input#signupConfirmPassword.form-control(name="confirm-password" type="password" placeholder="确认密码")
             span.glyphicon.glyphicon-remove-sign.form-clear(aria-hidden="true")
+            label#signupConfirmPassword-error.error(for="signupConfirmPassword" style="display:none")
           .form-group.clearfix
             label(for="signupCaptcha") 验证码
             input#signupCaptcha.form-control.form-captcha(name="captcha" type="text" placeholder="输入验证码")
@@ -69,3 +70,34 @@
         .modal-footer
           button.btn.btn-default(type="button" data-dismiss="modal") 关闭
           button.btn.btn-success(type="submit") 登录
+.nav
+  .nav-wrap.clearfix
+    .nav-logo
+      if logo == 'movie'
+        - var logoName = '电影'
+        a(href="/")
+          img(src="/libs/images/#{logo}/#{logo}Logo.png" alt="#{logo}Logo" style="width:115px;height:27px;")
+      else
+        - var logoName = '音乐'
+        a(href="/musicIndex")
+          img(src="/libs/images/#{logo}/#{logo}Logo.png" alt="#{logo}Logo" style="width:115px;height:27px;")
+    .nav-search
+      form(method='GET' action='/#{logo}/results')
+        .input-group
+          input.form-control(type='text' name='q' placeholder="#{logoName}搜索")
+          span.input-group-btn
+            button(type='submit').btn.btn-default
+              span.glyphicon.glyphicon-search
+  .nav-wrap
+    if user && user.role > 10
+      ul.clearfix
+        li: a(href="/admin/#{logo}/new" target="_blank") #{logoName}后台录入页
+        li: a(href="/admin/#{logo}/list" target="_blank") #{logoName}列表页
+        li: a(href="/admin/#{logo}/#{logo}Category/new" target="_blank") #{logoName}分类录入页
+        li: a(href="/admin/#{logo}/#{logo}Category/list" target="_blank") #{logoName}分类列表页
+        if logo == 'movie'
+          li: a(href="/admin/movie/city/new" target="_blank") 电影院录入页
+          li: a(href="/admin/movie/city/list" target="_blank") 电影院列表页
+        else
+          li: a(href="/admin/music/programme/list" target="_blank") 热门榜单列表页
+        li: a(href="/admin/user/list" target="_blank") 用户列表页

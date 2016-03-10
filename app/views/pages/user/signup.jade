@@ -11,28 +11,29 @@ block content
               .form-group.clearfix
                 label(for="dSignupName") 用户名
                 input#dSignupName.form-control(name="name", type="text" placeholder="账号")
-                span.glyphicon.glyphicon-remove-sign.form-clear(aria-hidden="true")  
+                span.glyphicon.glyphicon-remove-sign.form-clear(aria-hidden="true")
                 label#dSignupName-error.error(for="dSignupName" style="display:none")
               .form-group.clearfix
                 label(for="dSignupPassword") 密码
                 input#dSignupPassword.form-control(name="password", type="password" placeholder="密码")
-                span.glyphicon.glyphicon-remove-sign.form-clear(aria-hidden="true")  
+                span.glyphicon.glyphicon-remove-sign.form-clear(aria-hidden="true")
                 label#dSignupName-error.error(for="dSignupName" style="display:none")
               .form-group.clearfix
                 label(for="dSignupConfirmPassword") 确认密码
                 input#dSignupConfirmPassword.form-control(name="confirm-password", type="password" placeholder="确认密码")
                 span.glyphicon.glyphicon-remove-sign.form-clear(aria-hidden="true")
-              .form-group.clearfix  
+                label#dSignupConfirmPassword-error.error(for="dSignupConfirmPassword" style="display:none")
+              .form-group.clearfix
                 label(for="dSignupCaptcha") 验证码
                 input#dSignupCaptcha.form-control.form-captcha(name="captcha", type="text" placeholder="输入验证码")
                 span.glyphicon.glyphicon-remove-sign.form-clear.form-captcha-clear(aria-hidden="true")
                 label#dSignupCaptcha-error.error(for="dSignupCaptcha" style="display:none")
-                div.captcha-show 
-                p.glyphicon.glyphicon-repeat.captcha-repeat 换一张?                  
+                div.captcha-show
+                p.glyphicon.glyphicon-repeat.captcha-repeat 换一张?
             .modal-footer
               a(href="/"): button.btn.btn-default(type="button") 关闭
               button.btn.btn-success(type="submit") 注册
-        .col-md-offset-1.col-md-4 
+        .col-md-offset-1.col-md-4
           ul.aside
             li > 已豆瓣帐号？
-            a(href="/signin") 立即登录                
+            a(href="/signin") 立即登录

@@ -1,44 +1,25 @@
 "use strict";
 
 /* 热门歌单控制器 */
-var Programme = require('../../models/music/music_programme');    // 热门歌单数据模型
-
-// 豆瓣音乐热门歌单录入页面渲染函数
-exports.new = function(req, res) {
-  res.render('music/music_programme_admin', {
-    title: '豆瓣音乐热门歌单录入页',
-    programme: {}
-  });
-};
-
-// 豆瓣音乐热门歌单录入页点击录入处理函数
-exports.save = function(req, res) {
-    var _programme = req.body.programme,
-        programme = new Programme(_programme);
-
-    programme.save(function(err) {
-      if (err) {
-        console.log(err);
-      }
-     res.redirect('/admin/music/programme/list');
-    });
-};
+var mongoose = require('mongoose'),
+    Programme = mongoose.model('Programme');									// 引入近期热门歌单区域模型
 
 // 豆瓣音乐热门歌单列表页面渲染函数
 exports.list = function(req, res) {
   Programme
     .find({})
     .populate({
-      path: 'musicCategories',
-      select: 'name',
+      path:'musicCategories',
+      select:'name',
     })
     .exec(function(err,programmes) {
       if(err){
         console.log(err);
       }
       res.render('music/music_programme_list',{
-        title: '豆瓣音乐热门歌单列表页',
-        programmes: programmes
+        title:'豆瓣音乐热门歌单列表页',
+        logo:'music',
+        programmes:programmes
       });
     });
 };
@@ -49,11 +30,11 @@ exports.del = function(req,res) {
   var id  = req.query.id;
   if(id) {
     // 如果id存在则服务器中将该条数据删除并返回删除成功的json数据
-    Programme.remove({_id: id},function(err) {
+    Programme.remove({_id:id},function(err) {
       if(err){
         console.log(err);
       }
-      res.json({success: 1});
+      res.json({success:1});
     });
   }
 };

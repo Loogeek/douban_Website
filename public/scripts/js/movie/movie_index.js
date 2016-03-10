@@ -1,9 +1,11 @@
 "use strict";
 
+$.support.cors = true;																	// 解决IE8/9 Ajax跨域请求问题
+
 $(function() {
 	// 电影主页函数
 	var movieIndexFun = (function() {
-		var oCol6_width = $('.col-md-6').width();  // 获取主页左边区域布局对象
+		var oCol6_width = $('.col-md-6').width();  					// 获取主页左边区域布局对象
 		/*
 				即将上映和正在上映点击切换事件
 		*/
@@ -28,11 +30,11 @@ $(function() {
 
 			// 点击电影展示区正在上映或即将上映标题发送Ajax请求切换电影展示内容
 			$oTitle.on('click',function() {
-				var galleryName = $(this).text(); 								// 获取点击标题内容
+				var galleryName = $(this).text(); 							// 获取点击标题内容
 				var URL = '/?galleryName=' + encodeURIComponent(galleryName);
 
 				funAjax(URL,'GET',function(results) {
-					var data = results.data || [],                  // 返回正在上映或即将上映电影数据
+					var data = results.data || [],                // 返回正在上映或即将上映电影数据
 							dataMov = data.movies,
 							dataLength = data.movies.length;
 					$('#headerNow a').attr('href','/movie/results?cat=' + data._id + '&p=0').text(data.name);
@@ -42,10 +44,9 @@ $(function() {
 					}else{
 						$oTitle.text('即将上映');
 					}
-
 					// 如果切换后电影列表数量小于原电影数量,则将多余节点删除
-					if(dataLength < $oThumbnail.length){
-						$('#scrollMoives .thumbnail:gt('+dataLength+')').remove();
+					if(dataLength < $oThumbnail.length) {
+						$('#scrollMoives .thumbnail:gt('+ (dataLength -1) +')').remove();
 					// 如果切换后电影列表数量大于原电影数量,则创建多出的节点
 					}else if(dataLength > $oThumbnail.length) {
 						for(var j = $oThumbnail.length; j < dataLength; j++) {
@@ -63,7 +64,7 @@ $(function() {
 					// 设置电影展示区总宽度
 					$('#screenBody').width(oCol6_width * pageTotal);
 
-					// 切换前后节点数量不变，则只替换相应内容
+					// 节点数量相同，则只替换相应内容
 					for(var k = 0; k < $oThumbnail.length; k++) {
 						if (dataMov[k]) {
 							$($oThumbnail[k]).find('a').attr('href','/movie/' + dataMov[k]._id);
@@ -203,7 +204,7 @@ $(function() {
 				$(this).addClass('btn-primary').removeClass('btn-default').parent().siblings().children().addClass('btn-default').removeClass('btn-primary');
 			}
 		});
-		
+
 		/*
 				热门推荐部分
 		 */
@@ -315,10 +316,7 @@ $(function() {
 
 			// 当电影院搜索框中监听到键盘事件时将输入的影院名称发送给服务器
 			$citySugInput.keyup(function(event) {
-				// 当按下键盘空格键或1-9数字键或删除键时才发送Ajax请求
-				if(49 < event.keyCode && event.keyCode < 57 || event.keyCode === 32 || event.keyCode === 8) {
 					funGetCityCinemas();
-				}
 			});
 
 			// 选择影院

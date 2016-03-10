@@ -1,4 +1,4 @@
-extends ./music_layout
+extends ../../includes/layout
 
 block content
   .container
@@ -18,10 +18,10 @@ block content
               td #{item.name}
               td
                 each unit in item.musicCategories
-                  #{unit.name}
+                  | #{unit.name} 、
               td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
               td: a(target="_blank", href="/music/results?pro=#{item._id}&p=0") 查看
               td: a(target="_blank", href="/admin/music/list") 修改
               td
                 button.btn.btn-danger.programmeDel(type="button", data-id="#{item._id}") 删除
-  script(src="/scripts/js/music/music_admin.js")
+  script(src="/libs/scripts/js/music/music_admin.min.js")

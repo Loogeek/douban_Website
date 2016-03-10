@@ -10,18 +10,18 @@ body{font: 16px/1.8 "Microsoft Yahei,verdana";}
 	text-align: center;
 }
 .section1{
-	background:url(/images/movie/fullpage/Ant-Man.jpg) no-repeat center;
+	background:url(/libs/images/movie/fullpage/Ant-Man.jpg) no-repeat center;
 	background-size: cover;
 }
 .section2{
-	background:url(/images/movie/fullpage/Inception.jpg) no-repeat center;
+	background:url(/libs/images/movie/fullpage/Inception.jpg) no-repeat center;
 	background-size: cover;
 }
 .section3{
-	background:url(/images/movie/fullpage/MissionImpossible.jpg) no-repeat center;
+	background:url(/libs/images/movie/fullpage/MissionImpossible.jpg) no-repeat center;
 	background-size: cover;
 }
 .section4{
-	background:url(/images/movie/fullpage/Martian.jpg) no-repeat center;
+	background:url(/libs/images/movie/fullpage/Martian.jpg) no-repeat center;
 	background-size: cover;
 }

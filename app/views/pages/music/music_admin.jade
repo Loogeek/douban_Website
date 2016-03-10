@@ -1,4 +1,4 @@
-extends ./music_layout
+extends ../../includes/layout
 
 block content
   .container
@@ -16,7 +16,7 @@ block content
             input#inputMusicCategory.form-control(type="text", name="music[musicCategoryName]", value=music.musicCategoryName)
         .form-group
           label.col-sm-3.control-label 分类选择
-          .col-sm-6
+          .col-sm-6(style="height:200px;overflow:auto;")
             each cat in musicCategories
               label.radio-inline
                 if music._id
@@ -75,4 +75,4 @@ block content
         .form-group
           .col-sm-offset-3.col-sm-6
             button.btn.btn-default(type="submit") 录入
-  script(src='/scripts/js/music/music_admin.js')
+  script(src='/libs/scripts/js/music/music_admin.min.js')

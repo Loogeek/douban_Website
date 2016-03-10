@@ -18,6 +18,8 @@ mongoose.connect(dbUrl);
 
 // models loading
 var models_path = __dirname + '/app/models';           // 加载模型所在路径
+
+// 路径加载函数，加载各模型的路径,所以可以直接通过mongoose.model加载各模型 这样即使模型路径改变也无需更改路径
 var walk = function(path) {
   fs
     .readdirSync(path)
@@ -29,15 +31,13 @@ var walk = function(path) {
         if (/(.*)\.(js|coffee)/.test(file)) {
           require(newPath);
         }
-      }
       // 如果是文件夹则继续遍历
-      else if (stat.isDirectory()) {
+      }else if (stat.isDirectory()) {
         walk(newPath);
       }
-    })
+    });
 }
 walk(models_path);
-
 
 app.set('views','./app/views/pages');                   // 视图文件根目录
 app.set('view engine','jade');                          // 设置模板引擎

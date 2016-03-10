@@ -1,4 +1,4 @@
-extends ./movie_layout
+extends ../../includes/layout
 
 block content
   .container
@@ -21,16 +21,15 @@ block content
               if cityCategoryItem.cities.length > 0
                 td
                   each cityItem in cityCategoryItem.cities
-                    | #{cityItem.name},
+                    | #{cityItem.name}、
                 td
                   each cityItem in cityCategoryItem.cities
-                    | #{cityItem.cinemas},
+                    | #{cityItem.cinemas}、
               else
                 td
                 td
-              if cityCategoryItem.cityProgramme.length > 0
-                each cityProgrammeItem in cityCategoryItem.cityProgramme
-                  td #{cityProgrammeItem.name}
+              if cityCategoryItem.cityProgramme
+                td #{cityCategoryItem.cityProgramme.name}
               else
                 td
               td #{moment(cityCategoryItem.meta.updateAt).format('MM/DD/YYYY')}
@@ -38,4 +37,4 @@ block content
               td: a(href="#") 修改
               td
                 button.btn.btn-danger.citydel(type="button", data-id="#{cityCategoryItem._id}") 删除
-  script(src="/scripts/js/movie/movie_admin.js")
+  script(src="/libs/scripts/js/movie/movie_admin.min.js")

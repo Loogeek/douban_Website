@@ -1,6 +1,8 @@
 "use strict";
 
-var MovieComment = require('../../models/movie/movie_comment');    // 电影数据模型
+var mongoose = require('mongoose'),
+		MovieComment = mongoose.model('MovieComment'); 				// 电影评论模型
+
 // 电影评论后台录入控制器
 exports.save = function(req,res) {
 	var _comment = req.body.comment;				// 获取Ajax发送的数据
@@ -9,10 +11,10 @@ exports.save = function(req,res) {
 		// 通过点击回复一条电影评论的id，找到这条评论的内容
 		MovieComment.findById(_comment.cid,function(err,comment) {
 			var reply = {
-				from: _comment.from,  							// 回复人
-				to: _comment.tid,		 							// 被回复人
-				content: _comment.content, 				// 回复内容
-				meta: {
+				from:_comment.from,  							// 回复人
+				to:_comment.tid,		 							// 被回复人
+				content:_comment.content, 				// 回复内容
+				meta:{
 			    createAt: Date.now()
 			  }
 			};
@@ -28,7 +30,7 @@ exports.save = function(req,res) {
 					.populate('from','name')
 					.populate('reply.from reply.to','name')// 查找评论人和回复人的名字
 					.exec(function(err,comments) {
-						res.json({data: comments});
+						res.json({data:comments});
 					});
 			});
 		});
@@ -46,7 +48,7 @@ exports.save = function(req,res) {
 				.populate('from','name')
 				.populate('reply.from reply.to','name')		// 查找评论人和回复人的名字
 				.exec(function(err,comments) {
-					res.json({data: comments});
+					res.json({data:comments});
 				});
 		});
 	}
@@ -60,7 +62,7 @@ exports.del = function(req,res) {
     // 如果点击的是叠楼中的回复评论的删除按钮
     if(did !== 'undefined') {
     	// 先查找到该叠楼评论
-    	MovieComment.findOne({_id: cid},function(err,comment) {
+    	MovieComment.findOne({_id:cid},function(err,comment) {
     		var len = comment.reply.length; 					// 获取该叠楼评论中回复评论的条数
     		for(var i = 0; i < len; i++) {
     			// 如果找到该叠楼中点击删除的评论，则将其评论删除
@@ -74,15 +76,15 @@ exports.del = function(req,res) {
 			      console.log(err);
 			    }
 				});
-				res.json({success: 1});
+				res.json({success:1});
     	});
 		// 若是点击第一条评论中的删除
     }else {
-	    MovieComment.remove({_id: cid},function(err) {
+	    MovieComment.remove({_id:cid},function(err) {
         if(err){
           console.log(err);
         }
-        res.json({success: 1});
+        res.json({success:1});
 	    });
     }
 };

@@ -6,8 +6,14 @@ var mongoose = require('mongoose'),
 
 var CityCategorySchema = new Schema({
   name: String,
-  cities: [{type: ObjectId, ref: 'City'}],
-  cityProgramme: [{type: ObjectId, ref: 'CityProgramme'}],
+  cities: [{
+    type: ObjectId,
+    ref: 'City'
+  }],
+  cityProgramme: {
+    type: ObjectId,
+    ref: 'CityProgramme'
+  },
   meta: {
     createAt: {
       type: Date,

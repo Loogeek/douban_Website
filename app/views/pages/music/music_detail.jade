@@ -1,6 +1,7 @@
-extends ./music_layout
+extends ../../includes/layout
+
 block link
-  link(href="/css/detail.css" rel="stylesheet")
+  link(href="/libs/css/include/detail.min.css" rel="stylesheet")
 block content
   .container
     .row
@@ -60,7 +61,7 @@ block content
                   if item.from
                     li.media
                       .media-left
-                        img.media-object(src="/images/user/headImg.png" style="width: 40px; height: 40px;")
+                        img.media-object(src="/libs/images/user/headImg.png" style="width: 40px; height: 40px;")
                       .media-body
                         h4.media-heading #{item.from.name}
                         p #{item.content}
@@ -72,7 +73,7 @@ block content
                           each reply in item.reply
                             .media
                               .media-left
-                                img.media-object(src="/images/user/headImg.png" style="width: 30px; height: 30px;")
+                                img.media-object(src="/libs/images/user/headImg.png" style="width: 30px; height: 30px;")
                               .media-body
                                 h4.media-heading
                                   | #{reply.from.name}
@@ -84,4 +85,4 @@ block content
                                 if user && reply.from.name === user.name
                                   a.comment-del(href="javascript:;" data-cid="#{item._id}" data-did='#{reply._id}') &nbsp;|&nbsp;删除
                     hr
-  script(src="/scripts/js/music/music_detail.js")
+  script(src="/libs/scripts/js/music/music_detail.min.js")

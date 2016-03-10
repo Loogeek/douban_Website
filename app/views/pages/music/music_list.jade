@@ -1,4 +1,4 @@
-extends ./music_layout
+extends ../../includes/layout
 
 block content
   .container
@@ -39,4 +39,4 @@ block content
               td: a(target="_blank", href="/admin/music/update/#{item._id}") 修改
               td
                 button.btn.btn-danger.musicDel(type="button", data-id="#{item._id}") 删除
-  script(src="/scripts/js/music/music_admin.js")
+  script(src="/libs/scripts/js/music/music_admin.min.js")

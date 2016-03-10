@@ -1,5 +1,7 @@
 "use strict";
 
+$.support.cors = true;																	// 解决IE8/9 Ajax跨域请求问题
+
 $(function() {
 	// 音乐主页函数
 	var musicIndexFun = (function() {
@@ -81,10 +83,10 @@ $(function() {
 					$oRight = $('#editorFeatured .slide-next'),					 //获取右按钮
 					oThumbnail = $('#editorFeatured .thumbnail'), 			 //获取音乐数量
 					len = oThumbnail.length,					  								 //即将编辑推荐区音乐总数
-					pageCount = Math.ceil(len / 3),               			 //即将编辑推荐区总页数
+					pageCount = Math.ceil(len / 4),               			 //即将编辑推荐区总页数
 					// 每张海报的外边距及实际赋给每张海报内容宽度
 					marginWidth = oThumbnail.outerWidth(true) - oThumbnail.outerWidth(),
-					oThumbnailWidth =  (oCol6_width - marginWidth * 3) / 3;
+					oThumbnailWidth =  (oCol6_width - marginWidth * 4) / 4;
 
 			// 设置每张海报的宽度
 			oThumbnail.outerWidth(oThumbnailWidth);
@@ -308,7 +310,7 @@ $(function() {
 						if(data.length < oLi.length) {
 							var dataStart = data.length - 1;		// 设置切换到另外分类后数据起始位置
 							$('.hotArtist-songs li:gt('+ dataStart +')').remove();
-							// 若返回分类的音乐数量大于原分类音乐节点数量则创建多出的节点
+						// 若返回分类的音乐数量大于原分类音乐节点数量则创建多出的节点
 						}else if(data.length > oLi.length) {
 							var oDataMin = Math.min(10,data.length); // 重新添加最大的元素节点数量不能超过10个
 							//返回内容多于原音乐数量的创建新的节点并赋值
@@ -317,21 +319,23 @@ $(function() {
 							}
 						}
 						// 切换前后节点数量相同，则只替换节点内容
-						oLi = $('.hotArtist-songs li');				// 重新获取当前音乐列表中音乐数量
+						oLi = $('.hotArtist-songs li');					// 重新获取当前音乐列表中音乐数量
 						for(var k = 0;k < oLi.length; k++) {
-							//将原音乐连接、标题和海报换成切换后返回音乐数据相应内容
-							$(oLi[k]).find('a').attr('href','/music/'+data[k]._id);
-							$(oLi[k]).find('h5').html(data[k].title);
-							$(oLi[k]).find('p').html(data[k].singer+'&nbsp;/&nbsp;'+data[k].pv+'次播放');
-							$(oLi[k]).find('span').html(k+1);
-							var $oImg = $(oLi[k]).find('img');
-							//对音乐海报是否是自行上传进行判断
-							if (data[k].image) {
-								if(data[k].image.indexOf('http:')>-1) {
-									$oImg.attr('src',data[k].image).attr('alt',data[k].image);
-								}else {
-									//自行上传的海报图片路径不同
-									$oImg.attr('src','/upload/music/'+data[k].image).attr('alt',data[k].image);
+							if(data[k]) {
+								//将原音乐连接、标题和海报换成切换后返回音乐数据相应内容
+								$(oLi[k]).find('a').attr('href','/music/'+data[k]._id);
+								$(oLi[k]).find('h5').html(data[k].title);
+								$(oLi[k]).find('p').html(data[k].singer+'&nbsp;/&nbsp;'+data[k].pv+'次播放');
+								$(oLi[k]).find('span').html(k+1);
+								var $oImg = $(oLi[k]).find('img');
+								//对音乐海报是否是自行上传进行判断
+								if (data[k].image) {
+									if(data[k].image.indexOf('http:') > -1) {
+										$oImg.attr('src',data[k].image).attr('alt',data[k].image);
+									}else {
+										//自行上传的海报图片路径不同
+										$oImg.attr('src','/upload/music/'+data[k].image).attr('alt',data[k].image);
+									}
 								}
 							}
 						}

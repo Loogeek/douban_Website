@@ -1,8 +1,19 @@
 "use strict";
 
-var User = require('../../models/user/user'),		  // 用户数据模型
+var mongoose = require('mongoose'),
+		User = mongoose.model('User'),								// 用户数据模型
 	  ccap = require('ccap')(),										  // 加载验证码模块
 	  captcha;																			// 申明验证码变量
+
+/* 用户注册及登录框中验证码生成器控制器 */
+exports.captcha = function(req,res) {
+	if(req.url === '/favicon.ico') {
+		return res.end('');
+	}
+	var ary = ccap.get();
+  captcha = ary[0];																// 生成验证码
+  res.end(captcha);
+};
 
 /* 用户注册控制器 */
 exports.signup = function(req,res) {
@@ -20,26 +31,29 @@ exports.signup = function(req,res) {
 			_captcha = _user.captcha || '';
 
 	// 使用findOne对数据库中user进行查找
-	User.findOne({name: _name},function(err,user) {
+	User.findOne({name:_name},function(err,user) {
 		if(err) {
 			console.log(err);
 		}
 		// 如果用户名已存在
 		if(user) {
-			return res.json({data: 0});
+			return res.json({data:0});
 		}else{
-			if(_captcha.toLowerCase() !== captcha.toLowerCase()) {
-				res.json({data: 1});
-			}else {
-				// 数据库中没有该用户名，将其数据生成新的用户数据并保存至数据库
-				user = new User(_user);  					// 生成用户数据
-				user.save(function(err,user) {
-					if(err){
-						console.log(err);
-					}
-					req.session.user = user;   			// 将当前登录用户名保存到session中
-					return res.json({data: 2});
-				});
+			// 验证码存在
+			if (captcha) {
+				if(_captcha.toLowerCase() !== captcha.toLowerCase()) {
+					res.json({data:1});								// 输入的验证码不相等
+				}else {
+					// 数据库中没有该用户名，将其数据生成新的用户数据并保存至数据库
+					user = new User(_user);  					// 生成用户数据
+					user.save(function(err,user) {
+						if(err){
+							console.log(err);
+						}
+						req.session.user = user;   			// 将当前登录用户名保存到session中
+						return res.json({data:2});			// 注册成功
+					});
+				}
 			}
 		}
 	});
@@ -48,7 +62,7 @@ exports.signup = function(req,res) {
 /* 用户注册页面渲染控制器 */
 exports.showSignup = function(req,res) {
 	res.render('user/signup', {
-		title: '注册页面'
+		title:'注册页面'
 	});
 };
 
@@ -66,12 +80,12 @@ exports.signin = function(req,res) {
 	var _name = _user.name || '',
 		  _password = _user.password || '',
 			_captcha = _user.captcha || '';
-	User.findOne({name: _name},function(err,user) {
+	User.findOne({name:_name},function(err,user) {
 		if(err){
 			console.log(err);
 		}
 		if(!user) {
-			return res.json({data: 0});
+			return res.json({data:0});									// 用户不存在
 		}
 		// 使用user实例方法对用户名密码进行比较
 		user.comparePassword(_password,function(err,isMatch) {
@@ -80,15 +94,18 @@ exports.signin = function(req,res) {
 			}
 			// 密码匹配
 			if(isMatch) {
-				if(_captcha.toLowerCase() !== captcha.toLowerCase()) {
-					res.json({data: 2});
-				}else {
-					req.session.user = user;   // 将当前登录用户名保存到session中
-					return res.json({data: 3});
+				// 验证码存在
+				if (captcha) {
+					if(_captcha.toLowerCase() !== captcha.toLowerCase()) {
+						res.json({data:2});				 							// 输入的验证码不相等
+					}else {
+						req.session.user = user;  							// 将当前登录用户名保存到session中
+						return res.json({data:3});							// 登录成功
+					}
 				}
 			}else {
 				// 账户名和密码不匹
-				return res.json({data: 1});
+				return res.json({data:1});
 			}
 		});
 	});
@@ -97,7 +114,7 @@ exports.signin = function(req,res) {
 /* 用户登录页面渲染控制器 */
 exports.showSignin = function(req,res)  {
 	res.render('user/signin',{
-		title: '登录页面'
+		title:'登录页面'
 	});
 };
 
@@ -114,8 +131,9 @@ exports.list = function(req,res) {
 			console.log(err);
 		}
 		res.render('user/user_list', {
-			title: '豆瓣电影用户列表页',
-			users: users
+			title:'豆瓣电影用户列表页',
+			logo:'movie',
+			users:users
 		});
 	});
 };
@@ -145,21 +163,11 @@ exports.del = function(req,res) {
 	var id  = req.query.id;
 	if(id) {
 		// 如果id存在则服务器中将该条数据删除并返回删除成功的json数据
-		User.remove({_id: id},function(err) {
+		User.remove({_id:id},function(err) {
 			if(err){
 				console.log(err);
 			}
-			res.json({success: 1});
+			res.json({success:1});							// 删除成功
 		});
 	}
-};
-
-/* 用户注册及登录框中验证码控制器 */
-exports.captcha = function(req,res) {
-	if(req.url === '/favicon.ico') {
-		return res.end('');
-	}
-	var ary = ccap.get();
-  captcha = ary[0];
-  res.end(captcha);
 };

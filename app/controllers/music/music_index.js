@@ -1,9 +1,10 @@
 "use strict";
 
 /* 音乐首页交互 */
-var Music = require('../../models/music/music'),									// 引入music模型
-		MusicCategory = require('../../models/music/music_category'), // 引入音乐分类模型
-		Programme = require('../../models/music/music_programme'),		// 引入近期热门歌单区域模型
+var mongoose = require('mongoose'),
+		Music = mongoose.model('Music'),															// 音乐数据模型
+		MusicCategory = mongoose.model('MusicCategory'),							// 引入音乐分类模型
+		Programme = mongoose.model('Programme'),									// 引入近期热门歌单区域模型
 		fs = require('fs'),																						// 读写文件模块
 		path = require('path');																				// 路径模块
 
@@ -15,24 +16,24 @@ exports.index = function(req,res) {
 	// 如果是新碟榜部分发送Ajax请求
 	if(albumName) {
 		MusicCategory
-			.findOne({name: albumName})
+			.findOne({name:albumName})
 			.populate({
-				path: 'musics',
-				select: 'title image singer',
+				path:'musics',
+				select:'title image singer',
 			})
 			.exec(function(err,musicCategory) {
 				if(err){
 					console.log(err);
 				}
-				res.json({data: musicCategory});
+				res.json({data:musicCategory});
 			});
 	// 如果是热门歌单部分发送Ajax请求
 	}else if(hotProName) {
 		Programme
-			.findOne({name: hotProName})
+			.findOne({name:hotProName})
 			.populate({
-				path: 'musicCategories',
-				select: 'name musics'
+				path:'musicCategories',
+				select:'name musics'
 			})
 			.exec(function(err,programme) {
 				if(err){
@@ -46,10 +47,10 @@ exports.index = function(req,res) {
 							len = musicCategories.length;
 					for(var i = 0; i < len; i++) {
 						MusicCategory
-							.findOne({_id: musicCategories[i]._id})
+							.findOne({_id:musicCategories[i]._id})
 							.populate({
-								path: 'musics',
-								select: 'title image',
+								path:'musics',
+								select:'title image',
 							})
 							.exec(function(err,musics) {
 								count ++;
@@ -58,12 +59,12 @@ exports.index = function(req,res) {
 								}
 								dataMusics.push(musics);
 								if(count === len){
-									res.json({data: dataMusics,dataPro: programme});
+									res.json({data:dataMusics,dataPro:programme});
 								}
 							});
 					}
 				}else {
-					res.json({data: programme});
+					res.json({data:programme});
 				}
 			});
 	// 如果是本周单曲榜部分发送Ajax请求
@@ -83,7 +84,7 @@ exports.index = function(req,res) {
 	// 没有Ajax请求，则是渲染整个音乐首页
 	}else{
 		// 获取豆瓣音乐顶部轮播图文件夹中图片数量
-		var newPath = path.join(__dirname,'../../../public/images/music/gallery'),
+		var newPath = path.join(__dirname,'../../../public/libs/images/music/gallery'),
 				dirList = fs.readdirSync(newPath),
 				fileList = [],
 				reg = /^(.+)\.(jpg|bmp|gif|png)$/i;	// 通过正则匹配图片
@@ -113,10 +114,11 @@ exports.index = function(req,res) {
 							console.log(err);
 						}
 						res.render('music/music_index',{
-							title: '豆瓣音乐首页',
-							musicCategories: musicCategories,
-							programmes: programmes,
-							fileList: fileList
+							title:'豆瓣音乐首页',
+							logo:'music',
+							musicCategories:musicCategories,
+							programmes:programmes,
+							fileList:fileList
 						});
 					});
 			});
@@ -136,10 +138,10 @@ exports.search = function(req,res) {
 	if(catId) {
 		// 音乐分类功能
 		MusicCategory
-			.find({_id: catId})
+			.find({_id:catId})
 			.populate({
-				path: 'musics',
-				select: 'title image'
+				path:'musics',
+				select:'title image'
 		})
 		.exec(function(err, musicCategories) {
 			if(err) {
@@ -151,22 +153,23 @@ exports.search = function(req,res) {
 				results = musics.slice(index, index + count); // 分类页面每页显示的音乐数量
 
 				res.render('music/music_results', {
-					title: '豆瓣音乐分类列表页面',
-					keyword: musicCategory.name,								// 分类名称
-					currentPage: (page + 1),										// 当前页
-					query: 'cat=' + catId,											// 切换到另一页
-					totalPage: Math.ceil(musics.length / count),// 总页数，需向上取整
-					musics: results 														// 查询到音乐分类下所含的音乐
+					title:'豆瓣音乐分类列表页面',
+					logo:'music',
+					keyword:musicCategory.name,									// 分类名称
+					currentPage:(page + 1),											// 当前页
+					query:'cat=' + catId,												// 切换到另一页
+					totalPage:Math.ceil(musics.length / count),	// 总页数，需向上取整
+					musics:results 															// 查询到音乐分类下所含的音乐
 				});
 			}
 		});
 	// 近期热门歌单区歌单分类功能
 	}else if(proId) {
 		Programme
-			.find({_id: proId})
+			.find({_id:proId})
 			.populate({
-				path: 'musicCategories',
-				select: 'name musics'
+				path:'musicCategories',
+				select:'name musics'
 		})
 		.exec(function(err, musicCategories) {
 			if(err) {
@@ -180,10 +183,10 @@ exports.search = function(req,res) {
 						len = musicCats.length;
 				for(var i = 0; i < len; i++) {
 					MusicCategory
-						.findOne({_id: musicCats[i]._id})
+						.findOne({_id:musicCats[i]._id})
 						.populate({
-							path: 'musics',
-							select: 'title image',
+							path:'musics',
+							select:'title image',
 						})
 						.exec(function(err,musics) {
 							count ++;
@@ -196,12 +199,13 @@ exports.search = function(req,res) {
 								// 分类页面每页显示的音乐数量
 								// results = dataMusics.slice(index, index + count);
 								res.render('music/music_results', {
-									title: '近期热门歌单分类列表页面',
-									keyword: musicCategories[0].name,					// 分类名称
-									currentPage: (page + 1),									// 当前页
-									query: 'pro=' + proId,										// 切换到另一页
-									totalPage: Math.ceil(dataMusics.length / count),// 总页数，需向上取整
-									musicCats: dataMusics     								// 查询到音乐分类下所含的音乐
+									title:'近期热门歌单分类列表页面',
+									logo:'music',
+									keyword:musicCategories[0].name,							 // 分类名称
+									currentPage:(page + 1),												 // 当前页
+									query:'pro=' + proId,													 // 切换到另一页
+									totalPage:Math.ceil(dataMusics.length / count),// 总页数，需向上取整
+									musicCats:dataMusics     									// 查询到音乐分类下所含的音乐
 								});
 							}
 						});
@@ -218,12 +222,13 @@ exports.search = function(req,res) {
 				}
 				var results = musics.slice(index, index + count);
 				res.render('music/music_results', {
-					title: '豆瓣音乐搜索结果列表页面',
-					keyword: q,
-					currentPage: (page + 1),
-					query: 'q=' + q,
-					totalPage: Math.ceil(musics.length / count),
-					musics: results
+					title:'豆瓣音乐搜索结果列表页面',
+					logo:'music',
+					keyword:q,
+					currentPage:(page + 1),
+					query:'q=' + q,
+					totalPage:Math.ceil(musics.length / count),
+					musics:results
 				});
 			});
 	}

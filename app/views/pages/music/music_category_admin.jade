@@ -1,4 +1,4 @@
-extends ./music_layout
+extends ../../includes/layout
 
 block content
   .container
@@ -16,9 +16,9 @@ block content
             each cat in programmes
               label.radio-inline
                 if musicCategory._id
-                  input(type="radio" name="musicCategory[programmeId]" value=cat._id checked=cat._id.toString()==musicCategory.programme.toString())
+                  input(type="radio" name="musicCategory[programme]" value=cat._id checked=cat._id.toString()==musicCategory.programme.toString())
                 else
-                  input(type="radio" name="musicCategory[programmeId]" value=cat._id)
+                  input(type="radio" name="musicCategory[programme]" value=cat._id)
                 | #{cat.name}
         .form-group
           label.col-sm-3.control-label(for="inputMusicCategory") 音乐分类

@@ -1,5 +1,7 @@
 "use strict";
 
+$.support.cors = true;																	// 解决IE8/9 Ajax跨域请求问题
+
 $(function() {
 	// 获取电影列表删除按钮类名，当点击删除按钮触发删除事件
 	$('.movieDel').click(function(e) {
@@ -27,7 +29,7 @@ $(function() {
 
 		$.ajax({
 			type: 'DELETE',
-			url: '/admin/movie/category/list?id=' + id
+			url: '/admin/movie/movieCategory/list?id=' + id
 		})
 		.done(function(result) {
 			// 如果服务器返回json数据中success = 1，并且删除行存在，则将该行数据删除

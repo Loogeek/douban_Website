@@ -1,0 +1,97 @@
+/* 详情页标题部分样式 */
+.detail-header {
+  h4 {                                      // 详情页简介样式
+    color: #007722;
+  }
+  .intro {
+    font: 14px Helvetica,Arial,sans-serif;
+    text-indent: 2em;
+  }
+  span {
+    font-size: 25px;
+    font-weight: bold;
+    color: #494949;
+  }
+  .year {
+    color: #888;
+  }
+}
+
+/* 音乐详情页播放器部分样式 */
+audio {
+  display: block;
+  width: 100%;
+  height: 100px;
+}
+
+/* 详情页详细信息介绍部分样式 */
+.detail-body {
+  margin: 20px 0 30px;
+  img {
+    width: 100px;
+    height: 150px;
+    float: left;
+    margin-right: 10px;
+  }
+  .musicImg {
+    width: 100px;
+    height: 100px;
+  }
+  .detail-info {
+    float: left;
+    width: 248px;
+    font: 12px Arial, Helvetica, sans-serif;
+    dt {
+      width: auto;
+      text-align: left;
+      margin-right: 10px;
+      color: #666;
+    }
+    dd {
+      margin-left: 0;
+      color: #37a;
+    }
+  }
+  .rating {
+    float: left;
+    border-left: 1px solid #eaeaea;
+    padding-left: 15px;
+    margin-top: 2px;
+    span {
+      font-size: 17px;
+      color: #9b9b9b;
+    }
+    .rating-num {
+      color: #494949;
+      font-size: 28px;
+      min-width: 30%;
+    }
+    .rating-img {
+      width: 75px;
+      height: 15px;
+      overflow: hidden;
+    }
+    .star {
+      background-image: url(/libs/images/includes/stars.png);
+    }
+  }
+}
+
+/* 简介及评论部分样式 */
+.detaile-content {
+  .media-body {
+    h4 {
+      display: inline-block;
+    }
+    p {
+      word-wrap:break-word;
+      word-break:normal;
+      width: 550px;
+    }
+  }
+  textarea {
+    resize: none;
+    overflow: auto;
+    height: 100px;
+  }
+}

@@ -1,4 +1,4 @@
-extends ./movie_layout
+extends ../../includes/layout
 
 block content
   .container
@@ -11,19 +11,16 @@ block content
             each item in movies
               .col-md-2
                 .thumbnail
-                  a(href="/movie/#{item._id}")
-                    img(src="#{item.poster}", alt="#{item.title}" style="height: 200px;")
+                  if item.poster.indexOf('http:') > -1
+                    a(href="/movie/#{item._id}")
+                      img(src="#{item.poster}", alt="#{item.title}" style="height: 200px;")
+                  else
+                    a(href="/movie/#{item._id}")
+                      img(src="/upload/movie/#{item.poster}", alt="#{item.title}" style="height: 200px;")
                   .caption
                     h5(style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;") #{item.title}
                     p: a.btn.btn-primary(href="/movie/#{item._id}", role="button") 观看预告片
-      ul.pagination
-        - for (var i = 0; i < totalPage; i++) {
-          - if (currentPage == (i + 1)) {
-              li.active
-                span #{currentPage}
-          - }
-          - else {
-              li
-                a(href='/movie/results?#{query}&p=#{i}') #{i + 1}
-          - }
-        - }
+      div(style="margin: 0 auto;text-align: center;")
+        ul.pagination#page(data-currentPage = currentPage data-totalPage = totalPage data-query = query)
+  script(src="/libs/scripts/js/include/page.min.js")
+  script(src="/libs/scripts/js/movie/movie_results.min.js")

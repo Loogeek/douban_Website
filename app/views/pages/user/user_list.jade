@@ -1,4 +1,4 @@
-extends ../movie/movie_layout
+extends ../../includes/layout.jade
 
 block content
   .container
@@ -20,4 +20,4 @@ block content
               td: a(target="_blank", href="/admin/update/#{item._id}") 修改
               td
                 button.btn.btn-danger.userDel(type="button", data-id="#{item._id}") 删除
-  script(src="/scripts/js/user/user_list.js")       
+  script(src="/libs/scripts/js/user/user_list.min.js")

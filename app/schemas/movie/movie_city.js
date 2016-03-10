@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 var CitySchema = new Schema({
   name: String,
   cinemas: [{}],
-  cityCategory: [{
+  cityCategories: [{
     type: ObjectId,
     ref: 'CityCategory'
   }],

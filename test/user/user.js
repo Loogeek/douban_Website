@@ -12,9 +12,9 @@ function getRandomString(len) {
 }
 
 var should = require('should'),                     // 测试框架
-    app = require('../../app'),                  // 入口文件
+    app = require('../../app'),                     // 入口文件
     mongoose = require('mongoose'),
-    // User = require('../../app/models/user/user'),
+    // 通过app文件中的walk函数加载了各模型的路径,所以可以直接通过mongoose.model加载用户模型，这样即使模型路径改变也无需更改路径
     User = mongoose.model('User'),
     user;
 

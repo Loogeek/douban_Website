@@ -17,7 +17,7 @@
 .screen-header .slide-tip { float: right; position: absolute; top: 20px; right: 0; }
 .screen-header .slide-tip .side-max { margin-right: 10px; }
 .screen-header .slide-tip .glyphicon { cursor: pointer; }
-.screen-header .slide-tip .slide-prev, .screen-header .slide-tip .slide-next { background: url(/images/movie/slide_swithc_2.png); opacity: .5; width: 18px; height: 18px; cursor: pointer; outline: none; border: none; }
+.screen-header .slide-tip .slide-prev, .screen-header .slide-tip .slide-next { background: url(/libs/images/movie/slide_swithc_2.png); opacity: .5; width: 18px; height: 18px; cursor: pointer; outline: none; border: none; }
 .screen-header .slide-tip .slide-next { background-position: -18px 0; }
 .screen-header .slide-tip .slide-prev:hover, .screen-header .slide-tip .slide-next:hover { opacity: 1; }
 
@@ -50,7 +50,7 @@
 .cinemas-search { background-color: #f6f3d3; padding: 12px; margin-top: 20px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -ms-border-radius: 5px; border-radius: 5px; height: 50px; }
 .cinemas-search .city { background-color: #fff; position: relative; float: left; width: 20%; border: 1px solid #ddd; height: 26px; line-height: 26px; cursor: pointer; font-size: 12px; margin-right: 5px; }
 .cinemas-search .city > span { height: 100%; padding-left: 5px; display: block; text-align: left; position: relative; z-index: 10; }
-.cinemas-search .city > i { position: absolute; left: 47px; top: 7px; cursor: pointer; }
+.cinemas-search .city > i { position: absolute; right: 5px; top: 7px; cursor: pointer; }
 .cinemas-search .city hr { margin-top: 10px; margin-bottom: 10px; }
 .cinemas-search .cities-list { position: absolute; top: 40px; border: 1px solid #dfdfdf; -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); -ms-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); padding: 20px 20px 0; background-color: #fff; }
 .cinemas-search .cities-list span { color: #2e7ab3; }
@@ -102,5 +102,3 @@
 /* 首页底部样式 */
 .footer-img { margin: 60px 0 20px; }
 .footer-img img { margin: 0 auto; display: block; width: 100%; height: 90px; }
-
-/*# sourceMappingURL=movie_index.css.map */

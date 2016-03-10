@@ -137,11 +137,11 @@ h5{
 			border:none;
 			outline: none;
 			top:50%;
-			background:url(/images/music/banner_arrow.png);
+			background:url(/libs/images/music/banner_arrow.png);
 			width:36px;
 			height:51px;
 			&:hover{
-				background:url(/images/music/banner_arrow.png);
+				background:url(/libs/images/music/banner_arrow.png);
 			}
 		}
 		.slide-prev{
@@ -237,7 +237,7 @@ h5{
 		}
 		.slide-next,.slide-prev{
 			border: none;
-			background: url(/images/music/editor_arrow.png) no-repeat;
+			background: url(/libs/images/music/editor_arrow.png) no-repeat;
 			width: 20px;
 			height: 20px;
 			opacity: 0.5;
@@ -251,21 +251,22 @@ h5{
 		}
 	}
 	.screen-body{
-		height: 380px;
+		height: 350px;
 		position: relative;
 		padding: 15px 0;
 		background-color: #f5f7f8;
 	}
 	.thumbnail{
+		overflow: hidden;
 		border: none;
-		height: 350px;
+		height: 320px;
 		float: left;
 		background-color:#fff;
 		margin: 0 10px 0;
 		a{
 			img{
-				height: 130px;
-				width: 80%;
+				height: 100px;
+				width: 100px;
 			}
 		}
 		.caption {
@@ -426,7 +427,10 @@ h5{
 		float: left;
 		height: 110px;
 		margin: 0;
-		a{text-decoration: none;}
+		text-align: center;
+		a{
+			text-decoration: none;
+		}
 		img{
 			width: 80px;
 			height: 80px;
@@ -434,6 +438,11 @@ h5{
 		h5{
 			font-size: 12px;
 			text-align: center;
+			display: inline-block;
+		}
+		h5:hover{
+			background-color: #138A64;
+			color: #fff;
 		}
 	}
 }

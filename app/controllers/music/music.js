@@ -1,17 +1,18 @@
 "use strict";
 
-var Music = require('../../models/music/music'),       						//音乐数据模型
-		MusicComment = require('../../models/music/music_comment'),   //音乐评论模型
-		MusicCategory = require('../../models/music/music_category'), //音乐分类模型
-		_ = require('underscore'),   																//该模块用来对变化字段进行更新
-		fs = require('fs'),																						//读写文件模块
-		path = require('path');																				//路径模块
+var mongoose = require('mongoose'),
+		Music = mongoose.model('Music'),															// 音乐数据模型
+		MusicComment = mongoose.model('MusicComment'),								// 音乐评论模型
+		MusicCategory = mongoose.model('MusicCategory'),							// 音乐分类模型
+		_ = require('underscore'),   													// 该模块用来对变化字段进行更新
+		fs = require('fs'),																						// 读写文件模块
+		path = require('path');																				// 路径模块
 
 /* 详细页面路由 */
 exports.detail = function(req,res) {
 	var _id = req.params.id;
 	// 音乐用户访问统计，每次访问音乐详情页，PV增加1
-	Music.update({_id: _id},{$inc: {pv:1}},function(err) {
+	Music.update({_id:_id},{$inc:{pv:1}},function(err) {
 		if(err){
 			console.log(err);
 		}
@@ -20,14 +21,15 @@ exports.detail = function(req,res) {
 	Music.findById(_id,function(err,music) {
 		// 查找该_id值所对应的评论信息
 		MusicComment
-			.find({music: _id})
+			.find({music:_id})
 			.populate('from','name')
 			.populate('reply.from reply.to','name')							// 查找评论人和回复人的名字
 			.exec(function(err,comments) {
 				res.render('music/music_detail', {
-					title: '豆瓣音乐详情页',
-					music: music,
-					comments: comments
+					title:'豆瓣音乐详情页',
+					logo:'music',
+					music:music,
+					comments:comments
 				});
 			});
 	});
@@ -36,10 +38,14 @@ exports.detail = function(req,res) {
 /* 后台录入路由 */
 exports.new = function(req,res) {
 	MusicCategory.find({},function(err,musicCategories) {
+		if (err) {
+			console.log(err);
+		}
 		res.render('music/music_admin', {
-			title: '豆瓣音乐后台录入页',
-			musicCategories: musicCategories,
-			music: {}
+			title:'豆瓣音乐后台录入页',
+			logo:'music',
+			musicCategories:musicCategories,
+			music:{}
 		});
 	});
 };
@@ -78,83 +84,154 @@ exports.savePoster = function(req, res, next) {
 
 /* 后台录入路由 */
 exports.save = function(req,res) {
-	var id = req.body.music._id,
-			musicObj = req.body.music,
-			_music;
+	var id = req.body.music._id,												// 如果是更新音乐则获取到该音乐ID值
+			musicObj = req.body.music,											// 获取音乐新建表单发送的数据
+			musicCategoryId = musicObj.musicCategory,				// 获取音乐所属分类ID值
+			musicCategoryName = musicObj.musicCategoryName;	// 获取音乐所属分类名称
 	// 如果有自定义上传海报  将musicObj中的海报地址改成自定义上传海报的地址
 	if(req.image){
 		musicObj.image = req.image;
 	}
-	// 如果数据已存在，则更新相应修改字段
+	// 如果id值存在，则说明是对已存在的数据进行更新
 	if(id) {
-		Music.findById(id,function(err,music) {
+		Music.findById(id,function(err,_music) {
 			if(err) {
 				console.log(err);
 			}
-			// 使用underscore模块的extend函数复制musicObj对象中的所有属性覆盖到music对象
-			// 上，并且返回music对象. 复制是按顺序的, 所以后面的对象属性会把前面的对象属性覆盖掉
-			_music = _.extend(music,musicObj);
-			_music.save(function(err,music) {
+			// 如果输入后歌曲分类与原歌曲分类不同，则说明更新了音乐分类
+			if (musicObj.musicCategory.toString() !== _music.musicCategory.toString()) {
+				// 找到音乐对应的原歌曲分类
+				MusicCategory.findById(_music.musicCategory,function(err,_oldCat) {
+					if (err) {
+						console.log(err);
+					}
+					// 在原歌曲分类的musics属性中找到该歌曲的id值并将其删除
+					var index = _oldCat.musics.indexOf(id);
+					_oldCat.musics.splice(index,1);
+					_oldCat.save(function(err) {
+						if (err) {
+							console.log(err);
+						}
+					});
+				});
+				// 找到音乐对应的新歌曲分类
+				MusicCategory.findById(musicObj.musicCategory,function(err,_newCat) {
+					if (err) {
+						console.log(err);
+					}
+					// 将其id值添加到musics属性中并保存
+					_newCat.musics.push(id);
+					_newCat.save(function(err) {
+						if (err) {
+							console.log(err);
+						}
+					});
+				});
+			}
+			// 使用underscore模块的extend函数更新音乐变化的属性
+			_music = _.extend(_music,musicObj);
+			_music.save(function(err,_music) {
 				if(err){
 					console.log(err);
 				}
-				res.redirect('/music/' + music._id);
+				res.redirect('/music/' + _music._id);
 			});
 		});
-	}else {
-		// 获取音乐所属分类名称和ID值
-		var musicCategoryId = musicObj.musicCategory,
-				musicCategoryName = musicObj.musicCategoryName;
-    // 创建一个音乐新数据
-		_music = new Music(musicObj);
-		_music.save(function(err,music) {
-			if(err){
+	}else if(musicObj.title) {
+		// 如果表单中填写了音乐名称 则查找该音乐名称是否已存在
+		Music.findOne({title:musicObj.title},function(err,_music) {
+			if (err) {
 				console.log(err);
 			}
-			// 选择了音乐所属的音乐分类
-			if(musicCategoryId) {
-				MusicCategory.findById(musicCategoryId,function(err,musicCategory) {
+			if (_music) {
+				console.log('音乐已存在');
+				res.redirect('/admin/music/list');
+			}else {
+				// 创建一个音乐新数据
+				var newMusic = new Music(musicObj);
+				newMusic.save(function(err,_newMusic) {
 					if(err){
 						console.log(err);
 					}
-					musicCategory.musics.push(music._id);
-					musicCategory.save(function(err) {
-						if(err){
-							console.log(err);
-						}
-						res.redirect('/music/' + music._id);
-					});
-				});
-			// 输入新的音乐分类
-			}else if(musicCategoryName) {
-				MusicCategory.findOne({name: musicCategoryName}, function(err, _musicCategoryName) {
-					if(err) {
-						console.log(err);
-					}
-					if(_musicCategoryName) {
-						console.log('音乐分类已存在');
-						res.redirect('/admin/music/musicCategory/list');
-					}else {
-						//创建新的音乐分类
-						var musicCategory = new MusicCategory({
-							name: musicCategoryName,
-							musics: [music._id]
-						});
-						// 保存新创建的音乐分类
-						musicCategory.save(function(err,musicCategory) {
-							// 将新创建的音乐保存，musicCategory的ID值为对应的分类ID值
-							// 这样可通过populate方法进行相应值的索引
-							music.musicCategory = musicCategory._id;
-							music.save(function(err,music) {
-								res.redirect('/music/' + music._id);
+					// 选择了音乐所属的音乐分类
+					if(musicCategoryId) {
+						MusicCategory.findById(musicCategoryId,function(err,_musicCategory) {
+							if(err){
+								console.log(err);
+							}
+							_musicCategory.musics.push(_newMusic._id);
+							_musicCategory.save(function(err) {
+								if(err){
+									console.log(err);
+								}
+								res.redirect('/music/' + _newMusic._id);
 							});
 						});
+						// 输入新的音乐分类
+					}else if(musicCategoryName) {
+						// 查找音乐分类是否已存在
+						MusicCategory.findOne({name:musicCategoryName}, function(err, _musicCategoryName) {
+							if(err) {
+								console.log(err);
+							}
+							if(_musicCategoryName) {
+								console.log('音乐分类已存在');
+								res.redirect('/admin/music/musicCategory/list');
+							}else {
+								//创建新的音乐分类
+								var musicCategory = new MusicCategory({
+									name:musicCategoryName,
+									musics:[_newMusic._id]
+								});
+								// 保存新创建的音乐分类
+								musicCategory.save(function(err,musicCategory) {
+									if (err) {
+										console.log(err);
+									}
+									// 将新创建的音乐保存，musicCategory的ID值为对应的分类ID值
+									// 这样可通过populate方法进行相应值的索引
+									_newMusic.musicCategory = musicCategory._id;
+									_newMusic.save(function(err,music) {
+										if (err) {
+											console.log(err);
+										}
+										res.redirect('/music/' + music._id);
+									});
+								});
+							}
+						});
+					}else {
+						res.redirect('/admin/music/list');
 					}
 				});
-			}else {
-				res.redirect('/admin/music/musicCategory/list');
 			}
 		});
+	// 没有输入音乐名称 而只输入了歌曲分类名称
+	}else if(musicCategoryName) {
+		// 查找音乐分类是否已存在
+		MusicCategory.findOne({name:musicCategoryName}, function(err, _musicCategoryName) {
+			if(err) {
+				console.log(err);
+			}
+			if(_musicCategoryName) {
+				console.log('音乐分类已存在');
+				res.redirect('/admin/music/musicCategory/list');
+			}else {
+				// 创建新的音乐分类
+				var musicCategory = new MusicCategory({
+					name:musicCategoryName
+				});
+				// 保存新创建的音乐分类
+				musicCategory.save(function(err) {
+					if (err) {
+						console.log(err);
+					}
+					res.redirect('/admin/music/musicCategory/list');
+				});
+			}
+		});
+	}else {
+		res.redirect('/admin/music/list');
 	}
 };
 
@@ -168,9 +245,10 @@ exports.update = function(req,res) {
 				console.log(err);
 			}
 			res.render('music/music_admin',{
-				title: '豆瓣音乐后台更新页',
-				music: music,
-				musicCategories: musicCategories
+				title:'豆瓣音乐后台更新页',
+				logo:'music',
+				music:music,
+				musicCategories:musicCategories
 			});
 		});
 	});
@@ -185,8 +263,9 @@ exports.list = function(req,res)  {
 				console.log(err);
 			}
 			res.render('music/music_list',{
-				title: '豆瓣音乐列表页',
-				musics: musics
+				title:'豆瓣音乐列表页',
+				logo:'music',
+				musics:musics
 			});
 		});
 };
@@ -194,7 +273,8 @@ exports.list = function(req,res)  {
 /* 音乐列表删除音乐路由 */
 exports.del = function(req,res) {
 	// 获取客户端Ajax发送的URL值中的id值
-	var id  = req.query.id;
+	var id = req.query.id;
+	// 如果id存在则服务器中将该条数据删除并返回删除成功的json数据
 	if(id) {
 		Music.findById(id, function(err,music) {				// 查找该条音乐信息
 			if(err) {
@@ -215,11 +295,11 @@ exports.del = function(req,res) {
 						}
 					});
 				}
-				Music.remove({_id: id}, function(err) {		// 音乐模型中删除该电影数据
+				Music.remove({_id:id}, function(err) {		// 音乐模型中删除该电影数据
 					if(err) {
 						console.log(err);
 					}
-					res.json({success: 1});									// 返回删除成功的json数据给游览器
+					res.json({success:1});									// 返回删除成功的json数据给游览器
 				});
 			});
 		});

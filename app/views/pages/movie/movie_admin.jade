@@ -1,4 +1,4 @@
-extends ./movie_layout
+extends ../../includes/layout
 
 block content
   .container
@@ -16,7 +16,7 @@ block content
             input#inputCategory.form-control(type="text" name="movie[categoryName]" value=movie.categoryName)
         .form-group
           label.col-sm-3.control-label 分类选择
-          .col-sm-6
+          .col-sm-6(style="height:100px; overflow:auto;")
             each cat in categories
               label.radio-inline
                 if movie._id
@@ -75,4 +75,4 @@ block content
         .form-group
           .col-sm-offset-3.col-sm-6
             button.btn.btn-default(type="submit") 录入
-  script(src='/scripts/js/movie/movie_admin.js')
+  script(src='/libs/scripts/js/movie/movie_admin.min.js')

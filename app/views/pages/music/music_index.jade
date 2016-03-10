@@ -1,12 +1,14 @@
-extends ./music_layout
+extends ../../includes/layout
+
 block link
-  link(href="css/music/music_index.css",rel="stylesheet")
+  meta(name="description" content="记录你想听的、在听和听过的唱片，顺便打分、添加标签及个人附注、写评论。根据你的口味，豆瓣会推荐适合的唱片给你。")
+  link(href="/libs/css/music/music_index.min.css",rel="stylesheet")
 block content
   .wrapper
     .content
       .container-fluid
         .row
-          .col-md-6.col-md-offset-1.col-xs-7.screen
+          .col-md-6.col-md-offset-1.col-xs-7.col-sm-7.screen
             // 顶部轮播图标签节点
             #galleryFrames.gallery-frames
               .panel.panel-default
@@ -14,14 +16,14 @@ block content
                   ul.slide-content.clearfix(style="width: 10000px; left: -585px")
                     li.slide-item
                       a(href="javascript:;")
-                        img(src="/images/music/gallery/" + fileList.length + '.jpg' alt="")
+                        img(src="/libs/images/music/gallery/" + fileList.length + '.jpg' alt="")
                     - for(var i = 1; i <= fileList.length; i++)
                         li.slide-item
                           a(href="javascript:;")
-                            img(src="/images/music/gallery/" + i + '.jpg' alt="")
+                            img(src="/libs/images/music/gallery/" + i + '.jpg' alt="")
                     li.slide-item
                       a(href="javascript:;")
-                        img(src="/images/music/gallery/1.jpg" alt="")
+                        img(src="/libs/images/music/gallery/1.jpg" alt="")
                 button.slide-prev
                 button.slide-next
                 ul.slide-dots
@@ -58,7 +60,7 @@ block content
                             div #{item.summary}
             .left-advertisement
               a(href="javascript:;")
-                img(src="/images/music/1.jpg" alt="小老虎全国巡演")
+                img(src="/libs/images/music/1.jpg" alt="小老虎全国巡演")
             // 新碟榜
             .screen#newAlbums.new-albums
               each cat in musicCategories
@@ -120,11 +122,11 @@ block content
                                         p=j+1 + '.'
                                           |#{musicItem.musics[j].title}
                                     span ...
-          .col-md-4.col-xs-4
+          .col-md-4.col-xs-4.col-sm-4
             // 顶部右侧广告
             .right-advertisement.clearfix
               a(href="/fullpage" target="_blank")
-                img(src="/images/music/advertisements/1.jpg")
+                img(src="/libs/images/music/advertisements/1.jpg")
             // 热门音乐人分类
             .tag-block#tagBlock
               .screen
@@ -178,13 +180,11 @@ block content
                       h4 豆瓣音乐250
                       a.more(href="/music/results?cat=#{cat._id}&p=0" target="_blank") 更多
                     .billboard-bd.clearfix
-                      // table.table.table-hover
-                      //   tbody
                       if cat.musics && cat.musics.length > 0
                         - var len = Math.min(9,cat.musics.length)
                         - for(var i = 0; i < len; i++)
                           .thumbnail
-                            if(cat.musics[i])
+                            if cat.musics[i]
                               a(href="/music/#{cat.musics[i]._id}" target="_blank")
                                 if cat.musics[i].image.indexOf('http:') > -1
                                   img(src="#{cat.musics[i].image}", alt="#{cat.musics[i].title}")
@@ -194,5 +194,5 @@ block content
               // 豆瓣音乐250下方广告部分节点标签
               .right-advertisement.clearfix
                 a(href="/fullpage" target="_blank")
-                  img(src="/images/music/advertisements/2.jpg")
-  script(src="/scripts/js/music/music_index.js")
+                  img(src="/libs/images/music/advertisements/2.jpg")
+  script(src="/libs/scripts/js/music/music_index.min.js")

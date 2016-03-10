@@ -1,13 +1,16 @@
-extends ./movie_layout
+extends ../../includes/layout
+
 block link
-  link(href="/css/movie/movie_index.css",rel="stylesheet")
+  meta(name="keywords" content="电影、经典电影、热映、电视剧、美剧、影评、电影院、电影票、排行、推荐")
+  meta(name="description" content="豆瓣电影提供最新的电影介绍及评论包括上映影片的影讯查询及购票服务。你可以记录想看、在看和看过的电影电视剧，顺便打分、写影评。根据你的口味，豆瓣电影会推荐好电影给你。")
+  link(href="/libs/css/movie/movie_index.min.css",rel="stylesheet")
 block content
   // 容器标签节点
   .wrapper
     .content
       .container-fluid
         .row
-          .col-md-6.col-md-offset-1.col-xs-7.screen
+          .col-md-6.col-md-offset-1.col-xs-7.col-sm-7.screen
             // 顶部轮播图标签节点
             #scrollMoives
               each cat in categories
@@ -39,7 +42,7 @@ block content
             // 顶部轮播图下方广告标签节点
             .left-advertisement
               a(href="javascript:;")
-                img(src="/images/movie/middleImg/1.jpg" alt="middelImg")
+                img(src="/libs/images/movie/middleImg/1.jpg" alt="middelImg")
             // 选电影/选电视剧标签节点
             #fliterMovies.fliter-movies
               .screen
@@ -98,7 +101,7 @@ block content
                 ul.slide-content.clearfix(style="")
                   li.slide-item
                     a(href="javascript:;")
-                      img(src="/images/movie/galleryFrames/4.jpg" alt="【豆瓣会客厅】王千源：用实力证明不凡")
+                      img(src="/libs/images/movie/galleryFrames/4.jpg" alt="【豆瓣会客厅】王千源：用实力证明不凡")
                     .slide-detail
                       .slide-hd
                         a(href="javascript:;" target="_blank")
@@ -107,7 +110,7 @@ block content
                         p 在《解救吾先生》中扮演悍匪华子的王千源做客豆瓣会客厅。
                   li.slide-item
                     a(href="javascript:;")
-                      img(src="/images/movie/galleryFrames/1.jpg" alt="【豆瓣会客厅】王千源：用实力证明不凡")
+                      img(src="/libs/images/movie/galleryFrames/1.jpg" alt="【豆瓣会客厅】王千源：用实力证明不凡")
                     .slide-detail
                       .slide-hd
                         a(href="javascript:;" target="_blank")
@@ -116,7 +119,7 @@ block content
                         p 在《解救吾先生》中扮演悍匪华子的王千源做客豆瓣会客厅。
                   li.slide-item
                     a(href="javascript:;")
-                      img(src="/images/movie/galleryFrames/2.jpg" alt="怒吼你心中的怪兽(╰_╯)")
+                      img(src="/libs/images/movie/galleryFrames/2.jpg" alt="怒吼你心中的怪兽(╰_╯)")
                     .slide-detail
                       .slide-hd
                         a(href="javascript:;" target="_blank")
@@ -125,7 +128,7 @@ block content
                         p 每个人的心里都有一个怪兽。或是贪，或是嗔，或是色，或是恶。
                   li.slide-item
                     a(href="javascript:;")
-                      img(src="/images/movie/galleryFrames/3.jpg" alt="关于电影本身的电影")
+                      img(src="/libs/images/movie/galleryFrames/3.jpg" alt="关于电影本身的电影")
                     .slide-detail
                       .slide-hd
                         a(href="javascript:;" target="_blank")
@@ -134,7 +137,7 @@ block content
                         p 讲述和电影本身有关的一切的电影，电影幕后，电影明星，电影导演，电影海报，电影拍摄，电影制作，电影历史。让爱电影的人更了解电影。
                   li.slide-item
                     a(href="javascript:;")
-                      img(src="/images/movie/galleryFrames/4.jpg" alt="【豆瓣会客厅】王千源：用实力证明不凡")
+                      img(src="/libs/images/movie/galleryFrames/4.jpg" alt="【豆瓣会客厅】王千源：用实力证明不凡")
                     .slide-detail
                       .slide-hd
                         a(href="javascript:;" target="_blank")
@@ -143,7 +146,7 @@ block content
                         p 在《解救吾先生》中扮演悍匪华子的王千源做客豆瓣会客厅。
                   li.slide-item
                     a(href="javascript:;")
-                      img(src="/images/movie/galleryFrames/1.jpg" alt="【豆瓣会客厅】王千源：用实力证明不凡")
+                      img(src="/libs/images/movie/galleryFrames/1.jpg" alt="【豆瓣会客厅】王千源：用实力证明不凡")
                     .slide-detail
                       .slide-hd
                         a(href="javascript:;" target="_blank")
@@ -151,7 +154,7 @@ block content
                       .slide-hd
                         p 在《解救吾先生》中扮演悍匪华子的王千源做客豆瓣会客厅。
           // 电影院搜索标签节点
-          .col-md-4.col-xs-4
+          .col-md-4.col-xs-4.col-sm-4
             .cinemas-search
               #citySearch.city
                 span 广州
@@ -169,24 +172,26 @@ block content
                   .cities-list-bd
                     // 热门城市列表
                     - for(var j = 0; j < cityProgrammeList.length; j++)
-                      if cityProgrammeList[j].name === '热门'
-                        .cities-list-item.active
-                          ul
-                            - for(var h = 0; h < cityCategoryList.length; h++)
-                              if cityCategoryList[h].name === '热门'
-                                - for(var k = 0; k < cityCategoryList[h].cities.length; k++)
-                                  li: a.city-item(href="javascript:;") #{cityCategoryList[h].cities[k].name}
-                      else
-                        .cities-list-item
-                          - for(var y = 0; y < cityCategoryList.length; y++)
-                            if cityProgrammeList[j].name === cityCategoryList[y].cityProgramme[0].name
-                              dl.city-mod
-                                dt #{cityCategoryList[y].name}
-                                dd
-                                  ul
-                                    - for(var z = 0; z < cityCategoryList[y].cities.length; z++)
-                                      li: a.city-item(href="javascript:;") #{cityCategoryList[y].cities[z].name}
-                                hr
+                      if cityProgrammeList[j]
+                        if cityProgrammeList[j].name === '热门'
+                          .cities-list-item.active
+                            ul
+                              - for(var h = 0; h < cityCategoryList.length; h++)
+                                if cityCategoryList[h].name === '热门'
+                                  - for(var k = 0; k < cityCategoryList[h].cities.length; k++)
+                                    li: a.city-item(href="javascript:;") #{cityCategoryList[h].cities[k].name}
+                        else
+                          .cities-list-item
+                            - for(var y = 0; y < cityCategoryList.length; y++)
+                              if cityCategoryList[y].cityProgramme
+                                if cityProgrammeList[j].name === cityCategoryList[y].cityProgramme.name
+                                  dl.city-mod
+                                    dt #{cityCategoryList[y].name}
+                                    dd
+                                      ul
+                                        - for(var z = 0; z < cityCategoryList[y].cities.length; z++)
+                                          li: a.city-item(href="javascript:;") #{cityCategoryList[y].cities[z].name}
+                                    hr
               // 电影院搜索节点标签
               #citySug.city-suggestion
                 .city-suggestion-input
@@ -198,7 +203,7 @@ block content
             // 电影院下方广告节点标签
             .right-advertisement
               a(href="/fullpage" target="_blank")
-                img(src="/images/movie/advertisements/1.jpg")
+                img(src="/libs/images/movie/advertisements/1.jpg")
             // 电影活动部分节点标签
             .right-advertisementList
               h4 电影活动&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·
@@ -226,6 +231,6 @@ block content
             // 本周口碑榜下方广告部分节点标签
             .right-advertisement
               a(href="javascript:;")
-                img(src="/images/movie/advertisements/2.jpg")
+                img(src="/libs/images/movie/advertisements/2.jpg")
   // 电影首页JS脚本
-  script(src="/scripts/js/movie/movie_index.js")
+  script(src="/libs/scripts/js/movie/movie_index.min.js")

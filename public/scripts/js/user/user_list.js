@@ -1,5 +1,7 @@
 "use strict";
 
+$.support.cors = true;																	// 解决IE8/9 Ajax跨域请求问题
+
 $(function() {
   // 获取用户列表删除按钮类名，当点击删除按钮触发删除事件
   $('.userDel').click(function(e) {

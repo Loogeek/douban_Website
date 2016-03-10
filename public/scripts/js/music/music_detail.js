@@ -1,5 +1,7 @@
 "use strict";
 
+$.support.cors = true;																	// 解决IE8/9 Ajax跨域请求问题
+
 $(function() {
 	// 设置豆瓣音乐评分图片的样式
 	// 获取该歌曲的豆瓣评分来设置图片的Y轴位置，显示相应评分对象的星星数
@@ -59,10 +61,10 @@ $(function() {
 			// 如果是对评论进行回复
 			if(data.reply.length) {
 				var len = data.reply.length;  										// 回复评论人的条数
-				$('#mediaBody').append('<div class="media"><div class="media-left"><img src="/images/user/headImg.png" style="width: 30px; height: 30px;"/></div><div class="media-body"><h4  class="media-heading">' + data.reply[len-1].from.name + '<span>&nbsp;回复&nbsp;</span>' + data.reply[len-1].to.name + '</h4><p>' + data.reply[len-1].content + '</p><span class="createAt">' + format(new Date()) + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<a class="comment" href="#comments" data-cid=' + data._id + ' data-tid=' + data.reply[len-1].to._id + '> 回复</a>&nbsp;|&nbsp;<a class="comment-del" href="javascript:;" data-cid=' + data._id + ' data-did=' + data.reply[len-1]._id + '>删除</a></div></div>');
+				$('#mediaBody').append('<div class="media"><div class="media-left"><img src="/libs/images/user/headImg.png" style="width: 30px; height: 30px;"/></div><div class="media-body"><h4  class="media-heading">' + data.reply[len-1].from.name + '<span>&nbsp;回复&nbsp;</span>' + data.reply[len-1].to.name + '</h4><p>' + data.reply[len-1].content + '</p><span class="createAt">' + format(new Date()) + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<a class="comment" href="#comments" data-cid=' + data._id + ' data-tid=' + data.reply[len-1].to._id + '> 回复</a>&nbsp;|&nbsp;<a class="comment-del" href="javascript:;" data-cid=' + data._id + ' data-did=' + data.reply[len-1]._id + '>删除</a></div></div>');
 			// 如果是发表新评论
 			}else {
-				$('#mediaList').append('<li class="media"><div class="media-left"><img src="/images/user/headImg.png" style="width: 40px; height: 40px;" /></div><div class="media-body"><h4 class="media-heading">' + data.from.name + '</h4><p>' + data.content + '</p><span class="createAt">' + format(new Date()) + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<a class="comment" href="#comments" data-cid=' + data._id + ' data-tid=' + data.from._id + '> 回复</a>&nbsp;|&nbsp;<a class="comment-del" href="javascript:;" data-cid=' + data._id + '>删除</a></div><hr></li>');
+				$('#mediaList').append('<li class="media"><div class="media-left"><img src="/libs/images/user/headImg.png" style="width: 40px; height: 40px;" /></div><div class="media-body"><h4 class="media-heading">' + data.from.name + '</h4><p>' + data.content + '</p><span class="createAt">' + format(new Date()) + '</span>&nbsp;&nbsp;&nbsp;&nbsp;<a class="comment" href="#comments" data-cid=' + data._id + ' data-tid=' + data.from._id + '> 回复</a>&nbsp;|&nbsp;<a class="comment-del" href="javascript:;" data-cid=' + data._id + '>删除</a></div><hr></li>');
 			}
 
 			$('#comments textarea').val('');  // 发表评论后清空评论框内容

@@ -60,7 +60,7 @@
 	  .side-max{margin-right: 10px;}
 	  .glyphicon{cursor: pointer;}
 	  .slide-prev,.slide-next{
-		background:url(/images/movie/slide_swithc_2.png);
+		background:url(/libs/images/movie/slide_swithc_2.png);
 		opacity: .5;
 		width: 18px;
 		height: 18px;
@@ -188,7 +188,7 @@
 	  }
 	  > i{
 		  position: absolute;
-		  left: 47px;
+		  right: 5px;
 		  top: 7px;
 		  cursor: pointer;
 	  }
