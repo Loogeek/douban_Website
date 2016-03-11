@@ -36,7 +36,9 @@ NodeJs+MongoDB+jQuery仿豆瓣电影音乐网站搭建
 
 项目整体效果
 -------
-![电影首页](https://raw.githubusercontent.com/Loogeek/douban_Website/master/ReadmeImag/doubanMovie.png)
+![电影首页](http://7xrqxi.com1.z0.glb.clouddn.com/doubanMovie.png)
+![电影详情页](http://7xrqxi.com1.z0.glb.clouddn.com/doubanDetail.png)
+![音乐首页](http://7xrqxi.com1.z0.glb.clouddn.com/doubanMovie.png)
 
 动态效果演示
 -------
