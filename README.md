@@ -36,7 +36,7 @@ NodeJs+MongoDB+jQuery仿豆瓣电影音乐网站搭建
 
 项目整体效果
 -------
-动态效果演示(http://7xrqxi.com1.z0.glb.clouddn.com/douban.gif)
+[动态效果演示](http://7xrqxi.com1.z0.glb.clouddn.com/douban.gif)
 
 Node版本:
 -------
