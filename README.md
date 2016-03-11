@@ -34,6 +34,10 @@ NodeJs+MongoDB+jQuery仿豆瓣电影音乐网站搭建
   * 访客统计;
   * 简单的用户账号单元测试;
 
+项目整体效果
+-------
+[!效果](http://7xrqxi.com1.z0.glb.clouddn.com/douban.gif)
+
 Node版本:
 -------
 目前在4.2.x版本下运行正常
