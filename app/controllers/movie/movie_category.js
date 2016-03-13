@@ -1,13 +1,13 @@
 "use strict";
 
 var mongoose = require('mongoose'),
-		Category = mongoose.model('Category'); 	  						// 电影分类模型
+    Category = mongoose.model('Category');                 // 电影分类模型
 
 // 新建电影分类控制器
 exports.new = function(req, res) {
   res.render('movie/movie_category_admin', {
     title:'豆瓣电影后台分类录入页',
-		logo:'movie',
+    logo:'movie',
     category:{}
   });
 };
@@ -46,7 +46,7 @@ exports.list = function(req, res) {
       }
       res.render('movie/movie_category_list',{
         title:'豆瓣电影分类列表页',
-				logo:'movie',
+        logo:'movie',
         categories:categories
       });
     });

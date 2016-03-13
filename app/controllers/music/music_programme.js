@@ -2,7 +2,7 @@
 
 /* 热门歌单控制器 */
 var mongoose = require('mongoose'),
-    Programme = mongoose.model('Programme');									// 引入近期热门歌单区域模型
+    Programme = mongoose.model('Programme');                  // 引入近期热门歌单区域模型
 
 // 豆瓣音乐热门歌单列表页面渲染函数
 exports.list = function(req, res) {
