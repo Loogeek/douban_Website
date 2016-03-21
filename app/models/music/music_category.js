@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var mongoose = require('mongoose'),
     MusicCategorySchema = require('../../schemas/music/music_category');

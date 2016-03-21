@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var mongoose = require('mongoose'),
     Category = mongoose.model('Category');                 // 电影分类模型

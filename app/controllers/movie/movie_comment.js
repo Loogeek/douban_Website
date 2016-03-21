@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var mongoose = require('mongoose'),
     MovieComment = mongoose.model('MovieComment');   // 电影评论模型

@@ -1,8 +1,18 @@
-"use strict";
+'use strict';
 
 $.support.cors = true;                                  // 解决IE8/9 Ajax跨域请求问题
 
 $(function() {
+  // Ajax请求函数
+  function funAjax(URL,method,cb) {
+    $.ajax({
+      url:URL,
+      cache:true,
+      type:method,
+      crossDomain:true
+    }).done(cb);
+  }
+  
   // 电影主页函数
   var movieIndexFun = (function() {
     var oCol6_width = $('.col-md-6').width();           // 获取主页左边区域布局对象
@@ -243,32 +253,32 @@ $(function() {
           galleryMov('right');
         },5000);
       });
-      //轮播滚动函数，对作用方向进行不同移动
-      var galleryMov = function(direction){
+      // 轮播滚动函数，对作用方向进行不同移动
+      function galleryMov(direction){
         if(!$oUl.is(':animated')){
           if(direction === 'right'){
             page++;
-            $('#galleryFrames .side-index').html(page);      //设置当前页码
+            $('#galleryFrames .side-index').html(page);      // 设置当前页码
             $oUl.animate({left:'-='+oCol6_width},500);
 
             if(page === len - 1){
               page = 1;
-              $('#galleryFrames .side-index').html(page);     //设置当前页码
+              $('#galleryFrames .side-index').html(page);    // 设置当前页码
               $oUl.animate({left:-oCol6_width+'px'},0);
             }
           }else{
             page--;
-            $('#galleryFrames .side-index').html(page);       //设置当前页码
+            $('#galleryFrames .side-index').html(page);       // 设置当前页码
             $oUl.animate({left:'+='+oCol6_width},500);
 
             if(page === 0){
               page = len - 2;
-              $('#galleryFrames .side-index').html(page);     //设置当前页码
+              $('#galleryFrames .side-index').html(page);     // 设置当前页码
               $oUl.animate({left:-(oCol6_width * (len -2))+'px'},0);
             }
           }
         }
-      };
+      }
     })();
 
     /*
@@ -330,7 +340,7 @@ $(function() {
         $citySugList.css('display','none');
       });
 
-      var funGetCityCinemas = function() {
+      function funGetCityCinemas() {
         var cityName = $city.children('span').text(),
             searchName = $citySugInput.val(),
             URL = '/?cityName='+encodeURIComponent(cityName)+'&&search='+encodeURIComponent(searchName);
@@ -344,17 +354,7 @@ $(function() {
           // 显示影院列表
           $citySugList.css('display','block');
         });
-      };
+      }
     })();
-
-    // Ajax请求函数
-    var funAjax = function(URL,method,cb) {
-      $.ajax({
-        url:URL,
-        cache:true,
-        type:method,
-        crossDomain:true
-      }).done(cb);
-    };
   })();
 });

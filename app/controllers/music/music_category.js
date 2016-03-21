@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var mongoose = require('mongoose'),
     MusicCategory = mongoose.model('MusicCategory'),      // 引入音乐分类模型

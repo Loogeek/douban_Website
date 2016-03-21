@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),                // 用户数据模型

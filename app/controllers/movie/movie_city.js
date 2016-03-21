@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var mongoose = require('mongoose'),
     City = mongoose.model('City'),                    // 引入电影院模型

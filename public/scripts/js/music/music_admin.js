@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 $.support.cors = true;                                  // 解决IE8/9 Ajax跨域请求问题
 

@@ -1,8 +1,17 @@
-"use strict";
+'use strict';
 
 $.support.cors = true;                         // 解决IE8/9 Ajax跨域请求问题
 
 $(function() {
+
+  // 格式化时间函数
+  function padding(number) {
+    return number < 10 ? '0' + number : '' + number;
+  }
+  function format(date) {
+    return padding(date.getMonth() + 1) + '-' + padding(date.getDate()) + ' ' + padding(date.getHours()) + ':' + padding(date.getMinutes());
+  }
+  
   // 设置豆瓣音乐评分图片的样式
   // 获取该歌曲的豆瓣评分来设置图片的Y轴位置，显示相应评分对象的星星数
   var musicStar = Math.ceil($('.rating-num strong').html() - 10) * 15;
@@ -74,15 +83,6 @@ $(function() {
       $('#commentForm input:gt(1)').remove();
     });
   });
-
-  // 格式化时间函数
-  function padding(number) {
-    return number < 10 ? '0' + number : '' + number;
-  }
-  function format(date) {
-    return padding(date.getMonth() + 1) + '-' + padding(date.getDate()) + ' ' + padding(date.getHours()) + ':' + padding(date.getMinutes());
-  }
-
 
   // 删除评论功能
   $('#mediaList').on('click','.comment-del',function(event) {

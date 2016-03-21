@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var MusicComment = require('../../models/music/music_comment');    // 音乐数据模型
 // 音乐评论后台录入控制器

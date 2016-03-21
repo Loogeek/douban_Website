@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /* 与首页进行交互 */
 var mongoose = require('mongoose'),

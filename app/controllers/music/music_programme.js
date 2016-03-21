@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /* 热门歌单控制器 */
 var mongoose = require('mongoose'),

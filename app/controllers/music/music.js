@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var mongoose = require('mongoose'),
     Music = mongoose.model('Music'),                       // 音乐数据模型

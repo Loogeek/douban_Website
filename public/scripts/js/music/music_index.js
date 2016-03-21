@@ -1,8 +1,18 @@
-"use strict";
+'use strict';
 
 $.support.cors = true;                                  // 解决IE8/9 Ajax跨域请求问题
 
 $(function() {
+  // Ajax请求函数
+  function funAjax(URL,method,cb) {
+    $.ajax({
+      url:URL,
+      cache:true,
+      type:method,
+      crossDomain:true
+    }).done(cb);
+  }
+
   // 音乐主页函数
   var musicIndexFun = (function() {
     var oCol6_width = $('.col-md-6').width();  //获取主页左边区域布局对象
@@ -50,7 +60,7 @@ $(function() {
         },5000);
       });
       // 轮播滚动函数，对作用方向进行不同移动
-      var galleryMov = function(direction) {
+      function galleryMov(direction) {
         if(!$oUl.is(':animated')){
           if(direction === 'right'){
             page++;
@@ -70,7 +80,7 @@ $(function() {
           // 切换圆点导航样式
           $oDots.find('li:eq('+(page-1)+')').addClass('slide-active').siblings().removeClass('slide-active');
         }
-      };
+      }
     })();
 
     /*
@@ -348,15 +358,5 @@ $(function() {
       // 给当前点击的音乐标题添加on样式，其余删除该样式
       $(this).addClass('on').siblings('li').removeClass('on');
     });
-
-    // Ajax请求函数
-    var funAjax = function(URL,method,cb) {
-      $.ajax({
-        url:URL,
-        cache:true,
-        type:method,
-        crossDomain:true
-      }).done(cb);
-    };
   })();
 });
