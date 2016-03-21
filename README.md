@@ -5,6 +5,7 @@ NodeJs+MongoDB+jQuery仿豆瓣电影音乐网站搭建
 ---------------
 本项目电影和音乐首页交互代码是由jQuery完成的，在<a href="https://github.com/Loogeek/douban-react" target="\_blank">douban-react</a>项目中尝试了将部分代码使用React来重写，提高了阅读性和维护性，可以参考下。
 
+![项目演示](/gif/1.gif)
 
 * 项目后端搭建:
   * 使用NodeJs + express完成电影网站后端搭建;
@@ -33,20 +34,6 @@ NodeJs+MongoDB+jQuery仿豆瓣电影音乐网站搭建
   * 可同步豆瓣电影音乐数据方便新数据添加;
   * 访客统计;
   * 简单的用户账号单元测试;
-
-项目整体效果
--------
-<div>
-  <img src="https://raw.githubusercontent.com/Loogeek/douban_Website/master/ReadmeImag/doubanMovie.png" width="45%" float"left" height="700" alt="电影首页"/>
-  <img src="https://raw.githubusercontent.com/Loogeek/douban_Website/master/ReadmeImag/doubanMusic.png" width="45%" float"left" height="700" alt="音乐首页"/>
-</div>
-<div text-align="center">
-  <img src="https://raw.githubusercontent.com/Loogeek/douban_Website/master/ReadmeImag/doubanDetail.png" width="45%" alt="电影详情"/>
-</div>
-
-动态效果演示
--------
-[动态效果演示](http://7xrqxi.com1.z0.glb.clouddn.com/douban.gif)
 
 Node版本:
 -------

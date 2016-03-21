@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 var mongoose = require('mongoose'),
-    MusicCategory = mongoose.model('MusicCategory'),      // 引入音乐分类模型
-    Programme = mongoose.model('Programme'),              // 引入近期热门歌单区域模型
-    _ = require('underscore');                            // 该模块用来对变化字段进行更新
+		MusicCategory = mongoose.model('MusicCategory'),			// 引入音乐分类模型
+		Programme = mongoose.model('Programme'),							// 引入近期热门歌单区域模型
+    _ = require('underscore');   													// 该模块用来对变化字段进行更新
 
 // 音乐分类后台录入页控制器
 exports.new = function(req, res) {
@@ -11,7 +11,7 @@ exports.new = function(req, res) {
   Programme.find({},function(err, programmes) {
     res.render('music/music_category_admin', {
       title:'豆瓣音乐后台分类录入页',
-      logo:'music',
+			logo:'music',
       programmes:programmes,
       musicCategory:{}
     });
@@ -196,7 +196,7 @@ exports.list = function(req, res) {
       }
       res.render('music/music_category_list', {
         title:'豆瓣音乐分类列表页',
-        logo:'music',
+				logo:'music',
         musicCategories:musicCategories
       });
     });
@@ -223,7 +223,7 @@ exports.update = function(req,res) {
       }
       res.render('music/music_category_admin', {
         title:'豆瓣音乐后台更新页',
-        logo:'music',
+				logo:'music',
         musicCategory:musicCategory,
         programmes:programmes
       });

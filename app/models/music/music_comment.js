@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var mongoose = require('mongoose'),
     MusicCommentSchema = require('../../schemas/music/music_comment'),

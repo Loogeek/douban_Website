@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 $(function() {
   var currentPage = parseInt($('#page').attr('data-currentPage')),

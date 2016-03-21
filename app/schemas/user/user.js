@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var mongoose = require('mongoose'),
 		bcrypt = require('bcrypt'),    						// 用于密码加密

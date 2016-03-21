@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // 页码组件
 function page(opt) {

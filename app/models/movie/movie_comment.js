@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var mongoose = require('mongoose'),
     MovieCommentSchema = require('../../schemas/movie/movie_comment'),

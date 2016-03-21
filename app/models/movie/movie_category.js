@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var mongoose = require('mongoose'),
     CategorySchema = require('../../schemas/movie/movie_category');
