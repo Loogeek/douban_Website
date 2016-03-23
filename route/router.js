@@ -1,3 +1,4 @@
+'use strict';
 
 var MovieIndex = require('../app/controllers/movie/movie_index'), 		// 电影首页控制器
 		// 电影首页模块路由控制器

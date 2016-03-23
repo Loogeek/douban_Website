@@ -1,3 +1,5 @@
+"use strict";
+
 var express = require('express'),					          	// 加载express模块
     path = require('path'),
     bodyParser = require('body-parser'),
@@ -36,7 +38,7 @@ var walk = function(path) {
         walk(newPath);
       }
     });
-}
+};
 walk(models_path);
 
 app.set('views','./app/views/pages');                   // 视图文件根目录
