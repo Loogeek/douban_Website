@@ -24,7 +24,7 @@ NodeJs+MongoDB+jQuery仿豆瓣电影音乐网站搭建
 
   网站正常访问无需管理原权限，以下网站数据的添加及删除功能需要登录默认管理员账号(**账号:1234 密码:1234**)。
 
-  具体功能可查看网站[动态效果演示](http://7xrqxi.com1.z0.glb.clouddn.com/douban.gif),gif图片有点大请耐心等待。
+  具体功能可查看网站[动态效果演示](http://7xrqxi.com1.z0.glb.clouddn.com/douban1.gif),gif图片有点大请耐心等待。
   * 豆瓣电影和音乐相同的展示页面;
   * 用户注册登录及管理;
   * 电影及音乐评论添加及删除;
@@ -48,7 +48,7 @@ NodeJs+MongoDB+jQuery仿豆瓣电影音乐网站搭建
 
 动态效果演示
 -------
-[动态效果演示](http://7xrqxi.com1.z0.glb.clouddn.com/douban.gif)
+[动态效果演示](http://7xrqxi.com1.z0.glb.clouddn.com/douban1.gif)
 
 运行环境及Node版本:
 -------
