@@ -50,7 +50,7 @@ module.exports = function(app){
 	/*
 		电影网站路由
 	 */
-	//  电影主页路由
+	// 电影主页路由
 	app.get('/',MovieIndex.index);
 	// 首页电影搜索结果页
 	app.get('/movie/results',MovieIndex.search);

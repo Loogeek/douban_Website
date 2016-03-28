@@ -1,9 +1,9 @@
 "use strict";
 
 var express = require('express'),					          	// 加载express模块
-    path = require('path'),
+    path = require('path'),                           // 引入路径核心模块
     bodyParser = require('body-parser'),
-    mongoose = require('mongoose'),
+    mongoose = require('mongoose'),                   // 引入mongoose模块
     logger = require('morgan'),
     fs = require('fs'),       							          // 文件读写模块
     cookieParser = require('cookie-parser'),
@@ -44,7 +44,7 @@ walk(models_path);
 app.set('views','./app/views/pages');                   // 视图文件根目录
 app.set('view engine','jade');                          // 设置模板引擎
 app.use(express.static(path.join(__dirname,'public'))); // 设置静态文件目录
-app.locals.moment = require('moment');
+app.locals.moment = require('moment');  // 引入moment模块并设置为app.locals属性,用来格式化时间
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));

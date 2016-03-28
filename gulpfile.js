@@ -22,15 +22,12 @@ var path = {
 // 将scss文件转成css文件并压缩
 gulp.task('styles', function() {
   return plugins.rubySass(path.src.sass)
-    // 使用plugins.watch而不是gulp.watch()的好处是只会对变动的文件进行后面的操作，
-    // 而不是对整个文件夹进行校验压缩等操作
-   .pipe(plugins.watch(path.src.sass))
    .on('error', plugins.rubySass.logError)
    .pipe(plugins.autoprefixer({            // 自动添加游览器前缀
       browsers: ['last 2 versions'],
       cascade: false
     }))
-   .pipe(plugins.rename({suffix:'.min'}))  
+   .pipe(plugins.rename({suffix:'.min'}))
    .pipe(plugins.minifyCss())
    .pipe(gulp.dest(path.dest.sass));
 });
@@ -38,7 +35,6 @@ gulp.task('styles', function() {
 // js代码校验
 gulp.task('jshint', function() {
   return gulp.src(path.src.jshint)
-    .pipe(plugins.watch(path.src.jshint))
     .pipe(plugins.jshint('.jshintrc'))
     .pipe(plugins.jshint.reporter('default'));
 });
@@ -46,7 +42,6 @@ gulp.task('jshint', function() {
 // js代码压缩
 gulp.task('scripts', function() {
   return gulp.src(path.src.scripts)
-    .pipe(plugins.watch(path.src.scripts))
     .pipe(plugins.rename({suffix: '.min'}))
     .pipe(plugins.uglify())
     .pipe(gulp.dest(path.dest.scripts));
@@ -55,9 +50,16 @@ gulp.task('scripts', function() {
 // 图片压缩
 gulp.task('images', function() {
   return gulp.src(path.src.images)
-    .pipe(plugins.watch(path.src.images))
     .pipe(plugins.cache(plugins.imagemin({ progressive: true, interlaced: true })))
     .pipe(gulp.dest(path.dest.images));
+});
+
+// watch
+gulp.task('watch', function() {
+  gulp.watch(path.src.sass,['styles']);
+  gulp.watch(path.src.jshint,['jshint']);
+  gulp.watch(path.src.scripts,['scripts']);
+  gulp.watch(path.src.images,['images']);
 });
 
 // 清除文件
@@ -79,4 +81,4 @@ gulp.task('nodemon',function() {
 });
 
 // 默认任务
-gulp.task('default',['styles','jshint','scripts','nodemon']);
+gulp.task('default',['watch','nodemon']);

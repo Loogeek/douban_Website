@@ -46,7 +46,7 @@ MovieSchema.pre('save',function(next) {
 	next();
 });
 
-// 静态方法不会与数据库直接交互，需要经过模型编译实例化后才会具有该方法
+// 定义查询静态方法
 MovieSchema.statics = {
 	fetch: function(cb) {
 		return this
