@@ -49,10 +49,12 @@ exports.new = function(req,res) {
 
 // 存储海报路由
 exports.savePoster = function(req, res, next) {
+  // 如果有文件上传通过connect-multiparty中间件生成临时文件并通过req.files进行访问
+  // 并且当提交表单中有文件上传请求时表单要使用enctype="multipart/form-data"编码格式
   var posterData = req.files.uploadPoster,                    // 上传文件
       filePath = posterData.path,                             // 文件路径
       originalFilename = posterData.originalFilename;         // 原始名字
-
+  // 如果有自定义上传图片，则存在文件名
   if(originalFilename) {
     fs.readFile(filePath, function(err,data) {
       if(err) {
@@ -80,8 +82,8 @@ exports.savePoster = function(req, res, next) {
 
 // 后台录入路由
 exports.save = function(req,res) {
-  var id = req.body.movie._id,
-      movieObj = req.body.movie,
+  var movieObj = req.body.movie,
+      id = movieObj._id,
       categoryId = movieObj.category,              // 获取电影分类ID
       categoryName = movieObj.categoryName;        // 获取新创建的电影分类名称
   // 如果有自定义上传海报  将movieObj中的海报地址改成自定义上传海报的地址

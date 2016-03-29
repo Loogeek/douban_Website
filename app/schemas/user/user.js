@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose'),
 		bcrypt = require('bcrypt'),    						// 用于密码加密
-		SALT_WORK_FACTOR = 10; 										// 密码破解需要的强度，越大破解需要时间越长
+		SALT_WORK_FACTOR = 10; 										// 计算强度
 
 // 电影数据类型
 var UserSchema = new mongoose.Schema({

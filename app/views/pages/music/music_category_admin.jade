@@ -3,7 +3,7 @@ extends ../../includes/layout
 block content
   .container
     .row
-      form.form-horizontal(method="post" action="/admin/music/musicCategory")
+      form.form-horizontal(method="post" action="/admin/music/musicCategory/new")
         if musicCategory._id
           input(type="hidden" name="musicCategory[_id]" value=musicCategory._id)
         .form-group
