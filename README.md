@@ -39,11 +39,11 @@ NodeJs+MongoDB+jQuery仿豆瓣电影音乐网站搭建
 项目整体效果
 -------
 <div>
-  <img src="https://raw.githubusercontent.com/Loogeek/douban_Website/master/ReadmeImag/doubanMovie.png" width="45%" float"left" height="700" alt="电影首页"/>
-  <img src="https://raw.githubusercontent.com/Loogeek/douban_Website/master/ReadmeImag/doubanMusic.png" width="45%" float"left" height="700" alt="音乐首页"/>
+  <img src="http://7xrqxi.com1.z0.glb.clouddn.com/doubanMovie.png" width="45%" float"left" height="700" alt="电影首页"/>
+  <img src="http://7xrqxi.com1.z0.glb.clouddn.com/doubanMusic.png" width="45%" float"left" height="700" alt="音乐首页"/>
 </div>
 <div text-align="center">
-  <img src="https://raw.githubusercontent.com/Loogeek/douban_Website/master/ReadmeImag/doubanDetail.png" width="45%" alt="电影详情"/>
+  <img src="http://7xrqxi.com1.z0.glb.clouddn.com/doubanDetail.png" width="45%" alt="电影详情"/>
 </div>
 
 动态效果演示
