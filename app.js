@@ -8,7 +8,7 @@ var express = require('express'),					          	  // 加载express模块
     fs = require('fs'),       							            // 文件读写模块
     cookieParser = require('cookie-parser'),
     session = require('express-session'),  				      // session依赖cookie模块
-    mongoStore = require('connect-mongo')(session),		  // 用来对session进行持久化
+    mongoStore = require('connect-mongo')(session),		  // 对session进行持久化
     http = require('http'),
 
     port = process.env.PORT || 3000,                    // 设置监听端口
@@ -23,14 +23,14 @@ app.set('view engine','jade');                          // 设置模板引擎
 app.use(express.static(path.join(__dirname,'public'))); // 设置静态文件目录
 app.locals.moment = require('moment'); // 引入moment模块并设置为app.locals属性,用来格式化时间
 
-//  对application/x-www-form-urlencoded格式内容进行解析
+// 对application/x-www-form-urlencoded格式内容进行解析
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // 对application/json格式进行解析
 app.use(bodyParser.json());
 
 // models loading
-var models_path = __dirname + '/app/models';           // 模型所在路径
+var models_path = __dirname + '/app/models';            // 模型所在路径
 
 // 路径加载函数，加载各模型的路径,所以可以直接通过mongoose.model加载各模型 这样即使模型路径改变也无需更改路径
 var walk = function(path) {

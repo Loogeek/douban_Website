@@ -30,7 +30,7 @@ block content
                     #screenBody.panel-body.screen-body(style="width:10000px;")
                       if cat.movies && cat.movies.length > 0
                         each item in cat.movies
-                          .thumbnail
+                          .thumbnail(style="width:127px;")
                             a(href="/movie/#{item._id}" target="_blank")
                               if item.poster.indexOf('http:') > -1
                                 img(src="#{item.poster}", alt="#{item.title}")

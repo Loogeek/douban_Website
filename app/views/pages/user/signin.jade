@@ -11,24 +11,24 @@ block content
               .form-group.clearfix
                 label(for="dSigninName") 用户名
                 input#dSigninName.form-control(name="name", type="text" placeholder="账号")
-                span.glyphicon.glyphicon-remove-sign.form-clear(aria-hidden="true")  
+                span.glyphicon.glyphicon-remove-sign.form-clear(aria-hidden="true")
                 label#dSigninName-error.error(for="dSigninName" style="display:none")
               .form-group.clearfix
                 label(for="dSigninPassword") 密码
                 input#dSigninPassword.form-control(name="password", type="password" placeholder="密码")
-                span.glyphicon.glyphicon-remove-sign.form-clear(aria-hidden="true")  
+                span.glyphicon.glyphicon-remove-sign.form-clear(aria-hidden="true")
                 label#dSigninPassword-error.error(for="dSigninPassword" style="display:none")
-              .form-group.clearfix  
+              .form-group.clearfix
                 label(for="dSigninCaptcha") 验证码
                 input#dSigninCaptcha.form-control.form-captcha(name="captcha", type="text" placeholder="输入验证码")
                 span.glyphicon.glyphicon-remove-sign.form-clear.form-captcha-clear(aria-hidden="true")
                 label#dSigninCaptcha-error.error(for="dSigninCaptcha" style="display:none")
-                div.captcha-show 
-                p.glyphicon.glyphicon-repeat.captcha-repeat 换一张?                
+                div.captcha-show
+                p.glyphicon.glyphicon-repeat.captcha-repeat 换一张?
             .modal-footer
               a(href="/"): button.btn.btn-default(type="button") 关闭
-              button.btn.btn-success(type="submit") 登录            
-        .col-md-offset-1.col-md-4 
+              button.btn.btn-success(type="submit") 登录
+        .col-md-offset-1.col-md-4
           ul.aside
             li > 还没有豆瓣帐号？
-            a(href="/signup") 立即注册     
+            a(href="/signup") 立即注册

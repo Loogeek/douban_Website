@@ -17,6 +17,9 @@ exports.save = function(req, res) {
   var category = req.body.category;
   // 判断新创建的电影分类是否已存在，避免重复输入
   Category.findOne({name:category.name}, function(err, _category) {
+    if (err) {
+      console.log(err);
+    }
     if(_category) {
       console.log('电影分类已存在');
       res.redirect('/admin/movie/movieCategory/list');
@@ -37,7 +40,7 @@ exports.list = function(req, res) {
   Category
     .find({})
     .populate({
-      path:'movies',
+      path:'movies',                        // 通过movies属性查找电影分类所对应的电影名称
       select:'title',
     })
     .exec(function(err,categories) {

@@ -1,0 +1,27 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{font: 16px/1.8 "Microsoft Yahei,verdana";}
+.section{
+	position: relative;
+	background-color: #fff;
+	overflow: hidden;
+	text-align: center;
+}
+.section1{
+	background:url(/libs/images/movie/fullpage/Ant-Man.jpg) no-repeat center;
+	background-size: cover;
+}
+.section2{
+	background:url(/libs/images/movie/fullpage/Inception.jpg) no-repeat center;
+	background-size: cover;
+}
+.section3{
+	background:url(/libs/images/movie/fullpage/MissionImpossible.jpg) no-repeat center;
+	background-size: cover;
+}
+.section4{
+	background:url(/libs/images/movie/fullpage/Martian.jpg) no-repeat center;
+	background-size: cover;
+}

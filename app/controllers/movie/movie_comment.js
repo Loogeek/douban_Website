@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 // 电影评论后台录入控制器
 exports.save = function(req,res) {
-  var _comment = req.body.comment;        					 // 获取Ajax发送的数据
+  var _comment = req.body.comment;        					 // 获取post发送的数据
   // 如果存在cid说明是对评论人进行回复
   if(_comment.cid) {
     // 通过点击回复一条电影评论的id，找到这条评论的内容

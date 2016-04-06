@@ -48,10 +48,11 @@ exports.index = function(req,res){
       .findOne({name:_fliterName})
       .populate({
         path:'movies',
-        select:'title poster',
-        option:{limit:6}                  //限制最多6条数据
+        select:'title poster'
+        // option:{limit:6}                  //限制最多6条数据
       })
       .exec(function(err,category){
+        console.log(category);
         if(err){
           console.log(err);
         }
@@ -63,8 +64,8 @@ exports.index = function(req,res){
       .findOne({name:_galleryName})
       .populate({
         path:'movies',
-        select:'title poster',
-        option:{limit:6}                  //限制最多6条数据
+        select:'title poster'
+        // option:{limit:6}                  //限制最多6条数据
       })
       .exec(function(err,category) {
         if(err){
@@ -72,14 +73,14 @@ exports.index = function(req,res){
         }
         res.json({data:category});
       });
-  // 渲染豆瓣电影主页
+  // 没有发送上面请求的则渲染豆瓣电影主页
   }else {
     Category
       .find({})
       .populate({
         path:'movies',
-        select:'title poster',
-        option:{limit:6}                   //限制最多6条数据
+        select:'title poster'
+        // option:{limit:6}                   //限制最多6条数据
       })
       .exec(function(err,categories) {
         if(err){

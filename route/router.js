@@ -11,27 +11,24 @@ var MovieIndex = require('../app/controllers/movie/movie_index'), 		// 电影首
 		// 音乐首页模块路由控制器
 		MusicIndex = require('../app/controllers/music/music_index'), 		// 音乐首页控制器
 		Music = require('../app/controllers/music/music'),   							// 音乐模块路由控制器
-		/* 音乐分类控制器 */
+		// 音乐分类控制器
 		MusicCategory = require('../app/controllers/music/music_category'),
-		/* 音乐热门榜单控制器 */
+		// 音乐热门榜单控制器
 		Programmer = require('../app/controllers/music/music_programme'),
 		MusicComment = require('../app/controllers/music/music_comment'), // 音乐评论控制器
 
-		multipart = require('connect-multiparty'),											// 处理文件上传中间件
+		multipart = require('connect-multiparty'),											  // 处理文件上传中间件
 		multipartMiddleware = multipart();
 
+
 module.exports = function(app){
-	// 预处理用户登录
+	// 用户登录处理
 	app.use(function(req,res,next){
 		app.locals.user = req.session.user; // 将session中保存的用户名存储到本地变量中
 		next();
 	});
 
-	// 设置路由
-
-	/*
-		公共路由
-	*/
+	/*============== 公共路由 ==============*/
 	// 用户注册路由
 	app.get('/signup',User.showSignup);
 	app.post('/user/signup/',User.signup);
@@ -47,9 +44,7 @@ module.exports = function(app){
 			 .get(User.signinRequired,User.adminRequired,User.list)
 			 .delete(User.del);
 
-	/*
-		电影网站路由
-	*/
+	/*============== 电影网站路由 ==============*/
 	// 电影主页路由
 	app.get('/',MovieIndex.index);
 
@@ -102,9 +97,7 @@ module.exports = function(app){
 			 .get(User.signinRequired,User.adminRequired,City.list)
 			 .delete(City.del);
 
-	/*
-		豆瓣音乐网站路由
-	*/
+	/*============== 豆瓣音乐网站路由 */	
 	// 音乐主页路由
 	app.get('/musicIndex',MusicIndex.index);
 

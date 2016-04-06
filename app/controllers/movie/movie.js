@@ -8,23 +8,29 @@ var mongoose = require('mongoose'),
     fs = require('fs'),                                    // 读写文件模块
     path = require('path');                                // 路径模块
 
-// 详细页面路由
+// 详细页面控制器
 exports.detail = function(req,res) {
-  var _id = req.params.id;
+  var _id = req.params.id;                                 // 获取URL中的电影ID
   // 电影用户访问统计，每次访问电影详情页，PV增加1
   Movie.update({_id:_id},{$inc:{pv:1}},function(err) {
     if(err) {
       console.log(err);
     }
   });
-  // MovieComment存储到数据库中的_id值与相应的Movie _id值相同
+  // MovieComment存储到数据库中的movie属性值与相应的Movie _id值相同
   Movie.findById(_id, function(err,movie) {
+    if(err) {
+      console.log(err);
+    }
     // 查找该_id值所对应的评论信息
     MovieComment
       .find({movie:_id})
       .populate('from','name')
       .populate('reply.from reply.to','name')// 查找评论人和回复人的名字
       .exec(function(err,comments){
+        if(err) {
+          console.log(err);
+        }
         res.render('movie/movie_detail', {
           title:'豆瓣电影详情页',
           logo:'movie',
@@ -35,9 +41,12 @@ exports.detail = function(req,res) {
   });
 };
 
-// 后台录入路由
+// 后台录入控制器
 exports.new = function(req,res) {
   Category.find({},  function(err,categories) {
+    if(err) {
+      console.log(err);
+    }
     res.render('movie/movie_admin', {
       title:'豆瓣电影后台录入页',
       logo:'movie',
@@ -47,7 +56,7 @@ exports.new = function(req,res) {
   });
 };
 
-// 存储海报路由
+// 存储海报控制器
 exports.savePoster = function(req, res, next) {
   // 如果有文件上传通过connect-multiparty中间件生成临时文件并通过req.files进行访问
   // 并且当提交表单中有文件上传请求时表单要使用enctype="multipart/form-data"编码格式
@@ -80,7 +89,7 @@ exports.savePoster = function(req, res, next) {
   }
 };
 
-// 后台录入路由
+// 后台录入控制器
 exports.save = function(req,res) {
   var movieObj = req.body.movie,
       id = movieObj._id,
@@ -96,7 +105,7 @@ exports.save = function(req,res) {
       if(err) {
         console.log(err);
       }
-      // 如果输入后电影分类与原电影分类不同，则说明更新了电影分类
+      // 如果修改电影分类
       if (movieObj.category.toString() !== _movie.category.toString()) {
         // 找到电影对应的原电影分类
         Category.findById(_movie.category,function(err,_oldCat) {
@@ -117,7 +126,7 @@ exports.save = function(req,res) {
           if (err) {
             console.log(err);
           }
-          // 将其id值添加到movies属性中并保存
+          // 将其id值添加到电影分类的movies属性中并保存
           _newCat.movies.push(id);
           _newCat.save(function(err) {
             if (err) {
@@ -132,12 +141,12 @@ exports.save = function(req,res) {
         if(err){
           console.log(err);
         }
-        res.redirect('/movie/' + _movie._id);
+        res.redirect('/movie/' + _movie._id);       // 重镜像到电影详情页
       });
     });
-  // 如果不是更新电影 并且输入了电影名称
+  // 如果是新录入电影 并且输入了电影名称
   }else if(movieObj.title) {
-    // 如果表单中填写了电影名称 则查找该电影名称是否已存在
+    // 查找该电影名称是否已存在
     Movie.findOne({title:movieObj.title},function(err,_movie) {
       if (err) {
         console.log(err);
@@ -146,13 +155,13 @@ exports.save = function(req,res) {
         console.log('电影已存在');
         res.redirect('/admin/movie/list');
       }else {
-        // 创建一个电影新数据
+        // 创建一个新电影数据
         var newMovie = new Movie(movieObj);
         newMovie.save(function(err,_newMovie) {
           if(err){
             console.log(err);
           }
-          // 选择了电影所属的电影分类
+          // 如果选择了电影所属的电影分类
           if(categoryId) {
             Category.findById(categoryId,function(err,_category) {
               if(err){
@@ -188,7 +197,6 @@ exports.save = function(req,res) {
                     console.log(err);
                   }
                   // 将新创建的电影保存，category的ID值为对应的分类ID值
-                  // 这样可通过populate方法进行相应值的索引
                   _newMovie.category = category._id;
                   _newMovie.save(function(err,movie) {
                     if (err) {
@@ -199,6 +207,7 @@ exports.save = function(req,res) {
                 });
               }
             });
+          // 如果没有选择电影所属分类 重定向到当前页
           }else {
             res.redirect('/admin/movie/list');
           }
@@ -229,12 +238,13 @@ exports.save = function(req,res) {
         });
       }
     });
+  // 既没有输入电影名称和分类则数据录入失败 重定向到当前页
   }else {
-    res.redirect('/admin/movie/list');
+    res.redirect('/admin/movie/new');
   }
 };
 
-// 更新电影路由
+// 修改电影数据控制器
 exports.update = function(req,res) {
   var _id = req.params.id;
 
@@ -253,7 +263,7 @@ exports.update = function(req,res) {
   });
 };
 
-// 电影列表路由
+// 电影列表控制器
 exports.list = function(req,res) {
   Movie.find({})
     .populate('category','name')
@@ -261,7 +271,7 @@ exports.list = function(req,res) {
       if(err){
         console.log(err);
       }
-      return res.render('movie/movie_list', {
+      res.render('movie/movie_list', {
         title:'豆瓣电影列表页',
         logo:'movie',
         movies:movies
@@ -269,10 +279,10 @@ exports.list = function(req,res) {
     });
 };
 
-// 电影列表删除电影路由
+// 电影列表删除电影控制器
 exports.del = function(req,res) {
-  // 获取客户端Ajax发送的URL值中的id值
-  var id  = req.query.id;
+  // 获取客户端Ajax发送的请求中的id值
+  var id = req.query.id;
   // 如果id存在则服务器中将该条数据删除并返回删除成功的json数据
   if(id) {
     Movie.findById(id, function(err,movie) {        // 查找该条电影信息

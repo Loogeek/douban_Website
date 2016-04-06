@@ -3,7 +3,7 @@
 var mongoose = require('mongoose'),
     City = mongoose.model('City'),                    // 引入电影院模型
     CityCategory = mongoose.model('CityCategory'),    // 电影院分类模型
-    CityProgramme = mongoose.model('CityProgramme');  // 电影院分类股归类
+    CityProgramme = mongoose.model('CityProgramme');  // 电影院分类归类
 
 // 电影院录入页面渲染控制器
 exports.new = function(req, res) {
@@ -83,7 +83,7 @@ exports.save = function(req, res) {
             var newCityCategory = new CityCategory({
               name:cityCategoryName                         // 城市分类名称
             });
-            newCityCategory.cityProgramme = cityProgrammeId;
+            newCityCategory.cityProgramme = cityProgrammeId;// 分类归类属性指向当前归类
             _oldCityProgramme.cityCategories.push(newCityCategory._id);
             newCityCategory.save(function(err) {
               if(err) {
@@ -99,6 +99,7 @@ exports.save = function(req, res) {
           }
         });
       }
+      // 如果没有创建或选择城市分类则创建失败 重定向到当前页面
       else {
         console.log('需要添加城市分类');
         res.redirect('/admin/movie/city/new');
@@ -147,6 +148,7 @@ exports.save = function(req, res) {
           res.redirect('/admin/movie/city/list');
         }
       });
+    // 需要输入城市名
     }else {
       console.log('需要添加城市名称');
       res.redirect('/admin/movie/city/new');
@@ -203,16 +205,18 @@ exports.del = function(req,res) {
   // 获取客户端Ajax发送的URL值中的id值
   var id  = req.query.id;
   if(id) {
-    // 如果id存在则服务器中将该条数据删除并返回删除成功的json数据
+    // 查找该条城市分类
     CityCategory.findById(id, function(err,_cityCategory) {
       if (err) {
         console.log(err);
       }
+      // 查找该城市分类所对应的归类
       CityProgramme.findById(_cityCategory.cityProgramme, function(err,_cityProgramme) {
         if (_cityProgramme) {
           if (err) {
             console.log(err);
           }
+          // 将该分类从归类的数组中删除并保存
           var index = _cityProgramme.cityCategories.indexOf(id);
           _cityProgramme.cityCategories.splice(index,1);
           _cityProgramme.save(function(err){
@@ -229,6 +233,7 @@ exports.del = function(req,res) {
       }else {
         cityArray = _cityCategory.cities;
       }
+      // 将该分类下存储的城市都删除
       for(var i = 0; i < cityArray.length; i++) {
         City.remove({_id:cityArray[i]}, function(err) {
           if(err) {

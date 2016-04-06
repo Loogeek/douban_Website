@@ -62,7 +62,8 @@ exports.signup = function(req,res) {
 /* 用户注册页面渲染控制器 */
 exports.showSignup = function(req,res) {
   res.render('user/signup', {
-    title:'注册页面'
+    title:'注册页面',
+    logo:'movie'
   });
 };
 
@@ -114,7 +115,8 @@ exports.signin = function(req,res) {
 /* 用户登录页面渲染控制器 */
 exports.showSignin = function(req,res)  {
   res.render('user/signin',{
-    title:'登录页面'
+    title:'登录页面',
+    logo:'movie'
   });
 };
 
