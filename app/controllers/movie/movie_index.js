@@ -49,10 +49,8 @@ exports.index = function(req,res){
       .populate({
         path:'movies',
         select:'title poster'
-        // option:{limit:6}                  //限制最多6条数据
       })
       .exec(function(err,category){
-        console.log(category);
         if(err){
           console.log(err);
         }
@@ -65,7 +63,6 @@ exports.index = function(req,res){
       .populate({
         path:'movies',
         select:'title poster'
-        // option:{limit:6}                  //限制最多6条数据
       })
       .exec(function(err,category) {
         if(err){
@@ -80,7 +77,6 @@ exports.index = function(req,res){
       .populate({
         path:'movies',
         select:'title poster'
-        // option:{limit:6}                   //限制最多6条数据
       })
       .exec(function(err,categories) {
         if(err){
@@ -134,29 +130,29 @@ exports.search = function(req,res) {
       .populate({
         path:'movies',
         select:'title poster'
-    })
-    .exec(function(err, categories) {
-      if (err) {
-        console.log(err);
-      }
-      var category = categories[0] || {},            		// 查询到的电影分类
-          movies = category.movies || [],            		// 分类中包含的电影
-          results = movies.slice(index, index + count); // 分类页面每页显示的电影数量
+      })
+      .exec(function(err, categories) {
+        if (err) {
+          console.log(err);
+        }
+        var category = categories[0] || {},            		// 查询到的电影分类
+            movies = category.movies || [],            		// 分类中包含的电影
+            results = movies.slice(index, index + count); // 分类页面每页显示的电影数量
 
-      res.render('movie/movie_results', {
-        title:'豆瓣电影分类列表页面',
-        logo:'movie',
-        keyword:category.name,                      		// 分类名称
-        currentPage:(page + 1),                       	// 当前页
-        query:'cat=' + catId,                        		// 切换到另一页
-        totalPage:Math.ceil(movies.length / count),  		// 总页数，需向上取整
-        movies:results                               		// 查询到电影分类下所含的电影
+        res.render('movie/movie_results', {
+          title:'豆瓣电影分类列表页面',
+          logo:'movie',                                   // 显示电影logo
+          keyword:category.name,                      		// 分类名称
+          currentPage:(page + 1),                       	// 当前页
+          query:'cat=' + catId,                        		// 分类名称
+          totalPage:Math.ceil(movies.length / count),  		// 总页数，需向上取整
+          movies:results                               		// 查询到电影分类下所含的电影
+        });
       });
-    });
   }else{
     // 搜索功能
     Movie
-      .find({title:new RegExp(q + '.*', 'i')})     // 通过正则匹配查询电影的名称
+      .find({title:new RegExp(q + '.*', 'i')})            // 通过正则匹配查询电影的名称
       .exec(function(err, movies) {
         if (err) {
           console.log(err);

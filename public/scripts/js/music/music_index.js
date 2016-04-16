@@ -172,7 +172,7 @@ $(function() {
       if($(this).is('.on')) {
         return;
       }else {
-        var albumName = $(this).text();                // 获取按钮文字内容
+        var albumName = $(this).text();                  // 获取按钮文字内容
         var URL = '/musicindex?albumName='+encodeURIComponent('新碟榜'+albumName);   // 对中文进行编码
         // 发送Ajax请求
         funAjax(URL,'GET',function(results) {
@@ -229,13 +229,13 @@ $(function() {
       if($(this).is('.on')){
         return;
       }else{
-        var hotProName = $(this).text();                    //获取按钮文字内容
+        var hotProName = $(this).text();                    // 获取按钮文字内容
         // 对中文进行编码
         var URL = '/musicindex?hotProName='+encodeURIComponent('近期热门歌单'+hotProName);
         // 发送Ajax请求
         funAjax(URL,'GET',function(results) {
-          var dataCars = results.data;                      //获取Ajax返回的音乐分类数据
-          var oThumbnail = $('#hotProgrammes .thumbnail');  //获取当前音乐分类中歌单数量
+          var dataCars = results.data;                      // 获取Ajax返回的音乐分类数据
+          var oThumbnail = $('#hotProgrammes .thumbnail');  // 获取当前音乐分类中歌单数量
           if(dataCars) {
             // 如果切换后的歌单数量小于当前音乐分类中歌单数量，将多余的歌单节点删除
             if(dataCars.length < oThumbnail.length) {
@@ -254,7 +254,7 @@ $(function() {
               $(oThumbnail[i]).find('h5 a').html(dataCars[i].name).attr('href','/music/results?cat=' + dataCars[i]._id + '&p=0');
               // 查找每个歌单中原歌曲数目
               var oALen = $(oThumbnail[i]).find('.content a').length,
-                  len = Math.min(3,dataCars[i].musics.length);  // 每个歌单中最多显示3首歌
+                  len = dataCars[i].musics.length;  
               // 如果返回的歌单中歌曲数量小于切换前，则将多出歌曲节点删除
               if(len < oALen) {
                 var oThumbnailRemove = dataCars[i].musics.length > 0 ? $(oThumbnail[i]).find('.content a:gt('+ (dataCars[i].musics.length - 1) +')') : $(oThumbnail[i]).find('.content a') ;
@@ -323,7 +323,7 @@ $(function() {
               $('.hotArtist-songs li:gt('+ dataStart +')').remove();
             // 若返回分类的音乐数量大于原分类音乐节点数量则创建多出的节点
             }else if(data.length > oLi.length) {
-              var oDataMin = Math.min(10,data.length); // 重新添加最大的元素节点数量不能超过10个
+              var oDataMin = data.length; 
               //返回内容多于原音乐数量的创建新的节点并赋值
               for(var j = oLi.length; j < oDataMin; j++) {
                 $('.hotArtist-songs ul').append('<li><a href="" target="_blank"><img src="" alt=""><h5></h5><p></p><span class="order"></span></a></li>');

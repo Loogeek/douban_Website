@@ -105,7 +105,7 @@ block content
                   .screen
                     .panel-body.screen-body
                       if cat.musicCategories && cat.musicCategories.length > 0
-                        - var ctyLen = Math.min(6,cat.musicCategories.length)
+                        - var ctyLen = cat.musicCategories.length
                         - for(var i = 0; i < ctyLen; i++)
                           .thumbnail
                             .inner

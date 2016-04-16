@@ -11,8 +11,8 @@ var mongoose = require('mongoose'),
 /* 音乐首页 */
 exports.index = function(req,res) {
   var albumName = req.query.albumName,                // 获取新碟榜区分类请求名称
-      hotProName = req.query.hotProName,               // 获取近期热门歌单分类请求名称
-      hotSongs = req.query.hotSongs;                   // 获取本周单曲榜区分类请求名称
+      hotProName = req.query.hotProName,              // 获取近期热门歌单分类请求名称
+      hotSongs = req.query.hotSongs;                  // 获取本周单曲榜区分类请求名称
   // 如果是新碟榜部分发送Ajax请求
   if(albumName) {
     MusicCategory
@@ -20,6 +20,7 @@ exports.index = function(req,res) {
       .populate({
         path:'musics',
         select:'title image singer',
+        options:{limit:8}                               //限制最多8条数据
       })
       .exec(function(err,musicCategory) {
         if(err){
@@ -33,7 +34,8 @@ exports.index = function(req,res) {
       .findOne({name:hotProName})
       .populate({
         path:'musicCategories',
-        select:'name musics'
+        select:'name musics',
+        options:{limit:6}                               //限制最多6条数据
       })
       .exec(function(err,programme) {
         if(err){
@@ -41,23 +43,26 @@ exports.index = function(req,res) {
         }
         // 获取近期热门歌单最热、流行、摇滚等歌曲分类
         if(programme) {
-          var musicCategories = programme.musicCategories,
+          var musicCategories = programme.musicCategories, // 查找该榜单包含的歌曲分类 
               dataMusics = [],
               count = 0,
-              len = musicCategories.length;
+              len = musicCategories.length; 
           for(var i = 0; i < len; i++) {
+            // 查找每个歌曲分类下对应的音乐
             MusicCategory
               .findOne({_id:musicCategories[i]._id})
               .populate({
                 path:'musics',
                 select:'title image',
+                options:{limit:3}                               //限制最多3条数据
               })
               .exec(function(err,musics) {
-                count ++;
                 if(err){
                   console.log(err);
                 }
+                count++;
                 dataMusics.push(musics);
+                // 如果查询完毕则返回查找到的榜单和歌曲分类数据
                 if(count === len){
                   res.json({data:dataMusics,dataPro:programme});
                 }
@@ -74,6 +79,7 @@ exports.index = function(req,res) {
       .populate({
         path:'musics',
         select:'title image singer pv',
+        options:{limit:10}                               //限制最多10条数据
       })
       .exec(function(err,musicCategory){
         if(err){
@@ -88,7 +94,7 @@ exports.index = function(req,res) {
         dirList = fs.readdirSync(newPath),
         fileList = [],
         reg = /^(.+)\.(jpg|bmp|gif|png)$/i;  // 通过正则匹配图片
-
+    // 获取音乐首页轮播图文件夹下图片 
     dirList.forEach(function(item) {
       if(reg.test(item)){
         fileList.push(item);
@@ -102,12 +108,13 @@ exports.index = function(req,res) {
         if(err){
           console.log(err);
         }
-        //近期热门歌单区域歌曲分类查找
+        // 近期热门歌单区域歌曲分类查找
         Programme
           .find({})
           .populate({
             path:'musicCategories',
-            select:'name musics'
+            select:'name musics',
+            options:{limit:8}                       // 限制最多8条数据
           })
           .exec(function(err,programmes) {
             if(err){
@@ -115,10 +122,10 @@ exports.index = function(req,res) {
             }
             res.render('music/music_index',{
               title:'豆瓣音乐首页',
-              logo:'music',
-              musicCategories:musicCategories,
-              programmes:programmes,
-              fileList:fileList
+              logo:'music',                         // 显示音乐logo
+              musicCategories:musicCategories,      // 返回查询到的全部歌曲分类
+              programmes:programmes,                // 返回查询到的近期热门歌单数量
+              fileList:fileList                     // 首页轮播图图片数量
             });
           });
       });
@@ -127,12 +134,13 @@ exports.index = function(req,res) {
 
 /* 音乐分类及音乐搜索 */
 exports.search = function(req,res) {
-  var catId = req.query.cat || '',          // 获取音乐分类更多查询串ID
-      proId = req.query.pro || '',          // 近期热门歌单部分更多查询串ID
-      q = req.query.q || '',                // 获取搜索框提交内容
-      page = req.query.p || 0,              // 获取页面
+  var catId = req.query.cat || '',                  // 获取音乐分类更多查询串ID
+      proId = req.query.pro || '',                  // 近期热门歌单部分更多查询串ID
+      q = req.query.q || '',                        // 获取搜索框提交内容
+      page = req.query.p || 0,                      // 获取页面
       count = 6,
-      index = page * count;                 // 每页展示6条数据
+      index = page * count;                         // 每页展示6条数据
+      
   page = parseInt(req.query.p, 10) || 0;
   // 如果包含catId，则是点击了相应的音乐分类标题，进入results页面显示相应音乐分类的音乐
   if(catId) {

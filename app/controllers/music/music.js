@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
     fs = require('fs'),                                    // 读写文件模块
     path = require('path');                                // 路径模块
 
-/* 详细页面路由 */
+/* 详细页面控制器 */
 exports.detail = function(req,res) {
   var _id = req.params.id;
   // 音乐用户访问统计，每次访问音乐详情页，PV增加1
@@ -35,7 +35,7 @@ exports.detail = function(req,res) {
   });
 };
 
-/* 后台录入路由 */
+/* 后台录入控制器 */
 exports.new = function(req,res) {
   MusicCategory.find({},function(err,musicCategories) {
     if (err) {
@@ -50,7 +50,7 @@ exports.new = function(req,res) {
   });
 };
 
-/* 存储海报路由 */
+/* 存储海报控制器 */
 exports.savePoster = function(req, res, next) {
   var imageData = req.files.uploadMusicImage,                 // 上传文件
       filePath = imageData.path,                              // 文件路径
@@ -82,7 +82,7 @@ exports.savePoster = function(req, res, next) {
   }
 };
 
-/* 后台录入路由 */
+/* 后台录入控制器 */
 exports.save = function(req,res) {
   var id = req.body.music._id,                        // 如果是更新音乐则获取到该音乐ID值
       musicObj = req.body.music,                      // 获取音乐新建表单发送的数据
@@ -137,8 +137,8 @@ exports.save = function(req,res) {
         res.redirect('/music/' + _music._id);
       });
     });
+  // 如果表单中填写了音乐名称 则查找该音乐名称是否已存在
   }else if(musicObj.title) {
-    // 如果表单中填写了音乐名称 则查找该音乐名称是否已存在
     Music.findOne({title:musicObj.title},function(err,_music) {
       if (err) {
         console.log(err);
@@ -167,7 +167,7 @@ exports.save = function(req,res) {
                 res.redirect('/music/' + _newMusic._id);
               });
             });
-            // 输入新的音乐分类
+          // 输入新的音乐分类
           }else if(musicCategoryName) {
             // 查找音乐分类是否已存在
             MusicCategory.findOne({name:musicCategoryName}, function(err, _musicCategoryName) {
@@ -230,12 +230,14 @@ exports.save = function(req,res) {
         });
       }
     });
+  // 没有输入音乐名称或分类则重定向到该页
   }else {
-    res.redirect('/admin/music/list');
+    console.log('需要输入音乐分类或音乐名称');
+    res.redirect('/admin/music/new');
   }
 };
 
-/* 更新音乐路由 */
+/* 更新音乐控制器 */
 exports.update = function(req,res) {
   var _id = req.params.id;
 
@@ -254,7 +256,7 @@ exports.update = function(req,res) {
   });
 };
 
-/* 音乐列表路由 */
+/* 音乐列表控制器 */
 exports.list = function(req,res)  {
   Music.find({})
     .populate('musicCategory','name')
@@ -270,7 +272,7 @@ exports.list = function(req,res)  {
     });
 };
 
-/* 音乐列表删除音乐路由 */
+/* 音乐列表删除音乐控制器 */
 exports.del = function(req,res) {
   // 获取客户端Ajax发送的URL值中的id值
   var id = req.query.id;

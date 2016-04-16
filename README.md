@@ -3,8 +3,9 @@ NodeJs+MongoDB+jQuery仿豆瓣电影音乐网站搭建
 
 简介:
 ---------------
-本项目电影和音乐首页交互代码是由jQuery完成的，在<a href="https://github.com/Loogeek/douban-React" target="\_blank">douban-react</a>项目中尝试了将部分代码使用React来重写，提高了阅读性和维护性，可以参考下。
-
+本项目电影和音乐首页交互代码是由jQuery完成，下面两个项目将部分交互功能使用模块化进行了重写，提高了阅读性和维护性，可供参考:
+- <a href="https://github.com/Loogeek/douban-React" target="\_blank">douban-React</a>项目中尝试了将部分代码使用React来重写。
+- <a href="https://github.com/Loogeek/douban-Vue" target="\_blank">douban-Vue</a>项目中尝试了将部分代码使用Vue.js进行了重写。
 
 **1. 项目后端搭建:**
   * 使用NodeJs + express完成电影网站后端搭建;
@@ -97,8 +98,59 @@ NodeJs+MongoDB+jQuery仿豆瓣电影音乐网站搭建
 - 分类页:localhost:3000/admin/music/musicCategory/new
 - 热门榜单列表页:localhost:3000/admin/music/programme/list
 
+项目结构:
+----
+```
+├── app.js            项目入口文件
+├── app               Node后端MVC文件目录
+│   ├── controllers   控制器目录
+│   │   ├── movie     电影页面控制器目录
+│   │   ├── music     音乐页面控制器目录
+│   │   └── user      用户列表控制器目录
+│   ├── models        模型目录
+│   │   ├── movie
+│   │   ├── music
+│   │   └── user
+│   ├── schemas       模式目录
+│   │   ├── movie
+│   │   ├── music
+│   │   └── user
+│   └── views         视图文件目录
+│       ├── includes
+│       └── pages
+├── doubanDatabase    供参考的数据库数据
+│   └── douban
+├── node_modules      node模块目录
+├── public            静态文件目录
+│   ├── images        图片目录
+│   │   ├── includes  公共图片目录
+│   │   ├── movie
+│   │   ├── music
+│   │   └── user
+│   ├── libs          经过gulp处理后文件所在目录
+│   │   ├── css
+│   │   ├── images
+│   │   └── scripts
+│   ├── sass          样式目录
+│   │   ├── include
+│   │   ├── movie
+│   │   └── music
+│   ├── scripts       JS脚本目录
+│   │   └── js
+│   └── upload        用户自定义上传图片存储目录
+│       ├── movie
+│       └── music
+├── route             路由目录
+│   └── router.js
+├── test              测试文件目录
+│   └── user
+│       └── user.js
+├── README.md
+├── gulpfile.js       gulp文件
+└── package.json
+```
+
 后期完善:
 -------
 1. 完善网站功能;
-2. 完善<a href="https://github.com/Loogeek/douban-react" target="\_blank">douban-react</a>项目中的代码;
-* 尝试使用React Native制作移动端App;
+2. 优化项目代码;

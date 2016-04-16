@@ -73,7 +73,7 @@ exports.save = function(req, res) {
         res.redirect('/admin/music/programme/list');
       });
     });
-  // 如果输入了音乐分类名称
+  // 如果不是更新音乐分类，并且输入了音乐分类名称
   }else if(musicCatName) {
     // 查找输入的音乐分类名称是否已存在
     MusicCategory.findOne({name:musicCatName}, function(err,_musicCatName) {
