@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /* 音乐首页交互 */
 var mongoose = require('mongoose'),
@@ -43,10 +43,10 @@ exports.index = function(req,res) {
         }
         // 获取近期热门歌单最热、流行、摇滚等歌曲分类
         if(programme) {
-          var musicCategories = programme.musicCategories, // 查找该榜单包含的歌曲分类 
+          var musicCategories = programme.musicCategories, // 查找该榜单包含的歌曲分类
               dataMusics = [],
               count = 0,
-              len = musicCategories.length; 
+              len = musicCategories.length;
           for(var i = 0; i < len; i++) {
             // 查找每个歌曲分类下对应的音乐
             MusicCategory
@@ -94,7 +94,7 @@ exports.index = function(req,res) {
         dirList = fs.readdirSync(newPath),
         fileList = [],
         reg = /^(.+)\.(jpg|bmp|gif|png)$/i;  // 通过正则匹配图片
-    // 获取音乐首页轮播图文件夹下图片 
+    // 获取音乐首页轮播图文件夹下图片
     dirList.forEach(function(item) {
       if(reg.test(item)){
         fileList.push(item);
@@ -108,13 +108,12 @@ exports.index = function(req,res) {
         if(err){
           console.log(err);
         }
-        // 近期热门歌单区域歌曲分类查找
+        // 歌单区域歌曲分类查找
         Programme
           .find({})
           .populate({
             path:'musicCategories',
             select:'name musics',
-            options:{limit:8}                       // 限制最多8条数据
           })
           .exec(function(err,programmes) {
             if(err){
@@ -137,11 +136,10 @@ exports.search = function(req,res) {
   var catId = req.query.cat || '',                  // 获取音乐分类更多查询串ID
       proId = req.query.pro || '',                  // 近期热门歌单部分更多查询串ID
       q = req.query.q || '',                        // 获取搜索框提交内容
-      page = req.query.p || 0,                      // 获取页面
+      page = parseInt(req.query.p, 10) || 0,        // 获取页面
       count = 6,
       index = page * count;                         // 每页展示6条数据
-      
-  page = parseInt(req.query.p, 10) || 0;
+
   // 如果包含catId，则是点击了相应的音乐分类标题，进入results页面显示相应音乐分类的音乐
   if(catId) {
     // 音乐分类功能
@@ -161,9 +159,9 @@ exports.search = function(req,res) {
         results = musics.slice(index, index + count);  // 分类页面每页显示的音乐数量
 
         res.render('music/music_results', {
-          title:'豆瓣音乐分类列表页面',
-          logo:'music',
-          keyword:musicCategory.name,                  // 分类名称
+          title:'豆瓣音乐分类列表页面',                   // HTML文件标题
+          logo:'music',                                // 搜索页logo图标名称
+          keyword:musicCategory.name,                  // 歌曲分类名称
           currentPage:(page + 1),                      // 当前页
           query:'cat=' + catId,                        // 切换到另一页
           totalPage:Math.ceil(musics.length / count),  // 总页数，需向上取整
@@ -184,7 +182,7 @@ exports.search = function(req,res) {
         console.log(err);
       }
       if(musicCategories) {
-        // 查询近期热门歌单中每个音乐分类
+        // 查询这个歌单下所包含的歌曲分类
         var musicCats = musicCategories[0].musicCategories || {},
             dataMusics = [],
             count = 0,
@@ -205,7 +203,6 @@ exports.search = function(req,res) {
 
               if(count === len) {
                 // 分类页面每页显示的音乐数量
-                // results = dataMusics.slice(index, index + count);
                 res.render('music/music_results', {
                   title:'近期热门歌单分类列表页面',
                   logo:'music',

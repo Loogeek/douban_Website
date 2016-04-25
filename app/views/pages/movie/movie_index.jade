@@ -1,6 +1,7 @@
 extends ../../includes/layout
 
 block link
+  meta(name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0")
   meta(name="keywords" content="电影、经典电影、热映、电视剧、美剧、影评、电影院、电影票、排行、推荐")
   meta(name="description" content="豆瓣电影提供最新的电影介绍及评论包括上映影片的影讯查询及购票服务。你可以记录想看、在看和看过的电影电视剧，顺便打分、写影评。根据你的口味，豆瓣电影会推荐好电影给你。")
   link(href="/libs/css/movie/movie_index.min.css",rel="stylesheet")
@@ -10,7 +11,7 @@ block content
     .content
       .container-fluid
         .row
-          .col-md-6.col-md-offset-1.col-xs-7.col-sm-7.screen
+          .col-md-6.col-md-offset-1.screen
             // 顶部轮播图标签节点
             #scrollMoives
               each cat in categories
@@ -30,7 +31,7 @@ block content
                     #screenBody.panel-body.screen-body(style="width:10000px;")
                       if cat.movies && cat.movies.length > 0
                         each item in cat.movies
-                          .thumbnail(style="width:127px;")
+                          .thumbnail.scroll-item(style="width:127px;")
                             a(href="/movie/#{item._id}" target="_blank")
                               if item.poster.indexOf('http:') > -1
                                 img(src="#{item.poster}", alt="#{item.title}")
@@ -77,7 +78,7 @@ block content
                         #classBody.panel-body.screen-body
                           if cat.movies && cat.movies.length > 0
                             each item in cat.movies
-                              .col-md-3.col-xs-4
+                              .col-md-3.col-sm-3.col-xs-4
                                 .thumbnail
                                   a(href="/movie/#{item._id}" target="_blank")
                                     if item.poster.indexOf('http:') > -1
@@ -154,7 +155,7 @@ block content
                       .slide-hd
                         p 在《解救吾先生》中扮演悍匪华子的王千源做客豆瓣会客厅。
           // 电影院搜索标签节点
-          .col-md-4.col-xs-4.col-sm-4
+          .col-md-4
             .cinemas-search
               #citySearch.city
                 span 广州

@@ -77,7 +77,7 @@ block content
                   .screen
                     .panel-body.screen-body
                       if cat.musics && cat.musics.length > 0
-                        - var len = Math.min(8,cat.musics.length)
+                        - var len = cat.musics.length
                         - for(var i = 0; i < len; i++)
                           .thumbnail
                             a(href="/music/#{cat.musics[i]._id}" target="_blank")

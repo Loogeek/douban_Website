@@ -3,6 +3,7 @@
 $.support.cors = true;                                  // 解决IE8/9 Ajax跨域请求问题
 
 $(function() {
+
   // Ajax请求函数
   function funAjax(URL,method,cb) {
     $.ajax({
@@ -26,15 +27,26 @@ $(function() {
           $oLeft = $('#scrollMoives .slide-prev'),      // 获取左箭头按钮
           $oRight = $('#scrollMoives .slide-next'),     // 获取右箭头按钮
           $oThumbnail = $('#scrollMoives .thumbnail'),  // 获取电影对象
-          len = $oThumbnail.length,                     // 即将电影轮播展示区电影总数
-          pageTotal = Math.ceil(len / 4);               // 即将电影轮播展示区总页数
+          len = $oThumbnail.length;                     // 即将电影轮播展示区电影总数
+
+      var windowWidth = $(window).width();              // 获取当前视口宽度
+      // 如果当前视口宽度小于768，则上映电影区域每个版面展示3张电影
+      if (windowWidth < 768) {
+        var pageTotal = Math.ceil(len / 3);             // 即将电影轮播展示区总页数
+        // 获取海报的外边距，并给计算每张海报应赋予的宽度值
+        var marginWidth = $oThumbnail.outerWidth(true) - $oThumbnail.outerWidth();
+        var oThumbnailWidth = (oCol6_width - marginWidth * 3) / 3;
+      // 否则上映电影区域每个版面展示4张电影
+      }else {
+        var pageTotal = Math.ceil(len / 4);             // 即将电影轮播展示区总页数
+        var marginWidth = $oThumbnail.outerWidth(true) - $oThumbnail.outerWidth();
+        var oThumbnailWidth = (oCol6_width - marginWidth * 4) / 4;
+      }
       // 设置两个电影展示区总页数
       $('#scrollMoives .side-max').html(pageTotal);
       // 设置电影展示区总宽度
       $('#screenBody').width(oCol6_width * pageTotal);
-      // 获取海报的外边距，并给计算每张海报应赋予的宽度值
-      var marginWidth = $oThumbnail.outerWidth(true) - $oThumbnail.outerWidth(),
-          oThumbnailWidth = (oCol6_width - marginWidth * 4) / 4;
+
       // 设置每张轮播海报图片的宽度
       $oThumbnail.width(oThumbnailWidth);
 
@@ -46,9 +58,9 @@ $(function() {
         funAjax(URL,'GET',function(results) {
           var data = results.data || [],                // 返回正在上映或即将上映电影数据
               dataMov = data.movies,
-              dataLength = data.movies.length;
-          $('#headerNow a').attr('href','/movie/results?cat=' + data._id + '&p=0').text(data.name);
-          // 切换标题名称
+              dataLength = data.movies.length;          // 请求返回的电影数量
+          $('#headerNow a').attr('href','/movie/results?cat=' + data._id + '&p=0').text(data.name);                      // 设置标题名称
+          // 切换副标题名称
           if(galleryName === '即将上映'){
             $oTitle.text('正在上映');
           }else{
@@ -60,21 +72,34 @@ $(function() {
           // 如果切换后电影列表数量大于原电影数量,则创建多出的节点
           }else if(dataLength > $oThumbnail.length) {
             for(var j = $oThumbnail.length; j < dataLength; j++) {
-              $('#screenBody').append('<div class="thumbnail"><a href="" target="_blank"><img src="" alt="" /></a><div class="caption"><h5></h5><p><a class="btn btn-primary" href="" role="button">观看预告片</a></p></div></div>');
+              $('#screenBody').append('<div class="thumbnail scroll-item"><a href="" target="_blank"><img src="" alt="" /></a><div class="caption"><h5></h5><p><a class="btn btn-primary" href="" role="button">观看预告片</a></p></div></div>');
             }
             // 给新添加的电影节点设置宽度
-            $('#screenBody .thumbnail:gt('+ ($oThumbnail.length -1)  +')').width(oThumbnailWidth);
+            $('#screenBody .thumbnail:gt('+ ($oThumbnail.length - 1)  +')').width(oThumbnailWidth);
           }
           $oThumbnail = $('#scrollMoives .thumbnail');      // 重新获取电影对象
           // 重新获取轮播展示区电影数量及总页数
           len = $oThumbnail.length;
-          pageTotal = Math.ceil(len / 4);
-          // 设置切换后电影展示区总页数
+
+          windowWidth = $(window).width();              // 获取当前视口宽度
+          // 如果当前视口宽度小于768，则上映电影区域每个版面展示3张电影
+          if (windowWidth < 768) {
+            pageTotal = Math.ceil(len / 3);             // 即将电影轮播展示区总页数
+            // 获取海报的外边距，并给计算每张海报应赋予的宽度值
+            marginWidth = $oThumbnail.outerWidth(true) - $oThumbnail.outerWidth();
+            oThumbnailWidth = (oCol6_width - marginWidth * 3) / 3;
+          // 否则上映电影区域每个版面展示4张电影
+          }else {
+            pageTotal = Math.ceil(len / 4);             // 即将电影轮播展示区总页数
+            marginWidth = $oThumbnail.outerWidth(true) - $oThumbnail.outerWidth();
+            oThumbnailWidth = (oCol6_width - marginWidth * 4) / 4;
+          }
+          // 设置两个电影展示区总页数
           $('#scrollMoives .side-max').html(pageTotal);
           // 设置电影展示区总宽度
           $('#screenBody').width(oCol6_width * pageTotal);
 
-          // 节点数量相同，则只替换相应内容
+          // 经过上面添加或删除节点操作后节点数量相同，下面只替换节点内容
           for(var k = 0; k < $oThumbnail.length; k++) {
             if (dataMov[k]) {
               $($oThumbnail[k]).find('a').attr('href','/movie/' + dataMov[k]._id);
@@ -186,7 +211,7 @@ $(function() {
             // 如果切换后返回的电影数量大于切换前原电影数量，则创建新节点
             }else if((data.length > oThumbnail.length)) {
               for(var i = oThumbnail.length; i<data.length; i++) {
-                $('#classBody').append('<div class="col-md-3"><div class="thumbnail"><a href=""><img src="" alt="" /></a><div class="caption"><h5></h5></div></div></div>');
+                $('#classBody').append('<div class="col-md-3 col-sm-3 col-xs-4"><div class="thumbnail"><a href=""><img src="" alt="" /></a><div class="caption"><h5></h5></div></div></div>');
               }
             }
             oThumbnail = $('#classBody .thumbnail'); // 重新获取电影列表中电影数量

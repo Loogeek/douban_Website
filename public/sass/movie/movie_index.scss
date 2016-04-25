@@ -105,7 +105,7 @@
 }
 /* 正在上映区样式 */
 #scrollMoives{
-	.thumbnail{
+	.scroll-item{
 		float: left;
 	}
 }
@@ -363,7 +363,7 @@
 		img{
 		  float: left;
 		  width: 65%;
-		  height: 240px;
+		  height: 240px;;
 		}
 	}
 	.slide-detail{
@@ -384,5 +384,78 @@
 	  display: block;
 	  width: 100%;
 		height: 90px;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	/* 首页正在上映和选电影区公共样式 */
+	.screen-body {
+	  .thumbnail{
+			a{
+				img{
+					height: 150px;
+				}
+			}
+		}
+	}
+	// 顶部右侧广告样式
+	.right-advertisement {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.col-md-4 {
+		margin-left: 0;
+	}
+	h4 {
+		font-size: 15px;
+	}
+	/* 电影展示区头部样式 */
+	.screen-header {
+		h4 {
+			span {
+				font-size: 12px;
+			}
+		}
+	}
+	/* 首页正在上映和选电影区样式 */
+	.screen-body {
+	  .thumbnail{
+			a{
+				img{
+					height: 100px;
+				}
+			}
+			p {
+				display: none;
+			}
+		}
+	}
+	.class-top{
+		span{
+		  font-size: 15px;
+		}
+	}
+	// 顶部右侧广告样式
+  .right-advertisement {
+		display: none;
+	}
+	/* 热门推荐区样式 */
+	#galleryFrames {
+		.slide-item{
+			img{
+				height: 140px;;
+			}
+		}
+		.slide-detail {
+			padding: 0 0 0 10px;
+			height: 140px;
+			overflow: auto;
+		}
+	}
+	// 尾部样式
+	.m-footer {
+		display: none;
 	}
 }

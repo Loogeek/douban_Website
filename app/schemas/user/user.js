@@ -70,7 +70,7 @@ UserSchema.methods = {
 	}
 };
 
-// 静态方法不会与数据库直接交互，模型方法通过模型可以调用
+// 给模型添加静态方法 
 UserSchema.statics = {
 	fetch: function(cb) {
 		return this

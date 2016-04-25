@@ -90,7 +90,7 @@ exports.signin = function(req,res) {
     }
     // 使用user实例方法对用户名密码进行比较
     user.comparePassword(_password,function(err,isMatch) {
-      if(err){
+      if(err) {
         console.log(err);
       }
       // 密码匹配
@@ -98,7 +98,7 @@ exports.signin = function(req,res) {
         // 验证码存在
         if (captcha) {
           if(_captcha.toLowerCase() !== captcha.toLowerCase()) {
-            res.json({data:2});                      // 输入的验证码不相等
+            res.json({data:2});                     // 输入的验证码不相等
           }else {
             req.session.user = user;                // 将当前登录用户名保存到session中
             return res.json({data:3});              // 登录成功
