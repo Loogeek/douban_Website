@@ -1,4 +1,4 @@
-NodeJs+MongoDB+jQuery仿豆瓣电影音乐网站搭建
+基于NodeJs+MongoDB+jQuery搭建的豆瓣电影音乐网站
 ========================================
 
 简介:
@@ -8,14 +8,16 @@ NodeJs+MongoDB+jQuery仿豆瓣电影音乐网站搭建
 - <a href="https://github.com/Loogeek/douban-Vue" target="\_blank">douban-Vue</a>项目中尝试了将部分代码使用Vue.js进行了重写。
 
 **1. 项目后端搭建:**
-  * 使用`NodeJs + express`完成电影网站后端搭建;
+  * 使用`NodeJs的express`框架完成电影网站后端搭建;
   * 使用`mongodb`完成数据存储,通过`mongoose`模块完成对`mongodb`数据的构建;
   * 使用`jade`模板引擎完成页面创建渲染;
+  * 使用`Moment.js`格式化电影存储时间;
 
 **2. 项目前端搭建:**
   * 使用`jQuery`和`Bootsrap`完成网站前端JS脚本和样式处理;
   * 使用`Sass`完成电影和音乐首页样式的编写;
   * 使用`validate.js`完成对账号登录注册的判断;
+  * 使用`jQuery lazyload`插件对首页图片的延迟加载;
   * 使用`fullpage.js`完成电影宣传页面制作;
   * 前后端的数据请求交互通过`Ajax`完成;
 
