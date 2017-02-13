@@ -41,16 +41,16 @@
 项目整体效果
 -------
 <div>
-  <img src="http://7xrqxi.com1.z0.glb.clouddn.com/doubanMovie.png" width="45%" float"left" height="700" alt="电影首页"/>
-  <img src="http://7xrqxi.com1.z0.glb.clouddn.com/doubanMusic.png" width="45%" float"left" height="700" alt="音乐首页"/>
+  <img src="http://oh1orcwqb.bkt.clouddn.com/doubanMovie.jpeg" width="45%" float"left" height="700" alt="电影首页"/>
+  <img src="http://oh1orcwqb.bkt.clouddn.com/doubanMusic.jpeg" width="45%" float"left" height="700" alt="音乐首页"/>
 </div>
 <div text-align="center">
-  <img src="http://7xrqxi.com1.z0.glb.clouddn.com/doubanDetail.png" width="45%" alt="电影详情"/>
+  <img src="http://oh1orcwqb.bkt.clouddn.com/doubanDetail.jpeg" width="45%" alt="电影详情"/>
 </div>
 
 动态效果演示
 -------
-[动态效果演示](http://7xrqxi.com1.z0.glb.clouddn.com/douban1.gif)
+[动态效果演示](http://oh1orcwqb.bkt.clouddn.com/douban.gif)
 
 运行环境及Node版本:
 -------
