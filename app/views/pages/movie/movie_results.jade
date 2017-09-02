@@ -11,7 +11,7 @@ block content
             each item in movies
               .col-md-2
                 .thumbnail
-                  if item.poster.indexOf('http:') > -1
+                  if item.poster.indexOf('http') > -1
                     a(href="/movie/#{item._id}")
                       img(src="#{item.poster}", alt="#{item.title}" style="height: 200px;")
                   else

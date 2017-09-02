@@ -63,7 +63,7 @@ $(function() {
     var id = $(this).val();
     if(id) {
       $.ajax( {
-        url: 'http://api.douban.com/v2/music/' + id,
+        url: 'https://api.douban.com/v2/music/' + id,
         cache: true,
         type: 'get',
         dataType: 'jsonp',

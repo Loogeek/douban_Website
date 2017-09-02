@@ -11,7 +11,7 @@ block content
             each item in musics
               .col-md-2
                 .thumbnail
-                  if item.image.indexOf('http:') > -1
+                  if item.image.indexOf('http') > -1
                     a(href="/music/#{item._id}")
                       img(src="#{item.image}" alt="#{item.title}" style="height: 120px; width: 120px;")
                   else
@@ -28,7 +28,7 @@ block content
                   each music in item.musics
                     .col-md-2
                       .thumbnail
-                        if music.image && music.image.indexOf('http:') > -1
+                        if music.image && music.image.indexOf('http') > -1
                           a(href="/music/#{music._id}")
                             img(src="#{music.image}", alt="#{music.title}" style="height: 120px; width: 120px;")
                         else

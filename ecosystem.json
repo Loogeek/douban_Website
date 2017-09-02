@@ -1,0 +1,27 @@
+{
+    "apps": [
+        {
+            "name": "douban_Website",
+            "script": "pre.server.js",
+            "env": {
+                "COMMON_VARIABLE": "true"
+            },
+            "env_production" : {
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    "deploy": {
+        "production": {
+            "user": "root",
+            "host": ["39.108.179.151"],
+            "ref": "origin/master",
+            "repo": "https://github.com/Loogeek/douban_Website.git",
+            "path": "/root/Github/douban_Website",
+            "ssh_options": "StrictHostKeyChecking=no",
+            "env"  : {
+                "NODE_ENV": "production"
+            }
+        }
+    }
+}

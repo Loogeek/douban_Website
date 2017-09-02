@@ -10,11 +10,15 @@ var express = require('express'),					          	  // 加载express模块
     session = require('express-session'),  				      // session依赖cookie模块
     mongoStore = require('connect-mongo')(session),		  // 对session进行持久化
     http = require('http'),
+    // env = process.env.NODE_ENV || 'development'
 
-    port = process.env.PORT || 3000,                    // 设置监听端口
+    port = process.env.PORT || 3002,                    // 设置监听端口
     app = express(),                                    // 生成Web服务器实例
+    duUrl = 'mongodb://127.0.0.1/douban';               // 连接本地数据库及数据库名称
 
-    dbUrl = 'mongodb://127.0.0.1/douban';               // 连接本地数据库及数据库名称
+    // if (env === 'development') {
+    //   dbUrl = 'mongodb://127.0.0.1/douban';               
+    // }
 
 mongoose.connect(dbUrl);                                // 连接本地数据库
 

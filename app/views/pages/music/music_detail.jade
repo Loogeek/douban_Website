@@ -9,7 +9,7 @@ block content
         if music
           span #{music.title}
           .detail-body.clearfix
-            if music.image.indexOf('http:') > -1
+            if music.image.indexOf('http') > -1
               img.musicImg(src="#{music.image}" alt="#{music.title}")
             else
               // 音乐图片为自行上传

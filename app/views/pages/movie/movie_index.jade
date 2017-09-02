@@ -33,7 +33,7 @@ block content
                         each item in cat.movies
                           .thumbnail.scroll-item(style="width:127px;")
                             a(href="/movie/#{item._id}" target="_blank")
-                              if item.poster.indexOf('http:') > -1
+                              if item.poster.indexOf('http') > -1
                                 img(src="#{item.poster}", alt="#{item.title}")
                               else
                                 img(src="/upload/movie/#{item.poster}", alt="#{item.title}")
@@ -81,7 +81,7 @@ block content
                               .col-md-3.col-sm-3.col-xs-4
                                 .thumbnail
                                   a(href="/movie/#{item._id}" target="_blank")
-                                    if item.poster.indexOf('http:') > -1
+                                    if item.poster.indexOf('http') > -1
                                       img(src="#{item.poster}", alt="#{item.title}")
                                     else
                                       img(src="/upload/#{item.poster}", alt="#{item.title}")

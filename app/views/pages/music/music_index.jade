@@ -48,7 +48,7 @@ block content
                       each item in cat.musics
                         .thumbnail
                           a(href="/music/#{item._id}" target="_blank")
-                            if item.image.indexOf('http:') > -1
+                            if item.image.indexOf('http') > -1
                               img(src="#{item.image}", alt="#{item.title}")
                             else
                               img(src="/upload/music/#{item.image}", alt="#{item.title}")
@@ -81,7 +81,7 @@ block content
                         - for(var i = 0; i < len; i++)
                           .thumbnail
                             a(href="/music/#{cat.musics[i]._id}" target="_blank")
-                              if cat.musics[i].image.indexOf('http:') > -1
+                              if cat.musics[i].image.indexOf('http') > -1
                                 img(src="#{cat.musics[i].image}" alt="#{cat.musics[i].title}")
                               else
                                 img(src="/upload/music/#{cat.musics[i].image}" alt="#{cat.musics[i].title}")
@@ -186,7 +186,7 @@ block content
                           .thumbnail
                             if cat.musics[i]
                               a(href="/music/#{cat.musics[i]._id}" target="_blank")
-                                if cat.musics[i].image.indexOf('http:') > -1
+                                if cat.musics[i].image.indexOf('http') > -1
                                   img(src="#{cat.musics[i].image}", alt="#{cat.musics[i].title}")
                                 else
                                   img(src="/upload/music/#{cat.musics[i].image}", alt="#{cat.musics[i].title}")

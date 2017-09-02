@@ -201,7 +201,7 @@ $(function() {
 
               if (data[k].image) {
                 // 对音乐海报是否是自行上传进行判断
-                if(data[k].image.indexOf('http:') > -1) {
+                if(data[k].image.indexOf('http') > -1) {
                   $oImg.attr('src',data[k].image).attr('alt',data[k].image);
                 }else {
                   // 本地上传音乐图片
@@ -279,7 +279,7 @@ $(function() {
               var $oImg = $(oThumbnail[i]).find('img');
               // 判断每个歌单海报是否存在及是否是自行上传
               if(dataCars[i].musics[0]) {
-                if(dataCars[i].musics[0].image.indexOf('http:') > -1){
+                if(dataCars[i].musics[0].image.indexOf('http') > -1){
                   $oImg.attr('src',dataCars[i].musics[0].image).attr('alt',dataCars[i].musics[0].image).attr('style','display: inline');
                 }else{
                   // 自行上传的海报图片路径不同
@@ -341,7 +341,7 @@ $(function() {
                 var $oImg = $(oLi[k]).find('img');
                 //对音乐海报是否是自行上传进行判断
                 if (data[k].image) {
-                  if(data[k].image.indexOf('http:') > -1) {
+                  if(data[k].image.indexOf('http') > -1) {
                     $oImg.attr('src',data[k].image).attr('alt',data[k].image);
                   }else {
                     //自行上传的海报图片路径不同
