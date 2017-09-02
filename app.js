@@ -14,7 +14,7 @@ var express = require('express'),					          	  // 加载express模块
 
     port = process.env.PORT || 3002,                    // 设置监听端口
     app = express(),                                    // 生成Web服务器实例
-    duUrl = 'mongodb://127.0.0.1/douban';               // 连接本地数据库及数据库名称
+    dbUrl = 'mongodb://127.0.0.1/douban';               // 连接本地数据库及数据库名称
 
     // if (env === 'development') {
     //   dbUrl = 'mongodb://127.0.0.1/douban';               
