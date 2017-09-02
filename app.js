@@ -22,7 +22,7 @@ var express = require('express'),					          	  // 加载express模块
 
 mongoose.connect(dbUrl);                                // 连接本地数据库
 
-app.set('views',path.join(__dirname, './app/views/pages'));       // 视图文件根目录
+app.set('views','./app/views/pages');                   // 视图文件根目录
 app.set('view engine','jade');                          // 设置模板引擎
 app.use(express.static(path.join(__dirname,'public'))); // 设置静态文件目录
 app.locals.moment = require('moment'); // 引入moment模块并设置为app.locals属性,用来格式化时间
