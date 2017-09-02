@@ -2,7 +2,7 @@
     "apps": [
         {
             "name": "douban_Website",
-            "script": "pre.server.js",
+            "script": "gulpfile.js",
             "env": {
                 "COMMON_VARIABLE": "true"
             },
